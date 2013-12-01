@@ -1,0 +1,740 @@
+@font-face {
+    font-family: 'modsUsers';
+    src:url('../../assets/fonts/modsUsers.eot');
+    src:url('../../assets/fonts/modsUsers.eot?#iefix') format('embedded-opentype'),
+        url('../../assets/fonts/modsUsers.ttf') format('truetype'),
+        url('../../assets/fonts/modsUsers.woff') format('woff'),
+        url('../../assets/fonts/modsUsers.svg#modsUsers') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="icon-"]:before, [class*=" icon-"]:before {
+    font-family: 'modsUsers';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.icon-home:before {
+    content: "\e600";
+}
+.icon-users:before {
+    content: "\e601";
+}
+.icon-profile:before {
+    content: "\e602";
+}
+.icon-envelope:before {
+    content: "\e603";
+}
+.icon-cog:before {
+    content: "\e604";
+}
+.icon-insert-template:before {
+    content: "\e605";
+}
+.icon-menu:before {
+    content: "\e606";
+}
+.icon-info:before {
+    content: "\e607";
+}
+.icon-chevron-right:before {
+    content: "\e609";
+}
+.icon-chevron-left:before {
+    content: "\e60a";
+}
+.icon-pen:before {
+    content: "\e60b";
+}
+.icon-trash:before {
+    content: "\e60c";
+}
+.icon-power-outline:before {
+    content: "\e608";
+}
+.icon-arrow-right:before {
+    content: "\e60d";
+}
+    section#modsUser {
+        width: 100%;
+        height: 100vh;
+        background: rgba(235, 235, 235, 1);
+        font-family: Arial;
+        font-size: 13px;
+        color: rgba(186, 186, 186, 1);
+    }
+        section#modsUser > aside {
+            background: url("../../modules/Admin/assets/images/backgrounds/sidebar.jpg") repeat rgba(0, 0, 0, 0);
+            display: block;
+            height: 100%;
+            position: absolute;
+            width: 240px;
+            border-right: 1px solid rgba(195, 195, 195, 1);
+        }
+            section#modsUser > aside nav {
+            }
+                section#modsUser > aside nav ul {
+                    display: block;
+                    margin: 0; padding: 0; /* reset */
+                }
+                    section#modsUser > aside nav ul li {
+                        display: block;
+                        background: rgba(255, 255, 255, 0.02);
+                        list-style: none;
+                        border-bottom: 1px solid #555555;
+                        border-top: 1px solid #2E2E2E;
+                        color: rgba(186, 186, 186, 1);
+                        -webkit-transition: all .25s ease-in-out;
+                           -moz-transition: all .25s ease-in-out;
+                            -ms-transition: all .25s ease-in-out;
+                             -o-transition: all .25s ease-in-out;
+                                transition: all .25s ease-in-out;
+                    }
+                    section#modsUser > aside nav ul > li.active,
+                    section#modsUser > aside nav ul > li:hover {
+                        background: rgba(255, 255, 255, .1);
+                    }
+                        section#modsUser > aside nav ul li.pseudo {
+                            background: rgba(0, 0, 0, 0.2);
+                            color: rgba(238, 238, 238, 1);
+                            height: 46px;
+                        }
+                            section#modsUser > aside nav ul li.pseudo img {
+                                display: inline-block;
+                                border: none;
+                                width: 32px;
+                                height: 32px;
+                                border: 2px solid rgba(21, 21, 21, 1);
+                                border-radius: 2px 2px 2px 2px;
+                                -moz-border-radius: 2px 2px 2px 2px;
+                                -webkit-border-radius: 2px 2px 2px 2px;
+                                margin: 5px 15px;
+                                vertical-align: middle;
+                            }
+                            section#modsUser > aside nav ul li.pseudo > span {
+                                display: inline-block;
+                                line-height: 46px;
+                                vertical-align: middle;
+                            }
+                        section#modsUser > aside nav ul li a {
+                            display: block;
+                            color: rgba(235, 235, 235, 1);
+                            font-size: 13px;
+                            line-height: 42px;
+                            text-decoration: none;
+                            padding: 0 15px;
+                        }
+                        section#modsUser > aside nav ul li a:before {
+                            margin-right: 15px;
+                            font-size: 15px;
+                        }
+                            section#modsUser > aside nav > ul > li > a > span {
+                                display: inline-block;
+                                font-size: 11px;
+                                position: absolute;
+                                border: 1px solid rgba(46, 46, 46, 1);
+                                background: rgba(186,109,109,1);
+                                background: -moz-linear-gradient(top, rgba(186,109,109,1) 0%, rgba(146,71,71,1) 100%);
+                                background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(186,109,109,1)), color-stop(100%, rgba(146,71,71,1)));
+                                background: -webkit-linear-gradient(top, rgba(186,109,109,1) 0%, rgba(146,71,71,1) 100%);
+                                background: -o-linear-gradient(top, rgba(186,109,109,1) 0%, rgba(146,71,71,1) 100%);
+                                background: -ms-linear-gradient(top, rgba(186,109,109,1) 0%, rgba(146,71,71,1) 100%);
+                                background: linear-gradient(to bottom, rgba(186,109,109,1) 0%, rgba(146,71,71,1) 100%);
+                                /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ba6d6d', endColorstr='#924747', GradientType=0 );*/
+                                width: 18px;
+                                line-height: 18px;
+                                margin: 12px 0;
+                                text-align: center;
+                                border-radius: 2px 2px 2px 2px;
+                                -moz-border-radius: 2px 2px 2px 2px;
+                                -webkit-border-radius: 2px 2px 2px 2px;
+                                right: 10px;
+                            }
+                        section#modsUser > aside nav ul li:hover ul#userbox {
+                            display: block;
+                        }
+                            section#modsUser > aside nav ul li ul#userbox {
+                                display: none;
+                                margin: 0; padding: 0; /* reset */
+                            }
+                                section#modsUser > aside nav ul li ul#userbox li {
+                                    display: block;
+                                    list-style: none;
+                                }
+                                    section#modsUser > aside nav ul li ul#userbox li a {
+                                        line-height: 30px;
+                                    }
+                                section#modsUser > aside nav ul li ul#userbox li a:before {
+                                    margin-left: 30px;
+                                }
+                        section#modsUser > aside nav ul li:hover ul#listFriends,
+                        section#modsUser > aside nav ul li:focus ul#listFriends {
+                            top: 0;
+                        }
+                            section#modsUser > aside nav ul li ul#listFriends {
+                                display: block;
+                                position: absolute;
+                                width: 195px;
+                                height: -moz-calc(100vh - 2px);
+                                height: -webkit-calc(100vh - 2px);
+                                height: -o-calc(100vh - 2px);
+                                height: calc(100vh - 2px);
+                                margin-top: -100vh;
+                                left: 241px;
+                                margin: 0; padding: 0; /* reset */
+                                border: 1px solid rgba(205, 205 ,205, 1);
+                                border-top: 0;
+                                top: -100%;
+                                background: rgb(229,229,229);
+                                -webkit-transition: all .25s linear;
+                                   -moz-transition: all .25s linear;
+                                    -ms-transition: all .25s linear;
+                                     -o-transition: all .25s linear;
+                                        transition: all .25s linear;
+                            }
+                                section#modsUser > aside nav ul li ul#listFriends li {
+                                    display: block;
+                                    list-style: none;
+                                    background: rgb(248,248,248);
+                                    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2Y4ZjhmOCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlOGU4ZTgiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+                                    background: -moz-linear-gradient(top, rgba(248,248,248,1) 0%, rgba(232,232,232,1) 100%);
+                                    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(248,248,248,1)), color-stop(100%,rgba(232,232,232,1)));
+                                    background: -webkit-linear-gradient(top, rgba(248,248,248,1) 0%,rgba(232,232,232,1) 100%);
+                                    background: -o-linear-gradient(top, rgba(248,248,248,1) 0%,rgba(232,232,232,1) 100%);
+                                    background: -ms-linear-gradient(top, rgba(248,248,248,1) 0%,rgba(232,232,232,1) 100%);
+                                    background: linear-gradient(to bottom, rgba(248,248,248,1) 0%,rgba(232,232,232,1) 100%);
+                                    /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f8f8f8', endColorstr='#e8e8e8',GradientType=0 );*/
+                                    border: none;
+                                    border-bottom: 1px solid rgba(205, 205 ,205, 1);
+                                }
+                                section#modsUser > aside nav ul li ul#listFriends li:hover {
+                                    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.15);
+                                    border-bottom: 1px solid #FFFFFF;
+                                    background: rgba(255, 255, 255, 0.15);
+                                }
+                                section#modsUser > aside nav ul li ul#listFriends li:first-child:hover {
+                                    background: rgb(232,232,232);
+                                    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2U4ZThlOCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmOGY4ZjgiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+                                    background: -moz-linear-gradient(top, rgba(232,232,232,1) 0%, rgba(248,248,248,1) 100%);
+                                    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(232,232,232,1)), color-stop(100%,rgba(248,248,248,1)));
+                                    background: -webkit-linear-gradient(top, rgba(232,232,232,1) 0%,rgba(248,248,248,1) 100%);
+                                    background: -o-linear-gradient(top, rgba(232,232,232,1) 0%,rgba(248,248,248,1) 100%);
+                                    background: -ms-linear-gradient(top, rgba(232,232,232,1) 0%,rgba(248,248,248,1) 100%);
+                                    background: linear-gradient(to bottom, rgba(232,232,232,1) 0%,rgba(248,248,248,1) 100%);
+                                    /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8e8e8', endColorstr='#f8f8f8',GradientType=0 );*/
+                                }
+                                section#modsUser > aside nav ul li ul#listFriends li:first-child:hover {
+                                    box-shadow: none;
+                                    border-bottom: 1px solid rgba(205, 205 ,205, 1);
+                                }
+                                section#modsUser > aside nav ul li ul#listFriends li a {
+                                    color: rgba(99, 99, 99, 1);
+                                }
+                                section#modsUser > aside nav ul li ul#listFriends li:first-child a {
+                                    line-height: 48px;
+                                    font-weight: bold;
+                                }
+                                section#modsUser > aside nav ul li ul#listFriends li a img {
+                                        display: inline-block;
+                                        border: none;
+                                        width: 32px;
+                                        height: 32px;
+                                        border-radius: 2px 2px 2px 2px;
+                                        -moz-border-radius: 2px 2px 2px 2px;
+                                        -webkit-border-radius: 2px 2px 2px 2px;
+                                        margin: 5px 5px;
+                                        vertical-align: middle;
+                                    }
+                                    section#modsUser > aside nav ul li ul#listFriends li a.onlineGreen:after,
+                                    section#modsUser > aside nav ul li ul#listFriends li a.onlineRed:after {
+                                        content: '';
+                                        position: absolute;
+                                        width: 10px;
+                                        height: 10px;
+                                        background: rgba(52, 137, 26, 1);
+                                        -webkit-border-radius: 5px;
+                                        -moz-border-radius: 5px;
+                                        -o-border-radius: 5px;
+                                        border-radius: 5px;
+                                        right: 10px;
+                                        margin-top: 17px;
+                                    }
+                                    section#modsUser > aside nav ul li ul#listFriends li a.onlineRed:after {
+                                        background: rgba(138, 27, 28, 1);
+                                    }
+
+        section#modsUser > article {
+            border-left: 5px solid rgba(218, 218, 218, 1);
+            display: block;
+            height: 100%;
+            width: -moz-calc(100% - 246px);
+            width: -webkit-calc(100% - 246px);
+            width: -o-calc(100% - 246px);
+            width: calc(100% - 246px);
+            margin-left: 241px;
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+            section#modsUser > article header {
+                display: table;
+                width: 100%;
+                background: rgb(248,248,248);
+                background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2Y4ZjhmOCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlOGU4ZTgiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+                background: -moz-linear-gradient(top, rgba(248,248,248,1) 0%, rgba(232,232,232,1) 100%);
+                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(248,248,248,1)), color-stop(100%,rgba(232,232,232,1)));
+                background: -webkit-linear-gradient(top, rgba(248,248,248,1) 0%,rgba(232,232,232,1) 100%);
+                background: -o-linear-gradient(top, rgba(248,248,248,1) 0%,rgba(232,232,232,1) 100%);
+                background: -ms-linear-gradient(top, rgba(248,248,248,1) 0%,rgba(232,232,232,1) 100%);
+                background: linear-gradient(to bottom, rgba(248,248,248,1) 0%,rgba(232,232,232,1) 100%);
+                /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f8f8f8', endColorstr='#e8e8e8',GradientType=0 );*/
+                border-bottom: 1px solid rgba(205, 205, 205, 1);
+            }
+                section#modsUser > article header h1 {
+                    margin: 0; padding: 0; /* reset */
+                    line-height: 48px;
+                    color: rgba(99, 99, 99, 1);
+                    padding-left: 15px;
+                    font-family: 14px;
+                    display: table-cell;
+                    width: -moz-calc(100% - 60px);
+                    width: -webkit-calc(100% - 60px);
+                    width: -o-calc(100% - 60px);
+                    width: calc(100% - 60px);
+                }
+                section#modsUser > article header a {
+                    display: table-cell;
+                    text-decoration: none;
+                    width: 20px;
+                    padding: 0 5px;
+                    color: rgba(121, 121, 121, 1);
+                }
+                section#modsUser > article header a:hover {
+                    color: rgba(99, 99, 99, 1);
+                }
+                section#modsUser > article header a .icon-cog {
+                    font-size: 15px;
+                }
+                section#modsUser > article header a .icon-power-outline {
+                    font-size: 20px;
+                    vertical-align: -2px;
+                }
+            section#modsUser > article nav#breadcrumb {
+                height: 34px;
+                border-bottom: 1px solid rgba(205, 205, 205, 1);
+                background: rgb(248,248,248);
+                background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2Y4ZjhmOCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlOGU4ZTgiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+                background: -moz-linear-gradient(top, rgba(248,248,248,1) 0%, rgba(232,232,232,1) 100%);
+                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(248,248,248,1)), color-stop(100%,rgba(232,232,232,1)));
+                background: -webkit-linear-gradient(top, rgba(248,248,248,1) 0%,rgba(232,232,232,1) 100%);
+                background: -o-linear-gradient(top, rgba(248,248,248,1) 0%,rgba(232,232,232,1) 100%);
+                background: -ms-linear-gradient(top, rgba(248,248,248,1) 0%,rgba(232,232,232,1) 100%);
+                background: linear-gradient(to bottom, rgba(248,248,248,1) 0%,rgba(232,232,232,1) 100%);
+                /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f8f8f8', endColorstr='#e8e8e8',GradientType=0 );*/
+                color: rgba(99, 99, 99, 1);
+            }
+                section#modsUser > article nav#breadcrumb ul {
+                    display: block;
+                    margin: 0; padding: 0; /* reset */
+                    color: rgba(99, 99, 99, 1);
+                }
+                    section#modsUser > article nav#breadcrumb li {
+                        display: inline-block;
+                        list-style: none;
+                        font-size: 12px;
+                        line-height: 34px;
+                        padding-left: 15px;
+                    }
+                    section#modsUser > article nav#breadcrumb li:first-child {
+                        border-right:  1px solid rgba(205, 205, 205, 1);
+                        width: 32px;
+                        text-align: center;
+                        font-size: 13px;
+                        padding: 0;
+                    }
+            section#modsUser > article section {
+                display: none;
+                width: 100%;
+                height: 100%;
+                height: -moz-calc(100% - 81px);
+                height: -webkit-calc(100% - 81px);
+                height: -o-calc(100% - 81px);
+                height: calc(100% - 81px);
+            }
+            section#modsUser > article section:first-of-type {
+                display: table;
+            }
+                section#modsUser > article section > #usersContent {
+                    display: table-cell;
+                    width: 70%;
+                    height: 100%;
+                    border-right: 5px solid rgba(226, 226, 226, .7);
+                    -webkit-box-shadow: -1px 0 0 0 #CDCDCD inset;
+                    -moz-box-shadow: -1px 0 0 0 #CDCDCD inset;
+                    box-shadow: -1px 0 0 0 #CDCDCD inset;
+                    padding: 10px 50px;
+                    vertical-align: top;
+                }
+                    section#modsUser > article section > #usersContent > .full {
+                            display: block;
+                    }
+                        section#modsUser > article section > #usersContent > .full .icon-info {
+                            padding-left: 15px;
+                            color: rgba(99, 99, 99, 1);
+                        }
+                        section#modsUser > article section > #usersContent > .full .icon-info:before {
+                            margin-right: 10px;
+                        }
+                        section#modsUser > article section > #usersContent > .full > ul:first-child {
+                            display: inline-block;
+                            margin: 10px 0;
+                            padding: 0;
+                            width: 50%;
+                            vertical-align: top;
+                        }
+                            section#modsUser > article section > #usersContent > .full > ul:first-child li {
+                                display: inline-block;
+                                list-style: none;
+                                background: rgb(234,234,237);
+                                background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2VhZWFlZCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNjZWNmZDIiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+                                background: -moz-linear-gradient(top, rgba(234,234,237,1) 0%, rgba(206,207,210,1) 100%);
+                                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(234,234,237,1)), color-stop(100%,rgba(206,207,210,1)));
+                                background: -webkit-linear-gradient(top, rgba(234,234,237,1) 0%,rgba(206,207,210,1) 100%);
+                                background: -o-linear-gradient(top, rgba(234,234,237,1) 0%,rgba(206,207,210,1) 100%);
+                                background: -ms-linear-gradient(top, rgba(234,234,237,1) 0%,rgba(206,207,210,1) 100%);
+                                background: linear-gradient(to bottom, rgba(234,234,237,1) 0%,rgba(206,207,210,1) 100%);
+                                border: 1px solid rgba(140, 140, 140, 1);
+                                border-radius: 4px 4px 4px 4px;
+                                -moz-border-radius: 4px 4px 4px 4px;
+                                -webkit-border-radius: 4px 4px 4px 4px;
+                            }
+                                section#modsUser > article section > #usersContent > .full > ul:first-child li a {
+                                    line-height: 22px;
+                                    display: block;
+                                    padding: 0 15px;
+                                    color: rgba(121, 121, 121, 1);
+                                    text-decoration: none;
+                                }
+                        section#modsUser > article section > #usersContent > .full > ul:nth-child(2) {
+                            display: inline-block;
+                            margin: 10px 0;
+                            padding: 0;
+                            width: 40%;
+                            color: rgba(99, 99, 99, 1);
+                            vertical-align: top;
+                        }
+                            section#modsUser > article section > #usersContent > .full > ul:nth-child(2) li {
+                                list-style: none;
+                                display: inline-block;
+                                -webkit-transition: all .25s ease-in-out;
+                                   -moz-transition: all .25s ease-in-out;
+                                    -ms-transition: all .25s ease-in-out;
+                                     -o-transition: all .25s ease-in-out;
+                                        transition: all .25s ease-in-out;
+                                cursor: pointer;
+                                padding: 0 3px;
+                            }
+                            section#modsUser > article section > #usersContent > .full > ul:nth-child(2) li:hover {
+                                background: #3489AD;
+                                border-radius: 4px 4px 4px 4px;
+                                -moz-border-radius: 4px 4px 4px 4px;
+                                -webkit-border-radius: 4px 4px 4px 4px;
+                                color: rgba(255, 255, 255, 1);
+                            }
+                            section#modsUser > article section > #usersContent > .full > ul:nth-child(2) li:first-child:hover {
+                                background: transparent;
+                                border-radius: 0;
+                                -moz-border-radius: 0;
+                                -webkit-border-radius: 0;
+                                color: rgba(99, 99, 99, 1);
+                            }
+                            section#modsUser > article section > #usersContent > .full > ul:nth-child(2) li:first-child {
+                                font-weight: bold;
+                            }
+                            section#modsUser > article section > #usersContent > .full > ul:nth-child(2) li:first-child:after {
+                                content: ':';
+                                display: inline-block;
+                                padding-left: 2px;
+                            }
+                            section#modsUser > article section > #usersContent > .full > ul:nth-child(2) li:after {
+                                content: ',';
+                                display: inline-block;
+                            }
+                            section#modsUser > article section > #usersContent > .full > ul:nth-child(2) li:last-child:after {
+                                content: '';
+                            }
+
+
+
+                    section#modsUser > article section > #usersContent > .column {
+                        display: table;
+                        width: 100%;
+                    }
+                        section#modsUser > article section > #usersContent > .column > div {
+                            display: table-cell;
+                            width: 50%;
+                        }
+                            section#modsUser > article section > #usersContent > .column > div form#infosGen {
+                                display: block;
+                            }
+                                section#modsUser > article section > #usersContent > .column > div form h3 {
+                                    color: rgba(99, 99, 99, 1);
+                                    font-weight: bold;
+                                    text-shadow: rgba(255, 255, 255, 1) 0.1em 0.1em 0.2em;
+                                    font-size: 12px;
+                                    margin: 15px 0;
+                                }
+                                section#modsUser > article section > #usersContent > .column > div form#infosGen .title {
+                                    color: rgba(52, 137, 173, 1);
+                                    font-weight: bold;
+                                    font-size: 18px;
+                                    width: 100%;
+                                    margin: 10px auto;
+                                }
+                                section#modsUser > article section > #usersContent > .column > div form#infosGen img  {
+                                    display: inline-block;
+                                    vertical-align: top;
+                                    width: 105px;
+                                    height: 105px;
+                                    -webkit-box-shadow: inset 0px 0px 15px 1px rgba(174,174,174,0.5), 0px 0px 5px 3px rgba(255,255,255,0.5);
+                                    -moz-box-shadow: inset 0px 0px 15px 1px rgba(174,174,174,0.5), 0px 0px 5px 3px rgba(255,255,255,0.5);
+                                    box-shadow: inset 0px 0px 15px 1px rgba(174,174,174,0.5), 0px 0px 3px 5px rgba(255,255,255,0.5);
+                                    background: rgb(252,252,252);
+                                    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZjZmNmYyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+                                    background: -moz-linear-gradient(top, rgba(252,252,252,1) 0%, rgba(221,221,221,1) 100%);
+                                    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(221,221,221,1)));
+                                    background: -webkit-linear-gradient(top, rgba(252,252,252,1) 0%,rgba(221,221,221,1) 100%);
+                                    background: -o-linear-gradient(top, rgba(252,252,252,1) 0%,rgba(221,221,221,1) 100%);
+                                    background: -ms-linear-gradient(top, rgba(252,252,252,1) 0%,rgba(221,221,221,1) 100%);
+                                    background: linear-gradient(to bottom, rgba(252,252,252,1) 0%,rgba(221,221,221,1) 100%);
+                                    padding: 1px;
+                                    margin-left: 15px;
+                                }
+                                section#modsUser > article section > #usersContent > .column > div form > .contentInfos {
+                                    display: inline-block;
+                                    vertical-align: top;
+                                    width: -moz-calc(100% - 165px);
+                                    width: -webkit-calc(100% - 165px);
+                                    width: -o-calc(100% - 165px);
+                                    width: calc(100% - 165px);
+                                    padding: 0 15px;
+                                }
+                                    section#modsUser > article section > #usersContent > .column > div form .contentInfos div {
+                                        -webkit-transition: all .25s ease-in-out;
+                                           -moz-transition: all .25s ease-in-out;
+                                            -ms-transition: all .25s ease-in-out;
+                                             -o-transition: all .25s ease-in-out;
+                                                transition: all .25s ease-in-out;
+                                    }
+                                    section#modsUser > article section > #usersContent > .column > div form .contentInfos div:hover {
+                                        background: rgba(255, 255, 255, 0.2);
+                                        cursor: pointer;
+                                        border-radius: 3px 3px 3px 3px;
+                                        -moz-border-radius: 3px 3px 3px 3px;
+                                        -webkit-border-radius: 3px 3px 3px 3px;
+                                    }
+                                        section#modsUser > article section > #usersContent > .column > div form .contentInfos div span:first-child {
+                                            color: rgba(36, 36, 36, 1);
+                                            font-weight:  bold;
+                                            line-height: 21px;
+                                        }
+                                        section#modsUser > article section > #usersContent > .column > div form .contentInfos div span:first-child:after {
+                                            content: ':';
+                                            padding: 0 5px;
+                                        }
+                                        section#modsUser > article section > #usersContent > .column > div form .contentInfos div span:nth-child(2) {
+                                            color: rgba(99, 99, 99, 1);
+                                    }
+
+
+                section#modsUser > article section > aside {
+                    display: table-cell;
+                    min-width: 20%;
+                    border-left: 1px inset rgba(0, 0, 0, 0.12);
+                    height: 100%;
+                }
+                    section#modsUser > article section > aside > #tab-container ul {
+                        border-bottom: 1px solid rgba(205, 205, 205, 1);
+                        font-size: 11px;
+                        display: table;
+                        width: 100%;
+                        margin: 0; padding: 0; /* reset */
+                    }
+                        section#modsUser > article section > aside > #tab-container ul li {
+                            border-right: 1px solid rgba(205, 205, 205, 1);
+                            border-color: rgba(205, 205, 205, 1);
+                            display: table-cell;
+                            line-height: 35px;
+                            text-align: center;
+                            background: rgb(248,248,248);
+                            background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2Y4ZjhmOCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlOGU4ZTgiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+                            background: -moz-linear-gradient(top, rgba(248,248,248,1) 0%, rgba(232,232,232,1) 100%);
+                            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(248,248,248,1)), color-stop(100%,rgba(232,232,232,1)));
+                            background: -webkit-linear-gradient(top, rgba(248,248,248,1) 0%,rgba(232,232,232,1) 100%);
+                            background: -o-linear-gradient(top, rgba(248,248,248,1) 0%,rgba(232,232,232,1) 100%);
+                            background: -ms-linear-gradient(top, rgba(248,248,248,1) 0%,rgba(232,232,232,1) 100%);
+                            background: linear-gradient(to bottom, rgba(248,248,248,1) 0%,rgba(232,232,232,1) 100%);
+                            /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f8f8f8', endColorstr='#e8e8e8',GradientType=0 );*/
+                        }
+                        section#modsUser > article section > aside > #tab-container ul li:last-child {
+                            border: none;
+                        }
+                        section#modsUser > article section > aside > #tab-container ul li.clicked {
+                            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.15);
+                            background: rgba(255, 255, 255, 0.15);
+                            border-bottom: 1px solid rgba(255, 255, 255, 1);
+                        }
+                            section#modsUser > article section > aside > #tab-container ul li a {
+                                display: block;
+                                text-decoration: none;
+                                font-size: 12px;
+                                color: rgba(99, 99, 99, 1);
+                                text-shadow: 1px 0px 0px rgba(255, 255, 255,1);
+                                font-weight: bold;
+                            }
+                        section#modsUser > article section > aside > #tab-container > #Stats,
+                        section#modsUser > article section > aside > #tab-container > #Msgs,
+                        section#modsUser > article section > aside > #tab-container > #Comms {
+                            display: table;
+                            width: 100%;
+                        }
+                            section#modsUser > article section > aside > #tab-container > #Stats > .name,
+                            section#modsUser > article section > aside > #tab-container > #Stats > .value,
+                            section#modsUser > article section > aside > #tab-container > #Msgs > .name,
+                            section#modsUser > article section > aside > #tab-container > #Msgs > .value,
+                            section#modsUser > article section > aside > #tab-container > #Comms > .name,
+                            section#modsUser > article section > aside > #tab-container > #Comms > .value {
+                                    display: table-cell;
+                                    width: 75%;
+                            }
+                            section#modsUser > article section > aside > #tab-container > #Stats > .value,
+                            section#modsUser > article section > aside > #tab-container > #Msgs > .value,
+                            section#modsUser > article section > aside > #tab-container > #Comms > .value {
+                                width: 25%;
+                            }
+                                section#modsUser > article section > aside > #tab-container > #Stats > .name span,
+                                section#modsUser > article section > aside > #tab-container > #Stats > .value span,
+                                section#modsUser > article section > aside > #tab-container > #Msgs > .name span,
+                                section#modsUser > article section > aside > #tab-container > #Msgs > .value span,
+                                section#modsUser > article section > aside > #tab-container > #Comms > .name span,
+                                section#modsUser > article section > aside > #tab-container > #Comms > .value span {
+                                    display: block;
+                                    line-height: 35px;
+                                    background: rgb(242,242,242);
+                                    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2YyZjJmMiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlNWU1ZTUiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+                                    background: -moz-linear-gradient(top, rgba(242,242,242,1) 0%, rgba(229,229,229,1) 100%);
+                                    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(242,242,242,1)), color-stop(100%,rgba(229,229,229,1)));
+                                    background: -webkit-linear-gradient(top, rgba(242,242,242,1) 0%,rgba(229,229,229,1) 100%);
+                                    background: -o-linear-gradient(top, rgba(242,242,242,1) 0%,rgba(229,229,229,1) 100%);
+                                    background: -ms-linear-gradient(top, rgba(242,242,242,1) 0%,rgba(229,229,229,1) 100%);
+                                    background: linear-gradient(to bottom, rgba(242,242,242,1) 0%,rgba(229,229,229,1) 100%);
+                                    /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f2f2', endColorstr='#e5e5e5',GradientType=0 );*/
+                                        -webkit-transition: all .25s linear;
+                                           -moz-transition: all .25s linear;
+                                            -ms-transition: all .25s linear;
+                                             -o-transition: all .25s linear;
+                                                transition: all .25s linear;
+                                }
+                                section#modsUser > article section > aside > #tab-container > #Stats > .name span,
+                                section#modsUser > article section > aside > #tab-container > #Msgs > .name span,
+                                section#modsUser > article section > aside > #tab-container > #Comms > .name span {
+                                    font-size: 100%;
+                                    color: rgba(36, 36, 36, 1);
+                                    padding-left: 5px;
+                                    border-right: 1px solid rgba(205, 205, 205, 1);
+                                    border-bottom: 1px solid rgba(205, 205, 205, 1);
+                                }
+                                section#modsUser > article section > aside > #tab-container > #Stats > .value span,
+                                section#modsUser > article section > aside > #tab-container > #Msgs > .value span,
+                                section#modsUser > article section > aside > #tab-container > #Comms > .value span {
+                                    color: rgba(52, 137, 173, 1);
+                                    text-align: center;
+                                    border-bottom: 1px solid rgba(205, 205, 205, 1);
+                                    font-weight: bold;
+                                }
+                                    section#modsUser > article section > aside > #tab-container > #Stats > .name span a,
+                                    section#modsUser > article section > aside > #tab-container > #Msgs > .name span a,
+                                    section#modsUser > article section > aside > #tab-container > #Comms > .name span a {
+                                        display: block;
+                                        color: rgba(36, 36, 36, 1);
+                                        text-decoration: none;
+                                    }
+                                    section#modsUser > article section > aside > #tab-container > #Stats > .name span a,
+                                    section#modsUser > article section > aside > #tab-container > #Msgs > .name span a,
+                                    section#modsUser > article section > aside > #tab-container > #Comms > .name span a {
+                                        -webkit-transition: all .25s linear;
+                                           -moz-transition: all .25s linear;
+                                            -ms-transition: all .25s linear;
+                                             -o-transition: all .25s linear;
+                                                transition: all .25s linear;
+                                    }
+                                    section#modsUser > article section > aside > #tab-container > #Stats > .name span:hover a,
+                                    section#modsUser > article section > aside > #tab-container > #Msgs > .name span:hover a,
+                                    section#modsUser > article section > aside > #tab-container > #Comms > .name span:hover a {
+                                        background: rgba(255, 255, 255, 0.15);
+                                        color: rgba(38, 136, 188, 1);
+                                    }
+
+    section#modsUser input {
+        height: 17px;
+        border: 1px solid rgba(204, 204, 204, 1);
+        background: rgba(239, 238, 238, 1);
+        padding: 1px 5px;
+        width: 100%;
+        color: rgba(26, 26, 26, 1);
+    }
+    @media screen and (max-width: 1150px) {
+        section#modsUser > article section > #usersContent {
+            display: block;
+            width: 100%;
+        }
+        section#modsUser > article section > aside {
+            display: block;
+            width: 100%;
+            padding: 20px;
+        }
+    }
+    @media screen and (max-width: 950px) {
+        section#modsUser > article section > #usersContent > .column > div {
+            display: block;
+            width: 100%;
+        }
+        section#modsUser > article section > #usersContent > .full > ul:nth-child(2) {
+            display: block;
+            width: 100%;
+        }
+        section#modsUser > article section > #usersContent > .full > ul:first-child {
+            display: block;
+            width: 100%;
+        }
+        section#modsUser > article section > #usersContent {
+            padding: 10px 5px;
+        }
+        section#modsUser > article section > aside {
+            display: block;
+            padding: 5px;
+        }
+        section#modsUser > article section > #usersContent > .column > div form > .contentInfos {
+            width: 100%;
+        }
+    }
+    @media screen and (max-width: 500px) {
+        section#modsUser > aside {
+            width: 170px;
+        }
+        section#modsUser > article {
+            margin-left: 170px;
+            width: -moz-calc(100% - 183px);
+            width: -webkit-calc(100% - 183px);
+            width: -o-calc(100% - 183px);
+            width: calc(100% - 183px);
+            padding: 0 5px;
+        }
+    }
+
