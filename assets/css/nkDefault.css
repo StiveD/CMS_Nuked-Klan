@@ -1,3 +1,6 @@
+.nkDisplayNone {
+    display: none !important;
+}
 .nkDebug{
     background:#fff;
     color:#000;

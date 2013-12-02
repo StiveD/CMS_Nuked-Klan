@@ -24,13 +24,10 @@ nkTranslate('modules/User/lang/'.$GLOBALS['language'].'.lang.php');
                             <span>Stive</span>
                         </li>
                         <li>
-                            <a class="icon-home jqueryLinksSwtich" data-icon="icon-home" data-title="Accueil" href="#Home">Accueil</a>
+                            <a class="icon-home jqueryLinksSwtich" data-icon="icon-home" data-title="Accueil" href="#home">Accueil</a>
                         </li>
                         <li>
-                            <a class="icon-profile jqueryLinksSwtich" data-icon="icon-profile" data-title="Mon Compte" href="#MyAccount">Mon Compte</a>
-                        </li>
-                        <li>
-                            <a class="icon-envelope jqueryLinksSwtich" data-icon="icon-envelope" data-title="Messagerie Priv&eacute;" href="#PrivateMsg">Messagerie Priv&eacute;
+                            <a class="icon-envelope jqueryLinksSwtich" data-icon="icon-envelope" data-title="Messagerie Priv&eacute;" href="#privateMsg">Messagerie Priv&eacute;
                                 <span>14</span>
                             </a>
                             <ul id="userbox">
@@ -84,7 +81,7 @@ nkTranslate('modules/User/lang/'.$GLOBALS['language'].'.lang.php');
                     </ul>
                 </nav>
                 <section id="jquerySections">
-                    <?php Home(); ?>
+                    <?php home(); ?>
                 </section>
             </article>
 
@@ -94,13 +91,14 @@ nkTranslate('modules/User/lang/'.$GLOBALS['language'].'.lang.php');
             redirect("index.php?file=User&op=login_screen", 0);
         endif;
     }
-    function Home () {
+    function home () {
         if (!nkHasVisitor()):
             // ->   variables
             $arrayListLabel   = array();
             $arrayListSocial  = array();
             $arrayListGaming  = array();
             $arrayAllDataUser = array();
+            $nameGroups       = array();
             $tmpDivSocial     = '';
             $tmpDivMaterial   = '';
             $tmpDivPref       = '';
@@ -110,6 +108,11 @@ nkTranslate('modules/User/lang/'.$GLOBALS['language'].'.lang.php');
             $tmpCommentValue  = '';
             $tmpStatsName     = '';
             $tmpStatsValue    = '';
+            $tmpForumName     = '';
+            $tmpForumValue    = '';
+            $tmpTitleGroup    = '';
+            $tmpClassForum    = '';
+            $tmpClassComment  = '';
             // ->   array pref
             $arrayPref          =   array(
                                         'first_name',
@@ -129,7 +132,7 @@ nkTranslate('modules/User/lang/'.$GLOBALS['language'].'.lang.php');
                                         'date_of_arrival',
                                         'ip',
                                         'administrators',
-                                        'friend_numberS' ,
+                                        'friend_numbers' ,
                                         'groups',
                                         'numbers_connect',
                                         'numbers_forum',
@@ -143,10 +146,12 @@ nkTranslate('modules/User/lang/'.$GLOBALS['language'].'.lang.php');
                                             email AS public_mail,
                                             url AS website,
                                             pass AS password,
-                                            date AS date_of_arrival,
+                                            UT.date AS date_of_arrival,
                                             avatar,
                                             signature,
                                             country,
+                                            ids_group AS groups,
+                                            ip,
                                             prenom AS first_name,
                                             age AS date_of_birth,
                                             sexe AS sex,
@@ -162,13 +167,27 @@ nkTranslate('modules/User/lang/'.$GLOBALS['language'].'.lang.php');
                                             souris AS mouse,
                                             clavier AS keyboard,
                                             connexion AS connection,
-                                            system AS os
+                                            system AS os,
+                                            count(ST.id) AS numbers_sugg
                                     FROM    '.USERS_TABLE.' AS UT
                                     LEFT    OUTER JOIN '.USERS_DETAIL_TABLE.' AS UDT ON UT.id = UDT.user_id
-                                    WHERE   id = "'.$GLOBALS['user']['id'].'" ';
+                                    LEFT    OUTER JOIN '.SUGGEST_TABLE.' AS ST ON UT.id = ST.user_id
+                                    WHERE   UT.id = "'.$GLOBALS['user']['id'].'" ';
             $dbeUser            =   mysql_query($dbsUser);
             unset($dbsUser);
             $arrayAllDataUser   =   mysql_fetch_assoc($dbeUser);
+            $arrayAllDataUser['date_of_arrival_large'] = nkDate($arrayAllDataUser['date_of_arrival']);
+            $arrayAllDataUser['date_of_arrival_small'] = nkDate($arrayAllDataUser['date_of_arrival']);
+            // ->   sql select infos groups
+            $dbsGroup = ' SELECT id, nameGroup, color
+                          FROM '.GROUPS_TABLE.' ';
+            $dbeGroup = mysql_query($dbsGroup) or die(mysql_error());
+            while ($data = mysql_fetch_assoc($dbeGroup)) {
+                $data['nameGroup'] = (isset($data['nameGroup'])) ? constant($data['nameGroup']) : $data['nameGroup'];
+                $nameGroups[$data['id']] =  array('name'  => $data['nameGroup'],
+                                                  'color' => $data['color']
+                                                 );
+            }
             // ->   sql select label (on-off)
             $dbsLabel       = ' SELECT name, status
                                 FROM '.$GLOBALS['nuked']['prefix'].'_users_label ';
@@ -179,6 +198,7 @@ nkTranslate('modules/User/lang/'.$GLOBALS['language'].'.lang.php');
             }
             // ->   infos general
             foreach ($arrayInfosGen as $key) {
+                $arrayAllDataUser['date_of_arrival'] = $arrayAllDataUser['date_of_arrival_large'];
                 $arrayAllDataUser[$key] = (isset($arrayAllDataUser[$key])) ? $arrayAllDataUser[$key] : POA;
                 $arrayAllDataUser[$key] = (!empty($arrayAllDataUser[$key])) ? $arrayAllDataUser[$key] : POA;
                 $tmpDivGen .= ' <div><span>'.constant(strtoupper($key)).'</span><span>'.$arrayAllDataUser[$key].'</span></div> '."\n";
@@ -260,8 +280,9 @@ nkTranslate('modules/User/lang/'.$GLOBALS['language'].'.lang.php');
                                     WHERE autor_id = "'.$GLOBALS['user']['id'].'"
                                     ORDER BY id DESC LIMIT 0, 10 ';
             $dbeCommentLast     =   mysql_query($dbsCommentLast);
+            $arrayAllDataUser['numbers_comment'] = mysql_num_rows($dbeCommentLast);
             unset($dbsCommentLast);
-            while ($data        = mysql_fetch_assoc($dbeCommentLast)) {
+            while ($data = mysql_fetch_assoc($dbeCommentLast)) {
                 $data['title'] = (empty($data['title'])) ?  $data['module'] : $data['title'];
                 $tmpCommentName .= '    <span>
                                             <a href="'.$data['id'].'" title="'.$data['title'].'">
@@ -274,17 +295,61 @@ nkTranslate('modules/User/lang/'.$GLOBALS['language'].'.lang.php');
                 $tmpCommentName .= '<span>
                                         '.NO_COMMENT_IN_DATABASE.'
                                     </span> '."\n";
+                $tmpClassComment = 'nkDisplayNone';
+            }
+            // ->   sql forum
+            $dbsForumLast     = '   SELECT id, titre AS title, date, thread_id, forum_id
+                                    FROM '.FORUM_MESSAGES_TABLE.'
+                                    WHERE auteur_id = "'.$GLOBALS['user']['id'].'"
+                                    ORDER BY id DESC LIMIT 0, 10 ';
+            $dbeForumLast     =   mysql_query($dbsForumLast);
+            $arrayAllDataUser['numbers_forum'] = mysql_num_rows($dbeForumLast);
+            unset($dbsForumLast);
+            while ($data = mysql_fetch_assoc($dbeForumLast)) {
+                $data['title'] = (empty($data['title'])) ?  $data['module'] : $data['title'];
+                $tmpForumName .= '    <span>
+                                            <a href="'.$data['id'].'" title="'.$data['title'].'">
+                                                '.$data['title'].'
+                                            </a>
+                                        </span> '."\n";
+                $tmpForumValue .= '   <span>'.nkDate($data['date'], true).'></span> '."\n";
+            }
+            if(empty($tmpForumName)) {
+                $tmpForumName .= '  <span>
+                                        '.NO_POST_IN_DATABASE.'
+                                    </span> '."\n";
+                $tmpClassForum = 'nkDisplayNone';
             }
             // ->   sql stats
             foreach ($arrayStats as $key) {
+                $arrayAllDataUser['date_of_arrival'] = $arrayAllDataUser['date_of_arrival_small'];
                 $name = (defined(strtoupper($key))) ? constant(strtoupper($key)) : $key;
                 $arrayAllDataUser[$key] = (isset($arrayAllDataUser[$key])) ? $arrayAllDataUser[$key] : UNKNOWN;
                 $tmpStatsName .= '  <span>'.$name.'</span> '."\n";
-                $tmpStatsValue .= ' <span>'.$arrayAllDataUser[$key].'</span> '."\n";
+                if ($key == 'ip') {
+                    $tmpStatsValue .= ' <a class="tipE" href="#" original-title="'.$arrayAllDataUser[$key].'"><span class="icon-cog"></span></a> '."\n";
+                }
+                else if ($key == 'administrators') {
+                    if (nkHasAdmin()) {
+                        $tmpStatsValue .= ' <span>'.YES.'</span> '."\n";
+                    }
+                    else {
+                        $tmpStatsValue .= ' <span>'.NO.'</span> '."\n";
+                    }
+                }
+                else if ($key == 'groups') {
+                    //$nameGroups
+                    $tmpGroups = explode('|', $arrayAllDataUser[$key]);
+                    foreach ($tmpGroups as $key) {
+                        $tmpTitleGroup .= $nameGroups[$key]['name'].'<br> '."\n";
+                    }
+                    $tmpStatsValue .= ' <a class="tipE" href="#" original-title="'.$tmpTitleGroup.'"><span class="icon-cog"></span></a> '."\n";
+                } else {
+                    $tmpStatsValue .= ' <span>'.$arrayAllDataUser[$key].'</span> '."\n";
+                }
             }
 ?>
                     <div id="usersContent">
-
                         <div class="full">
                             <ul>
                                 <li>
@@ -303,7 +368,7 @@ nkTranslate('modules/User/lang/'.$GLOBALS['language'].'.lang.php');
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="tipW" href="#" title="Preference">
+                                    <a class="tipW jqueryLinksSwtich" title="Option du compte" data-icon="icon-cog" data-title="Option du compte" href="#accountOption">
                                         <i class="icon-cog"></i>
                                     </a>
                                 </li>
@@ -349,7 +414,7 @@ nkTranslate('modules/User/lang/'.$GLOBALS['language'].'.lang.php');
                                 if ($arrayListLabel['HARDWARE_CONFIG'] == 'on'):
 ?>
                                 <form id="config">
-                                    <h3>Configuration Materiel</h3>
+                                    <h3><?php echo HARDWARE_CONFIG; ?></h3>
                                     <div class="contentInfos">
                                         <?php echo $tmpDivMaterial; ?>
                                     </div>
@@ -377,7 +442,7 @@ nkTranslate('modules/User/lang/'.$GLOBALS['language'].'.lang.php');
                                 if ($arrayListLabel['GAMING'] == 'on'):
 ?>
                                     <form id="gaming">
-                                        <h3>Gaming / Esport</h3>
+                                        <h3><?php echo GAMING; ?></h3>
                                         <div class="contentInfos">
                                             <?php echo $tmpDivGaming; ?>
                                         </div>
@@ -408,25 +473,17 @@ nkTranslate('modules/User/lang/'.$GLOBALS['language'].'.lang.php');
                             </div>
                             <div id="Msgs">
                                 <div class="name">
-                                    <span><a href="#" title="#">labla bla</a></span>
-                                    <span><a href="#" title="#">labla bla</a></span>
-                                    <span><a href="#" title="#">labla bla</a></span>
-                                    <span><a href="#" title="#">labla bla</a></span>
-                                    <span><a href="#" title="#">labla bla</a></span>
+                                    <?php echo $tmpForumName; ?>
                                 </div>
-                                <div class="value">
-                                    <span>14/08/1987</span>
-                                    <span>27/11/2013</span>
-                                    <span>27/11/2013</span>
-                                    <span>27/11/2013</span>
-                                    <span>27/11/2013</span>
+                                <div class="value <?php echo $tmpClassForum; ?>">
+                                    <?php echo $tmpForumValue; ?>
                                 </div>
                             </div>
                             <div id="Comms">
                                 <div class="name">
                                     <?php echo $tmpCommentName; ?>
                                 </div>
-                                <div class="value">
+                                <div class="value <?php echo $tmpClassComment; ?>">
                                     <?php echo $tmpCommentValue; ?>
                                 </div>
                             </div>
@@ -438,6 +495,165 @@ nkTranslate('modules/User/lang/'.$GLOBALS['language'].'.lang.php');
         endif;
     }
 
+    function accountOption () {
+        $tmpOnglet = '';
+        // ->   sql select label (on-off)
+        $dbsLabel       = ' SELECT name, status
+                            FROM '.$GLOBALS['nuked']['prefix'].'_users_label ';
+        $dbeLabel       =   mysql_query($dbsLabel);
+        unset($dbsLabel);
+        while ($data        = mysql_fetch_assoc($dbeLabel)) {
+            $data['name'] = (defined(strtoupper($data['name'] ))) ? constant(strtoupper($data['name'] )) : $data['name'] ;
+            $tmpOnglet .= ' <div>
+                                <span>
+                                    <input type="checkbox" id="'.$data['name'].'" class="regular-checkbox" />
+                                    <label for="'.$data['name'].'">
+                                </span>
+                                <p>'.$data['name'].'</p>
+                            </div> '."\n";
+        }
+?>
+                    <div id="usersContent">
+                        <div class="full">
+                            <ul>
+                                <li>
+                                    <a class="tipE" href="#" title="Menu">
+                                        <i class="icon-menu"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="tipS" href="#" title="Template">
+                                        <i class="icon-insert-template"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="tipN" href="#" title="User">
+                                        <i class="icon-users"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="tipW jqueryLinksSwtich" title="Option du compte" data-icon="icon-cog" data-title="Option du compte" href="#accountOption">
+                                        <i class="icon-cog"></i>
+                                    </a>
+                                </li>
+                            </ul>
+
+                            <div class="icon-info"><?php echo DD_CLICK_TO_EDIT; ?></div>
+                        </div>
+
+                        <div class="column">
+                            <div>
+                                <form id="config">
+                                    <h3>Option du compte</h3>
+                                    <div class="contentInfosSubpage">
+                                        <div>
+                                            <span>
+                                                <input type="checkbox" id="checkbox-1-1" class="regular-checkbox" />
+                                                <label for="checkbox-1-1">
+                                            </span>
+                                            <span>Garder mon courriel privé</span>
+                                        </div>
+                                        <div>
+                                            <span>
+                                                <input type="checkbox" id="checkbox-1-2" class="regular-checkbox" />
+                                                <label for="checkbox-1-2">
+                                            </span>
+                                            <span>Mode invisible</span>
+                                            <p>Le mode invisible vous permet de naviguer sur le forum sans apparaitre</p>
+                                            <p>dans la liste des utilisateurs connectés.</p>
+                                            <p>Cependant vous resterais visible pour les administrateurs et modérateurs.</p>
+                                        </div>
+                                    </div>
+                                </form>
+                                <form id="config">
+                                    <h3>Messagerie privé</h3>
+                                    <div class="contentInfosSubpage">
+                                        <div>
+                                            <span>
+                                                <input type="checkbox" id="checkbox-1-2" class="regular-checkbox" />
+                                                <label for="checkbox-1-2">
+                                            </span>
+                                            <span>Messagerie privé</span>
+                                            <p>Active ou désactive la messagerie privé.</p>
+                                        </div>
+                                        <div>
+                                            <span>
+                                                <input type="checkbox" id="checkbox-1-2" class="regular-checkbox" />
+                                                <label for="checkbox-1-2">
+                                            </span>
+                                            <span>Messagerie privé restreint</span>
+                                            <p>Recevoir uniquement des messages privés de mes amis et des modérateur.</p>
+                                        </div>
+                                        <div>
+                                            <span>
+                                                <input type="checkbox" id="checkbox-1-2" class="regular-checkbox" />
+                                                <label for="checkbox-1-2">
+                                            </span>
+                                            <span>Notifications nouveaux messages privés</span>
+                                            <p>Le site peut vous envoyer un message sur votre adresse email afin de vous</p>
+                                            <p>informer losque quelqu'un vous à envoyé un message privé</p>
+                                        </div>
+                                        <div>
+                                            <span>
+                                                <input type="checkbox" id="checkbox-1-2" class="regular-checkbox" />
+                                                <label for="checkbox-1-2">
+                                            </span>
+                                            <span>Supprimer automatiquement les messages</span>
+                                            <p>Les messages seront supprimer automatiquement au bout de 90 jours</p>
+                                        </div>
+                                    </div>
+                                </form>
+                                <form id="config">
+                                    <h3>Informations personnelles</h3>
+                                    <div class="contentInfosSubpage">
+                                        <div>
+                                            <span>
+                                                <input type="checkbox" id="checkbox-1-1" class="regular-checkbox" />
+                                                <label for="checkbox-1-1">
+                                            </span>
+                                            <span>Visibilité profil</span>
+                                            <p>Afficher les informations de votre profil uniquement à vos amis</p>
+                                        </div>
+                                        <div>
+                                            <span>
+                                                <input type="checkbox" id="checkbox-1-2" class="regular-checkbox" />
+                                                <label for="checkbox-1-2">
+                                            </span>
+                                            <span>Profil restreint</span>
+                                            <p>Afficher les informations de votre profil uniquement à vos amis</p>
+                                            <p>et aux utilisateurs enregistrés</p>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div>
+                                <form id="config">
+                                    <h3>Onglets</h3>
+                                    <div class="contentInfosSubpage">
+                                        <div>
+                                            <span>
+                                                <p>Décidez quels onglets vous voulez faire apparaître quand un utilisateur</p>
+                                                <p>consulté votre compte</p>
+                                                <p>Les onglets que vous avez décocher resteront visibles quand vous editez</p>
+                                                <p>votre compte</p>
+                                            </span>
+                                        </div>
+                                        <?php echo $tmpOnglet; ?>
+                                    </div>
+                                </form>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+<?php
+    }
+
+    function privateMsg () {
+
+    }
 
     // -> backward compatibility for Nk < 1.8
     if (!array_key_exists('nuked_nude', $_REQUEST)) { opentable(); }
@@ -447,8 +663,16 @@ nkTranslate('modules/User/lang/'.$GLOBALS['language'].'.lang.php');
              index();
              break;
 
-        case"Home":
-            Home();
+        case"home":
+            home();
+            break;
+
+        case"accountOption":
+            accountOption();
+            break;
+
+        case"privateMsg":
+            privateMsg();
             break;
 
         default:

@@ -77,38 +77,56 @@ $(document).ready(function(){
     function modsUsers() {
         closeModalFull();
         // -> Variables
-        animateHoverListFriends = false;
+        animate = false;
         // -> tabs
         $('#tab-container').easytabs({
             animationSpeed: 300,
             collapsible: false,
             tabActiveClass: "clicked"
         });
-        $('.jqueryLinksSwtich').each(function() {
-            $(this).click(function(event) {
-                event.preventDefault();
-                // -> Variables
-                var value  = $(this).attr('href').replace('#','');
-                var getUrl = 'index.php?file=User&nuked_nude=index&op=' + value;
-                var title  = $(this).data('title');
-                var icon   = $(this).data('icon');
-                $('#jquerySections').fadeOut(450, function() {
-                    // -> ajax
-                    $.ajax({
-                        type: 'GET',
-                        url: getUrl,
-                        // -> success
-                        success:function(data) {
-                            $('#jquerySections').empty().append(data).fadeIn(450);
-                            modsUsers();
-                            tooltips();
-                        } // -> end success
-                    }); // -> end ajax
-                });
-                $('#jqueryTitle').empty().append(title);
-                $('#jqueryIcon').removeAttr('class').attr('class', icon);
+        /* Remplace span to input */
+        $('#modsUser form .contentInfos > div').dblclick(function() {
+            var i     = 0;
+            var value = $(this).data('value');
+            var name  = $(this).data('name');
+
+            $('#modsUser form').find('input').each(function() {
+                i++;
             });
+
+            $(this).children().hide(1000);
+            $(this).append('<input type="text" value="test">');
         });
+
+            //    $('.jqueryLinksSwtich').one('click', function(event) {
+                $('#modsUser').on('click', '.jqueryLinksSwtich', function(event) {
+                //$('#jqueryNav > li > a').one('click', function(event) {
+                    event.preventDefault();
+                    // -> Variables
+                    var value  = $(this).attr('href').replace('#','');
+                    var getUrl = 'index.php?file=User&nuked_nude=index&op=' + value;
+                    var title  = $(this).data('title');
+                    var icon   = $(this).data('icon');
+                    $('#jquerySections').fadeOut(450, function() {
+                        // -> ajax
+                        $.ajax({
+                            type: 'GET',
+                            url: getUrl,
+                            beforeSend:function() {
+                            },
+                            // -> success
+                            success:function(data) {
+                                $('#jquerySections').empty().append(data).fadeIn(450);
+                                modsUsers();
+                                tooltips();
+                            }, // -> end success
+                            complete:function() {
+                            }
+                        }); // -> end ajax
+                    });
+                    $('#jqueryTitle').empty().append(title);
+                    $('#jqueryIcon').removeAttr('class').attr('class', icon);
+                });
     }
     // -> Initialize tooltips
     function tooltips() {

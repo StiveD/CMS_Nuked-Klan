@@ -18,17 +18,20 @@ $arrayModLang = array(
     #####################################
     'POA'                    => 'Non renseign&eacute;',
     'UNKNOWN'                => 'Inconnu',
-    'DD_CLICK_TO_EDIT'       => 'Double click on elements to edit',
+    'DD_CLICK_TO_EDIT'       => 'Double cliquer sur un &eacute;l&eacute;ments pour l\'&eacute;diter',
     #####################################
     # USER - function Home H3
     #####################################
     'HISTORY_NICKNAME_USED'  => 'Historique pseudo(s) utilis&eacute;(s)',
     'NO_OLD_NICKNAME'        => 'Vous n&rsquo;avez utilis&eacute; aucun autre pseudo.',
-    'NO_COMMENT_IN_DATABASE' => 'Aucun commentaire dans la base de données',
+    'NO_COMMENT_IN_DATABASE' => 'Aucun commentaire dans la base de donn&eacute;es',
+    'NO_POST_IN_DATABASE'    => 'Aucun message dans la base de donn&eacute;es',
     #####################################
     # USER - function Home H3
     #####################################
     'SOCIAL_NETWORKS'        => 'R&eacute;seaux Sociaux',
+    'GAMING'                 => 'Gaming / Esport',
+    'HARDWARE_CONFIG'        => 'Configuration Materiel',
     #####################################
     # USER - function Pref General
     #####################################
@@ -40,7 +43,7 @@ $arrayModLang = array(
     #####################################
     # USER - function Home Pref
     #####################################
-    'FIRST_NAME'             => 'Prénom',
+    'FIRST_NAME'             => 'Pr&eacute;nom',
     'DATE_OF_BIRTH'          => 'Date de naissance',
     'GENDER'                 => 'Sexe',
     'COUNTRY'                => 'Pays',
