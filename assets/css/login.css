@@ -1,0 +1,335 @@
+/* -> JQUERY UI MODAL LOGIN */
+.nkFloatRight {
+    float: right;
+}
+.ui-widget-overlay {
+    background: rgba(0,0,0,0.75);
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99995;
+}
+
+.ui-dialog {
+    background-clip: padding-box;
+    background-color: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 6px 6px 6px 6px;
+    outline: 0 none;
+    position: fixed !important;
+    border-bottom-color: rgba(0, 0, 0, 0.4);
+    border-radius: 0 0 0 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+    z-index: 1050005;
+    box-shadow: -30px 30px 50px rgba(0, 0, 0, 0.32);
+}
+.ui-dialog-titlebar {
+    background-color: #333333;
+    padding: 0 0 0 15px;
+    border-bottom: 1px solid rgb(187, 187, 187);
+}
+.ui-dialog-title {
+    display: inline-block;
+    color: #FFFFFF;
+    font-size: 15px;
+    width: -moz-calc(100% - 20px); /* correction du padding */
+    width: -webkit-calc(100% - 20px);
+    width: calc(100% - 20px);
+    margin: 10px 0;
+}
+#nkDialog {
+    padding: 15px;
+    border: 1px solid #E5E5E5;
+    border-left: 0; border-right: 0;
+    overflow: hidden;
+    display: none;
+}
+.ui-dialog-buttonpane {
+    margin: 10px auto !important;
+    text-align: right !important;
+    padding: 0 30px !important;
+}
+
+/*** -> FORM */
+#nkDialog > form div {
+    width: 100%;
+    margin: 5px 0;
+}
+#nkDialog > form#formUsers div span {
+    display: inline-block;
+    *display: inline; zoom: 1; /* ie6 ie7 hack */
+    font-size: 13px;
+    color: rgb(85, 85, 85);
+    padding: 6px;
+    font-weight: normal;
+    vertical-align: top;
+    background-color: rgb(243, 243, 243);
+    border: 1px solid rgb(204, 204, 204);
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
+    width: 12px;
+    height: 16px;
+    border-right: 0;
+    text-align: center;
+}
+#nkDialog > form#formUsers div span#disclaimer {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid rgb(204, 204, 204);
+    text-align: inherit;
+    padding: 5px 0;
+}
+#nkDialog > form#formUsers div span#disclaimer p {
+    margin: 5px 10px;
+}
+#nkDialog > form#formUsers div span.icon:after {
+    background: url(../../assets/images/ModUserSpriteIcons.png) no-repeat;
+    content: '';
+    height: 12px;
+    left: 17px;
+    margin-top: 2px;
+    position: absolute;
+    width: 12px;
+}
+#nkDialog > form#formUsers div span.user:after {
+    background-position: 0 0;
+}
+#nkDialog > form#formUsers div span.edit:after {
+    background-position: -14px 0;
+}
+#nkDialog > form#formUsers div span.mail:after {
+    background-position: -28px 0;
+}
+#nkDialog > form#formUsers div span.password:after {
+    background-position: -42px 0;
+}
+#nkDialog > form#formUsers div input[type=text],
+#nkDialog > form#formUsers div input[type=password],
+#nkDialog > form#formUsers div input[type=email],
+#nkDialog > form#formUsers div select {
+    display: inline-block;
+    *display: inline; zoom: 1; /* ie6 ie7 hack */
+    color: rgba(51, 51, 51, 1);
+    padding: 6px;
+    font-weight: normal;
+    vertical-align: top;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(204, 204, 204);
+    border-radius: 2px;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
+    width: -moz-calc(100% - 39px );
+    width: -webkit-calc(100% - 39px);
+    width: calc(100% - 39px);
+    margin-left: -4px;
+}
+#nkInputRequired input,
+#nkInputRequired span,
+#nkInputOptional input,
+#nkInputOptional span {
+    margin: 3px 0 3px -2px;
+}
+
+#nkDialog > form#formUsers div input[type=text]:disabled,
+#nkDialog > form#formUsers div input[type=password]:disabled,
+#nkDialog > form#formUsers div input[type=email]:disabled,
+#nkDialog > form#formUsers div select:disabled {
+    background-color: #DDDDDD;
+    border-color: #BBBBBB;
+    box-shadow: none;
+}
+
+select.ui-wizard-content {
+    margin-bottom: 0 !important;
+    margin-left: -2px;
+    margin-right: 0 !important;
+    margin-top: 3px;
+    padding: 5px 6px !important;
+    width: 385px !important;
+}
+label.error {
+    display: block;
+}
+.nkColor {
+    color: red;
+    text-align: right;
+    padding-right: 10px;
+    width: 400px !important;
+}
+.nkColor input {
+    vertical-align: middle;
+    cursor: pointer;
+}
+/* UI BUTTON */
+
+.ui-button,
+.navigation_button {
+    -moz-user-select: none;
+    background-color: #F3F3F3;
+    background-image: none;
+    border: 1px solid rgba(0, 0, 0, 0.13);
+    border-radius: 2px;
+    cursor: pointer;
+    filter: none;
+    font-size: 13px;
+    font-weight: normal;
+    padding: 6px 13px;
+    position: relative;
+    z-index: 1;
+    margin: 0 5px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+    color: #FFFFFF;
+    text-shadow: 0 1px 0 #000000;
+    transition: background 500ms ease-in 0s;
+}
+.ui-button:hover,
+.navigation_button {
+    background-color: #F8F8F8;
+    border-color: rgba(0, 0, 0, 0.13);
+}
+.ui-button-blue {
+    background-color: #1C5EA0;
+    border-color: #064792;
+    color: #FFFFFF;
+    float: right;
+}
+.ui-button-blue:hover {
+    background-color: #064792;
+}
+
+/* */
+form > fieldset {
+    border:1px solid #bbb;
+    padding:10px;
+    position:relative;
+    margin-bottom:10px;
+    background: rgba(221, 221, 221, 1);
+}
+form > fieldset > legend {
+    font-size:1.1em;
+    padding:.4em .8em;
+    background:#fff;
+    border:1px solid #bbb;
+}
+form > fieldset > .textarea {
+    overflow-x : hidden;
+    overflow-y : auto;
+    padding: 0 0 5px 5px;
+    height: auto;
+    max-height: 200px;
+}
+
+/* Button Close */
+
+.ui-dialog-titlebar-close {
+    font-family: inherit;
+    display: inline-block;
+    color: #000000;
+    float: right;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 26px;
+    opacity: 0.3;
+    text-shadow: 0 1px 0 #FFFFFF;
+    cursor: pointer;
+    border: 0 !important;
+    background-color: #333333;
+    padding: 5px 0 !important;
+    position: absolute !important;
+    width: 40px;
+    text-align: center;
+    margin-left: -20px;
+    box-shadow: none;
+}
+.ui-dialog-titlebar-close:hover {
+    opacity: 0.8;
+    background-color: #333333;
+}
+.ui-dialog-titlebar-close:before{
+    content:"x";
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 20px;
+}
+.ui-dialog-titlebar-close span{
+    display:none;
+}
+
+
+input[type=submit]:disabled {
+    color: rgb(158, 112, 60);
+    background-color: rgb(246, 237, 186);
+    border: 1px solid rgb(158, 112, 60);
+    text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.5);
+}
+
+input[type=submit]:disabled.disabledSuccess {
+    color: rgb(70, 136, 71);
+    background-color: rgb(223, 240, 216);
+    border-color: rgb(70, 136, 106);
+}
+input[type=submit]:disabled.disabledError {
+    color: rgb(185, 74, 72);
+    background-color: rgb(242, 222, 222);
+    border-color: rgb(185, 74, 72);
+}
+#formUsers label > i {
+    vertical-align: middle;
+}
+
+#formUsers label {
+    display: inline-block;
+    line-height: 19px;
+}
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+    left: -9999px;
+    position: absolute;
+}
+[type="checkbox"]:not(:checked) + label, [type="checkbox"]:checked + label {
+    cursor: pointer;
+    padding-left: 25px;
+    position: relative;
+}
+[type="checkbox"]:not(:checked) + label:before, [type="checkbox"]:checked + label:before {
+    background: none repeat scroll 0 0 #F8F8F8;
+    border: 1px solid #AAAAAA;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) inset;
+    content: "";
+    height: 17px;
+    left: 0;
+    position: absolute;
+    top: 2px;
+    width: 17px;
+}
+[type="checkbox"]:not(:checked) + label:after, [type="checkbox"]:checked + label:after {
+    color: #09AD7E;
+    content: attr(data-value);
+    font-size: 12px;
+    line-height: 22px;
+    left: 4px;
+    position: absolute;
+    top: 0;
+    transition: all 500ms ease 0s;
+}
+[type="checkbox"]:not(:checked) + label:after {
+    opacity: 0;
+    transform: scale(0);
+}
+[type="checkbox"]:checked + label:after {
+    opacity: 1;
+    transform: scale(1);
+}
+[type="checkbox"]:disabled:not(:checked) + label:before, [type="checkbox"]:disabled:checked + label:before {
+    background-color: #DDDDDD;
+    border-color: #BBBBBB;
+    box-shadow: none;
+}
+[type="checkbox"]:disabled:checked + label:after {
+    color: #999999;
+}
+[type="checkbox"]:disabled + label {
+    color: #AAAAAA;
+}

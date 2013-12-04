@@ -11,6 +11,34 @@ $(document).ready(function(){
     // -> Redirect link
     $('a').click(function() {
         var hrefLink = $(this).attr('href');
+        if (hrefLink == 'index.php?file=User&nuked_nude=index&op=logout') {
+            var dataHref = 'index.php?file=User&nuked_nude=index&op=formLogout';
+            $(this).attr('data-title', 'Déconnexion').attr('href', dataHref);
+            userModal(this);
+            $(this).attr('href', hrefLink);
+            return false;
+        }
+        if (hrefLink == 'index.php?file=User&nuked_nude=index&op=login') {
+            var dataHref = 'index.php?file=User&nuked_nude=index&op=formLogin';
+            $(this).attr('data-title', 'Connexion').attr('href', dataHref);
+            userModal(this);
+            $(this).attr('href', hrefLink);
+            return false;
+        }
+        if (hrefLink == 'index.php?file=User&op=reg_screen') {
+            var dataHref = 'index.php?file=User&nuked_nude=index&op=formRegister';
+            $(this).attr('data-title', 'Inscription').attr('href', dataHref);
+            userModal(this);
+            $(this).attr('href', hrefLink);
+            return false;
+        }
+        if (hrefLink == 'index.php?file=User&op=oubli_pass') {
+            var dataHref = 'index.php?file=User&nuked_nude=index&op=formLostPassword';
+            $(this).attr('data-title', 'Mot de passe Perdu').attr('href', dataHref);
+            userModal(this);
+            $(this).attr('href', hrefLink);
+            return false;
+        }
 
         if (hrefLink == 'index.php?file=User') {
             var dataHref = 'index.php?file=User&nuked_nude=index&op=index';
@@ -26,6 +54,50 @@ $(document).ready(function(){
     // -> Initialize nkDialog
     function initDivSystem(){
         $('<div id="nkDialog"></div>').prependTo('body');
+    }
+    // -> user modal
+    function userModal(dataThis) {
+        var getUrl = $(dataThis).attr('href');
+        if (getUrl == undefined) {
+            getUrl = $(dataThis).data('href');
+        }
+        var titleDialog  = 'Formulaire';
+        if ($(dataThis).data('title') != undefined) {
+            titleDialog = $(dataThis).data('title');
+        }
+        // -> ajax
+        $.ajax({
+            type: 'GET',
+            url: getUrl,
+            // -> success
+            success:function(data) {
+                $('#nkDialog').html(data);
+                // -> effect background
+                $('body').addClass('body');
+                $('html').addClass('html');
+                // -> dialog ui
+                $('#nkDialog').dialog({
+                    title: titleDialog,
+                    modal: true,
+                    draggable: false,
+                    resizable: false,
+                    width: 475,
+                    maxWidth: 600,
+                    minHeight: 0,
+                    hide: 'slideUp',
+                    show: 'slideDown',
+                    closeOnEscape: true,
+                    maxHeight: $(window).innerHeight() - 50,
+                    dialogClass: "ui-dialog-no-close"
+                }); // -> end dialog ui
+                form($('#nkDialog > form'));
+                lostPassword();
+            }, // -> end success
+            // -> error
+            error:function(){
+                $('#nkDialog').html("ERROR !");
+            } // -> end error
+        }); // -> end ajax
     }
     // -> user modal fullscreen
     function userModalFull(getUrl) {
@@ -56,7 +128,6 @@ $(document).ready(function(){
                 $('#nkDialog').html("ERROR !");
             }// -> error
         }); // -> end ajax
-
         closeModalFull();
     }
     // -> user modal close
@@ -98,35 +169,108 @@ $(document).ready(function(){
             $(this).append('<input type="text" value="test">');
         });
 
-            //    $('.jqueryLinksSwtich').one('click', function(event) {
-                $('#modsUser').on('click', '.jqueryLinksSwtich', function(event) {
-                //$('#jqueryNav > li > a').one('click', function(event) {
-                    event.preventDefault();
-                    // -> Variables
-                    var value  = $(this).attr('href').replace('#','');
-                    var getUrl = 'index.php?file=User&nuked_nude=index&op=' + value;
-                    var title  = $(this).data('title');
-                    var icon   = $(this).data('icon');
-                    $('#jquerySections').fadeOut(450, function() {
-                        // -> ajax
-                        $.ajax({
-                            type: 'GET',
-                            url: getUrl,
-                            beforeSend:function() {
-                            },
-                            // -> success
-                            success:function(data) {
-                                $('#jquerySections').empty().append(data).fadeIn(450);
-                                modsUsers();
-                                tooltips();
-                            }, // -> end success
-                            complete:function() {
-                            }
-                        }); // -> end ajax
-                    });
-                    $('#jqueryTitle').empty().append(title);
-                    $('#jqueryIcon').removeAttr('class').attr('class', icon);
-                });
+        $('#modsUser').on('click', '.jqueryLinksSwtich', function(event) {
+            event.preventDefault();
+            // -> Variables
+            var value  = $(this).attr('href').replace('#','');
+            var getUrl = 'index.php?file=User&nuked_nude=index&op=' + value;
+            var title  = $(this).data('title');
+            var icon   = $(this).data('icon');
+            $('#jquerySections').fadeOut(450, function() {
+                // -> ajax
+                $.ajax({
+                    type: 'GET',
+                    url: getUrl,
+                    beforeSend:function() {
+                    },
+                    // -> success
+                    success:function(data) {
+                        $('#jquerySections').empty().append(data).fadeIn(450);
+                        modsUsers();
+                        tooltips();
+                    }, // -> end success
+                    complete:function() {
+                    }
+                }); // -> end ajax
+            });
+            $('#jqueryTitle').empty().append(title);
+            $('#jqueryIcon').removeAttr('class').attr('class', icon);
+        });
+    }
+    function form(form) {
+        var formLogin = $('#' + $(form).attr('id'));
+        var formId    = '#' + $(form).attr('id');
+        formLogin.submit(function() {
+            $.ajax({
+                type: 'POST',
+                url: formLogin.attr('action'),
+                dataType: "json",
+                data: formLogin.serialize(),
+                success: function(dataLogin) {
+                    var errorMsg  = dataLogin.errorMsg;
+                    var bgClass   = dataLogin.bgClass;
+                    var uiButton  = $('.ui-button-blue');
+                    var wUiButton = uiButton.width();
+
+                    uiButton.animate(
+                        {
+                        width: "100%",
+                        margin: 0,
+                        },
+                        1000 )
+                    .attr('disabled', true)
+                    .val(errorMsg);
+
+                    if (dataLogin.redirectLink == '') {
+                        $(formId + ' input').attr('disabled', true);
+                        setTimeout(function() {
+                            uiButton
+                                .addClass('disabledError');
+                        }, 500);
+                        setTimeout(function() {
+                            uiButton.removeAttr('style')
+                            .attr('disabled', false)
+                            .val('Send');
+                        }, 3500);
+                        setTimeout(function() {
+                            $(formId + ' input').attr('disabled', false);
+                        }, 3550);
+                    }
+                    else {
+                        $(formId + ' input').attr('disabled', true);
+                        setTimeout(function() {
+                            uiButton
+                                .addClass('disabledSuccess')
+                                .val(dataLogin.redirectedName);
+                        }, 1700);
+                        setTimeout(function() {
+                            location.href = dataLogin.redirectLink;
+                        }, 3500);
+                    }
+                }
+            });
+            return false;
+        });
+    }
+    // -> form lost password
+    function lostPassword() {
+        $('#passLost').click(function() {
+            var nkDialog    = $('#nkDialog');
+            var heightModal = nkDialog.height();
+            var getUrl      = 'index.php?file=User&nuked_nude=index&op=formLostPassword';
+            nkDialog.css({minHeight: heightModal+'px'});
+            $('#formUsers').slideUp(500, function(){
+                $(this).delay(500).remove();
+            });
+            $.ajax({
+                type: 'GET',
+                url: getUrl,
+                success: function(data){
+                   nkDialog.animate({minHeight: '0'}, 1000).html(data);
+                   form($('#nkDialog > form'));
+                }
+            });
+        });
     }
     // -> Initialize tooltips
     function tooltips() {

@@ -14,47 +14,52 @@ if (!defined("INDEX_CHECK")) exit('You can\'t run this file alone.');
 
 function printMedias($jQuery = false){
     // Vérification des variables de request
-    if(array_key_exists('file', $_REQUEST)){
+    if (array_key_exists('file', $_REQUEST)) {
         $file = $_REQUEST['file'];
     }
-    else{
+    else {
         $file = '';
     }
 
     // Vérification de la présence de marqueur de génération
     // Permet de ne pas recharger un css ou un js si un block le demande alors qu'ils ont déjà été chargés par le module
-    if(array_key_exists('mediaPrinted', $GLOBALS['nuked'])){
+    if (array_key_exists('mediaPrinted', $GLOBALS['nuked'])) {
         // Si le marqueur existe on le stocke temporairement
         $mediasPrinted = $GLOBALS['mediaPrinted'];
     }
-    else{
+    else {
         $mediasPrinted = array();
     }
 
     // Définition du chemin vers les fichiers de modules
-    $pathJsMods = 'modules/'.$file.'/'.$file.'.js';
+    $pathJsMods  = 'modules/'.$file.'/'.$file.'.js';
     $pathCssMods = 'modules/'.$file.'/'.$file.'.css';
 
     // Définition du chemin vers les fichiers du themes
-    $pathJsTemplate = 'themes/'.$GLOBALS['theme'].'/js/modules/'.$file.'.js';
+    $pathJsTemplate  = 'themes/'.$GLOBALS['theme'].'/js/modules/'.$file.'.js';
     $pathCssTemplate = 'themes/'.$GLOBALS['theme'].'/css/modules/'.$file.'.css';
 
-    // Définition des cheminds vers les fichiers par défaut
-    $pathJsDefault = 'assets/scripts/nkDefault.js';
+    // Définition des chemins vers les fichiers par défaut
+    $pathJsDefault  = 'assets/scripts/nkDefault.js';
+    $pathJsAdmin    = 'modules/Admin/assets/scripts/main.js';
     $pathCssDefault = 'assets/css/nkDefault.css';
+    $pathCssLogin   = 'assets/css/login.css';
 
     // On stocke les paths dans un ordre bien précis Default -> Mods -> Templates afin de permettre la surcharge des propriétés css
     $arrayMedias = array(
-                    'CSS' => array($pathCssDefault, $pathCssMods, $pathCssTemplate),
-                    'JS'  => array($pathJsDefault, $pathJsMods, $pathJsTemplate)
+                    'CSS' => array($pathCssDefault, $pathCssMods, $pathCssLogin, $pathCssTemplate),
+                    'JS'  => array($pathJsDefault, $pathJsMods, $pathJsTemplate, $pathJsAdmin)
                 );
 
     // On initialise la sortie
     $output = '';
 
     // On ajout le chargement de jquery avant les autres scripts
-    if($jQuery === false){
-        $output = '<script type="text/javascript" src="assets/scripts/jquery-min-1.8.3.js"></script>';
+    if ($jQuery === false) {
+        $output = '<script src="assets/scripts/jquery-min-1.8.3.js"></script>';
+    }
+    if (!jQuery.ui) {
+        $output .= '<script src="assets/scripts/jquery-ui.min.js"></script>';
     }
 
     // On parcours le tableaux des paths et on génère la sortie html

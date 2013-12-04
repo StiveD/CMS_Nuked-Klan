@@ -19,6 +19,41 @@ $arrayModLang = array(
     'POA'                    => 'Non renseign&eacute;',
     'UNKNOWN'                => 'Inconnu',
     'DD_CLICK_TO_EDIT'       => 'Double cliquer sur un &eacute;l&eacute;ments pour l\'&eacute;diter',
+    'REDIRECTED'             => 'Redirection en cours...',
+    'LOGIN_PROGRESS'         => 'Login en cours...',
+    'REGISTER_PROGRESS'      => 'Enregistrement cours...',
+    'USERLOGOUTINPROGRESS'   => 'D&eacute;connexion en cours...',
+    #####################################
+    # USER - Error Global
+    #####################################
+    'ERROR_PSEUDO_BANNED'    => 'Utilisateurs est banni',
+    'ERROR_EMPTY_FIELD'      => 'Un champ obligatoire est vide',
+    'ERROR_LOGIN'            => 'un ou plusieurs champs ont mal &eacute;t&eacute; renseign&eacute;s',
+    'ERROR_WRONG_MAIL'       => 'L\'adresse email que vous avez saisie est incorrect.',
+    'ERROR_TOKEN_ACTIVE'     => 'Un token vous a d&eacute;j&agrave; &eacute;t&eacute; envoy&eacute;, veuillez v&eacute;rifier votre bo&icirc;te email.',
+    'ERROR_WRONG_TOKEN'      => 'Le token est incorrect.',
+    #####################################
+    # USER - SendRegister
+    #####################################
+    'ERROR_REG_LOGIN'        => 'Utilisateurs existe d&eacute;j&agrave;',
+    'ERROR_MAIL_BANNED'      => 'Ce courriel est banni',
+    'ERROR_TWO_PASS_FAIL'    => 'Les deux mots de passe saisis ne sont pas identiques',
+    'REG_PROGRESS'           => 'Enregistrement en cours...',
+    'ERROR_MAIL_USE'         => 'Ce courriel est d&eacute;j&agrave; utilis&eacute;',
+    'NICK_TO_LONG'           => 'Votre pseudo est trop long',
+    #####################################
+    # USER - SendLostPassword
+    #####################################
+    'WRONG_MAIL'             => 'L\'adresse email que vous avez saisie est incorrect.',
+    'LOST_PASSWORD'          => 'Mot de passe perdu',
+    'SEND_MAIL_OK'           => 'Votre mail a bien &eacute;t&eacute; envoy&eacute;',
+    'SEND_MAIL_FAIL'         => 'Erreur d\'envoi de l\'e-mail',
+    'TEXT_TIME_INFOS'        => 'Ce lien est valide 1 heure, passer ce délai il faudra recommencer la procédure de mot de passe oublié',
+    'TEXT_HELLO'             => 'Bonjour',
+    'LINK_TO_NEW_PASS'       => 'Veuillez cliquer sur le lien suivant pour réinitialiser votre mot de passe',
+    'TITLE_MAIL'             => 'Récupération de mot de passe',
+    'LINK_NEW_PASS'          => 'Veuillez trouver ci-dessous votre nouveau mot de passe.',
+    'YOUR_NEW_PASS'          => 'Votre nouveau mot de passe',
     #####################################
     # USER - function Home H3
     #####################################

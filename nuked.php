@@ -1181,6 +1181,10 @@ function nkHtmlEntities($var){
     return htmlentities($var,ENT_QUOTES,'ISO-8859-1');
 }
 
+function nkUtf8Encode ($var) {
+    return utf8_encode(nkHtmlEntityDecode($var));
+}
+
 $GLOBALS['includeLanguage'] = array();
 /**
  * Backward compatibility translate function
