@@ -40,14 +40,14 @@ function printMedias($jQuery = false){
     $pathCssTemplate = 'themes/'.$GLOBALS['theme'].'/css/modules/'.$file.'.css';
 
     // Définition des chemins vers les fichiers par défaut
-    $pathJsDefault  = 'assets/scripts/nkDefault.js';
-    $pathJsAdmin    = 'modules/Admin/assets/scripts/main.js';
-    $pathCssDefault = 'assets/css/nkDefault.css';
-    $pathCssLogin   = 'assets/css/login.css';
-
+    $pathJsDefault   = 'assets/scripts/nkDefault.js';
+    $pathJsAdmin     = 'modules/Admin/assets/scripts/main.js';
+    $pathCssDefault  = 'assets/css/nkDefault.css';
+    $pathCssjQueryUi = 'modules/Admin/assets/css/ui_custom.css';
+    $pathCssLogin    = 'assets/css/login.css';
     // On stocke les paths dans un ordre bien précis Default -> Mods -> Templates afin de permettre la surcharge des propriétés css
     $arrayMedias = array(
-                    'CSS' => array($pathCssDefault, $pathCssMods, $pathCssLogin, $pathCssTemplate),
+                    'CSS' => array($pathCssDefault, $pathCssMods, $pathCssjQueryUi, $pathCssLogin, $pathCssTemplate),
                     'JS'  => array($pathJsDefault, $pathJsMods, $pathJsTemplate, $pathJsAdmin)
                 );
 

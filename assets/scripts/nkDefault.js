@@ -65,6 +65,8 @@ $(document).ready(function(){
         if ($(dataThis).data('title') != undefined) {
             titleDialog = $(dataThis).data('title');
         }
+        // -> Empty div nkDialog
+        $('.ui-dialog').empty().removeAttr('style');
         // -> ajax
         $.ajax({
             type: 'GET',
@@ -88,7 +90,6 @@ $(document).ready(function(){
                     show: 'slideDown',
                     closeOnEscape: true,
                     maxHeight: $(window).innerHeight() - 50,
-                    dialogClass: "ui-dialog-no-close"
                 }); // -> end dialog ui
                 form($('#nkDialog > form'));
                 lostPassword();
@@ -98,9 +99,12 @@ $(document).ready(function(){
                 $('#nkDialog').html("ERROR !");
             } // -> end error
         }); // -> end ajax
+        closeModal();
     }
     // -> user modal fullscreen
     function userModalFull(getUrl) {
+        // -> Empty div nkDialog
+        $('.ui-dialog').empty().removeAttr('style');
         // -> add style for user
         $("head").append( $(document.createElement("link")).attr({rel:"stylesheet", type:"text/css", href:"modules/User/User.css"}));
         // -> ajax
@@ -130,6 +134,13 @@ $(document).ready(function(){
         }); // -> end ajax
         closeModalFull();
     }
+    function closeModal() {
+        $('.ui-widget-overlay, ui-front').click(function() {
+            $(this).fadeOut(1000);
+            $('#nkDialog').fadeOut(1000);
+            alert('test');
+        });
+    }
     // -> user modal close
     function closeModalFull() {
         $(document).keyup(function(e) {
@@ -147,27 +158,51 @@ $(document).ready(function(){
     // -> change page in jquery
     function modsUsers() {
         closeModalFull();
-        // -> Variables
-        animate = false;
+        // -> variables
+        var getUrlSave = 'index.php?file=User&nuked_nude=index&op=saveJquery';
+        // -> insert div#jqueryDataInput
+        $('<div id="jqueryDataInput"></div>').prependTo('section#modsUser');
         // -> tabs
         $('#tab-container').easytabs({
             animationSpeed: 300,
             collapsible: false,
             tabActiveClass: "clicked"
         });
-        /* Remplace span to input */
+        /* remplace span to input */
         $('#modsUser form .contentInfos > div').dblclick(function() {
-            var i     = 0;
-            var value = $(this).data('value');
-            var name  = $(this).data('name');
+            var i      = 0;
+            var value  = $(this).data('value');
+            var title  = $(this).data('title');
+            var name   = $(this).data('name');
 
             $('#modsUser form').find('input').each(function() {
                 i++;
             });
 
-            $(this).children().hide(1000);
-            $(this).append('<input type="text" value="test">');
-        });
+            // -> ajax
+            $.ajax({
+                type: 'POST',
+                data: {name:name},
+                url: getUrlSave,
+                // -> success
+                success:function(data) {
+                    // -> insert data
+                    $('#jqueryDataInput').html(data);
+                    // -> dialog ui
+                    $('#jqueryDataInput').dialog({
+                        title: title,
+                        modal: true,
+                        draggable: true,
+                        resizable: true,
+                        closeOnEscape: false,
+                    }); // -> end dialog ui
+                    $(".jQueryChosen").chosen();
+                }, // -> end success
+                complete:function() {
+                }
+            }); // -> end ajax
+        }); // -> end dblclick
+
 
         $('#modsUser').on('click', '.jqueryLinksSwtich', function(event) {
             event.preventDefault();

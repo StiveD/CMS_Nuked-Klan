@@ -201,7 +201,10 @@ nkTranslate('modules/User/lang/'.$GLOBALS['language'].'.lang.php');
                 $arrayAllDataUser['date_of_arrival'] = $arrayAllDataUser['date_of_arrival_large'];
                 $arrayAllDataUser[$key] = (isset($arrayAllDataUser[$key])) ? $arrayAllDataUser[$key] : POA;
                 $arrayAllDataUser[$key] = (!empty($arrayAllDataUser[$key])) ? $arrayAllDataUser[$key] : POA;
-                $tmpDivGen .= ' <div><span>'.constant(strtoupper($key)).'</span><span>'.$arrayAllDataUser[$key].'</span></div> '."\n";
+                $tmpDivGen .= ' <div data-title="'.constant(strtoupper($key)).'" data-name="'.$key.'">
+                                    <span>'.constant(strtoupper($key)).'</span>
+                                    <span>'.$arrayAllDataUser[$key].'</span>
+                                </div> '."\n";
             }
             // ->   preference
             foreach ($arrayPref as $key) {
@@ -221,7 +224,10 @@ nkTranslate('modules/User/lang/'.$GLOBALS['language'].'.lang.php');
                     $arrayAllDataUser[$data['name']] = (isset($arrayAllDataUser[$data['name']])) ? $arrayAllDataUser[$data['name']] : POA;
                     $arrayAllDataUser[$data['name']] = (!empty($arrayAllDataUser[$data['name']])) ? $arrayAllDataUser[$data['name']] : POA;
                     $name = (defined(strtoupper($data['name']))) ? constant(strtoupper($data['name'])) : $data['name'];
-                    $tmpDivMaterial .= '  <div><span>'.$name.'</span><span>'.$arrayAllDataUser[$data['name']].'</span></div> '."\n";
+                    $tmpDivMaterial .= '    <div data-title="'.$name.'" data-name="'.$data['name'].'">
+                                                <span>'.$name.'</span>
+                                                <span>'.$arrayAllDataUser[$data['name']].'</span>
+                                            </div> '."\n";
                 }
             }
             // ->   social networks
@@ -307,12 +313,12 @@ nkTranslate('modules/User/lang/'.$GLOBALS['language'].'.lang.php');
             unset($dbsForumLast);
             while ($data = mysql_fetch_assoc($dbeForumLast)) {
                 $data['title'] = (empty($data['title'])) ?  $data['module'] : $data['title'];
-                $tmpForumName .= '    <span>
-                                            <a href="'.$data['id'].'" title="'.$data['title'].'">
-                                                '.$data['title'].'
-                                            </a>
-                                        </span> '."\n";
-                $tmpForumValue .= '   <span>'.nkDate($data['date'], true).'></span> '."\n";
+                $tmpForumName .= '  <span>
+                                        <a href="'.$data['id'].'" title="'.$data['title'].'">
+                                            '.$data['title'].'
+                                        </a>
+                                    </span> '."\n";
+                $tmpForumValue .= ' <span>'.nkDate($data['date'], true).'></span> '."\n";
             }
             if(empty($tmpForumName)) {
                 $tmpForumName .= '  <span>
@@ -740,7 +746,55 @@ A REVOIR ! la function page et le reste !
                         </div>
 <?php
     }
+    function saveJquery () {
+        // variables
+        $optTmp = '';
+        // liste les request autorisé
+        $arrayRequest = array('name');
+        foreach ($arrayRequest as $key) {
+            if (!array_key_exists($key, $_REQUEST)) {
+                $_REQUEST[$key] = '';
+            }
+        }
+        if (!nkHasVisitor()) { require_once'modules/User/array.php'; }
 
+        if (array_key_exists($_REQUEST['name'], $arrayListMaterial)) {
+            $select = $arrayListMaterial[$_REQUEST['name']];
+            // ->   sql select data $_REQUEST['name']
+            $dbsUser            = ' SELECT '.$select.'
+                                    FROM   '.USERS_DETAIL_TABLE.'
+                                    WHERE  user_id  = "'.$GLOBALS['user']['id'].'" ';
+            $dbeUser            =   mysql_query($dbsUser);
+            unset($dbsUser);
+            $value   =   mysql_fetch_assoc($dbeUser);
+            $placeholder = (defined(strtoupper($_REQUEST['name']))) ? constant(strtoupper($_REQUEST['name'])) : '' ;
+            if ($_REQUEST['name'] == 'os') {
+                foreach ($arraySystemOs as $key) {
+                    $optTmp .= '<option value="'.$key.'">'.$key.'</option> '."\n";
+                }
+                $input = '  <select data-placeholder="Chosisez votre OS" class="jQueryChosen">
+                                <option value="'.$value[$select].'">'.$value[$select].'</option>
+                                '.$optTmp.'
+                            </select>';
+            }
+            else {
+                $input = '<input name="pseudo" placeholder="'.$placeholder.'" type="text" value="'.$value[$select].'">';
+            }
+        }
+?>
+        <script src="assets/scripts/jquery.chosen.min.js"></script>
+        <form type="post" id="formUsers" action="index.php?file=User&amp;nuked_nude=index&amp;op=sendLogin">
+            <fieldset>
+                <div class="inputSaveJquery">
+                    <?php echo $input; ?>
+                </div>
+            </fieldset>
+            <div>
+                <input class="ui-button ui-button-blue" type="submit" value="Sauvegarder" />
+            </div>
+        </form>
+<?php
+    }
     function formLogin () {
         if (nkHasVisitor()) {
 ?>
@@ -933,7 +987,7 @@ A REVOIR ! la function page et le reste !
                 </body>
             </html>
 <?php
-        redirect("index.php?file=User", 2);
+        redirect("index.php", 2);
         endif;
     }
 
@@ -958,10 +1012,10 @@ A REVOIR ! la function page et le reste !
         $dbeLogOut = mysql_query($dbuLogOut);
 
         setcookie($GLOBALS['cookieSession'], '', time() - 3600);
-        setcookie($GLOBALS['cookieUserId'], '', time() - 3600);
-        setcookie($GLOBALS['cookieTheme'], '', time() - 3600);
-        setcookie($GLOBALS['cookieLang'], '', time() - 3600);
-        setcookie($GLOBALS['cookieForum'], '', time() - 3600);
+        setcookie($GLOBALS['cookieUserId'],  '', time() - 3600);
+        setcookie($GLOBALS['cookieTheme'],   '', time() - 3600);
+        setcookie($GLOBALS['cookieLang'],    '', time() - 3600);
+        setcookie($GLOBALS['cookieForum'],   '', time() - 3600);
         $_SESSION['admin'] = false;
 
         $redirectLink = 'index.php';
@@ -1656,6 +1710,10 @@ A REVOIR ! la function page et le reste !
 
         case"privateMsg":
             privateMsg();
+            break;
+
+        case"saveJquery":
+            saveJquery();
             break;
 
         case"formLogin":

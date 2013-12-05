@@ -471,9 +471,8 @@
                             }
 
 
-
                     section#modsUser > article section > #usersContent > .column,
-                    section#modsUser > article section > #usersContent > .columnTemplate, {
+                    section#modsUser > article section > #usersContent > .columnTemplate {
                         display: table;
                         width: 100%;
                     }
@@ -894,4 +893,42 @@ cursor: pointer;
             padding: 0 5px;
         }
     }
+
+/* -> jquery ui modal */
+#jqueryDataInput {
+    display: none;
+}
+.inputSaveJquery input {
+    width: -moz-calc(100% - 10px) !important;
+    width: -webkit-calc(100% - 10px) !important;
+    width: -o-calc(100% - 10px) !important;
+    width: calc(100% - 10px) !important;
+}
+.ui-widget-overlay {
+    background: rgba(0, 0, 0, .5);
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99995;
+}
+.ui-dialog {
+    position: fixed !important;
+    z-index: 1050005;
+    color: #5F5F5F;
+    font-family: Arial,Helvetica,sans-serif;
+    background: rgba(0, 0, 0, .20);
+    border: 1px soolid rgba(0, 0, 0, .35);
+    padding: 6px;
+    border-radius: 1px;
+    box-shadow: none;
+}
+
+.chosen-container .chosen-drop {
+    position: relative !important;
+}
+.chosen-container {
+    width: 100% !important;
+}
 

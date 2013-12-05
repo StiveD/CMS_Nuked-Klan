@@ -3,7 +3,7 @@
     float: right;
 }
 .ui-widget-overlay {
-    background: rgba(0,0,0,0.75);
+    background: rgba(0, 0, 0, .5);
     position: fixed;
     left: 0;
     top: 0;
@@ -11,34 +11,16 @@
     height: 100%;
     z-index: 99995;
 }
-
 .ui-dialog {
-    background-clip: padding-box;
-    background-color: #FFFFFF;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 6px 6px 6px 6px;
-    outline: 0 none;
     position: fixed !important;
-    border-bottom-color: rgba(0, 0, 0, 0.4);
-    border-radius: 0 0 0 0;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-    border-radius: 3px;
     z-index: 1050005;
-    box-shadow: -30px 30px 50px rgba(0, 0, 0, 0.32);
-}
-.ui-dialog-titlebar {
-    background-color: #333333;
-    padding: 0 0 0 15px;
-    border-bottom: 1px solid rgb(187, 187, 187);
-}
-.ui-dialog-title {
-    display: inline-block;
-    color: #FFFFFF;
-    font-size: 15px;
-    width: -moz-calc(100% - 20px); /* correction du padding */
-    width: -webkit-calc(100% - 20px);
-    width: calc(100% - 20px);
-    margin: 10px 0;
+    color: #5F5F5F;
+    font-family: Arial,Helvetica,sans-serif;
+    background: rgba(0, 0, 0, .20);
+    border: 1px soolid rgba(0, 0, 0, .35);
+    padding: 6px;
+    border-radius: 1px;
+    box-shadow: none;
 }
 #nkDialog {
     padding: 15px;
@@ -57,6 +39,7 @@
 #nkDialog > form div {
     width: 100%;
     margin: 5px 0;
+    overflow: hidden;
 }
 #nkDialog > form#formUsers div span {
     display: inline-block;
@@ -88,11 +71,11 @@
 #nkDialog > form#formUsers div span.icon:after {
     background: url(../../assets/images/ModUserSpriteIcons.png) no-repeat;
     content: '';
-    height: 12px;
     left: 17px;
     margin-top: 2px;
     position: absolute;
     width: 12px;
+    height: 12px;
 }
 #nkDialog > form#formUsers div span.user:after {
     background-position: 0 0;
@@ -110,10 +93,9 @@
 #nkDialog > form#formUsers div input[type=password],
 #nkDialog > form#formUsers div input[type=email],
 #nkDialog > form#formUsers div select {
-    display: inline-block;
     *display: inline; zoom: 1; /* ie6 ie7 hack */
     color: rgba(51, 51, 51, 1);
-    padding: 6px;
+    padding: 7px 6px;
     font-weight: normal;
     vertical-align: top;
     background-color: rgb(255, 255, 255);
@@ -123,7 +105,7 @@
     width: -moz-calc(100% - 39px );
     width: -webkit-calc(100% - 39px);
     width: calc(100% - 39px);
-    margin-left: -4px;
+    margin: 0;
 }
 #nkInputRequired input,
 #nkInputRequired span,
@@ -205,7 +187,7 @@ form > fieldset {
     padding:10px;
     position:relative;
     margin-bottom:10px;
-    background: rgba(221, 221, 221, 1);
+    background: -moz-linear-gradient(center top , #F8F8F8 0%, #E8E8E8 100%) repeat scroll 0 0 rgba(221, 221, 221, 1);;
 }
 form > fieldset > legend {
     font-size:1.1em;
@@ -222,7 +204,7 @@ form > fieldset > .textarea {
 }
 
 /* Button Close */
-
+/*
 .ui-dialog-titlebar-close {
     font-family: inherit;
     display: inline-block;
@@ -256,7 +238,7 @@ form > fieldset > .textarea {
 .ui-dialog-titlebar-close span{
     display:none;
 }
-
+*/
 
 input[type=submit]:disabled {
     color: rgb(158, 112, 60);

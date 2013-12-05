@@ -85,6 +85,8 @@ function top(){
                                                                         $hasAdmin = nkHasAdmin();
                                                                         if ($hasVisitor === true){
 ?>
+                                                                        <a href="index.php?file=User&amp;nuked_nude=index&amp;op=login"><?php echo 'Login'; ?></a> -
+
                                                                         <a href="index.php?file=User&amp;op=reg_screen"><?php echo _ININSCRIPT; ?></a>
 <?php
                                                                         }
