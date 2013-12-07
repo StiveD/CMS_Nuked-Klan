@@ -2,6 +2,7 @@ $(document).ready(function(){
     // -> all Initialize function
     initDivSystem();
     tooltips();
+    datepicker();
     $(".lightbox").fancybox({ 'padding': 2 });
     // -> close popup private message
     $('#nkNewPrivateMsgClose').click(function(){
@@ -47,6 +48,9 @@ $(document).ready(function(){
             $(this).attr('href', hrefLink);
             return false;
         }
+    });
+    $('#formUsers').submit(function() {
+        return false;
     });
 });
 
@@ -158,55 +162,17 @@ $(document).ready(function(){
     // -> change page in jquery
     function modsUsers() {
         closeModalFull();
-        // -> variables
-        var getUrlSave = 'index.php?file=User&nuked_nude=index&op=saveJquery';
-        // -> insert div#jqueryDataInput
-        $('<div id="jqueryDataInput"></div>').prependTo('section#modsUser');
         // -> tabs
         $('#tab-container').easytabs({
             animationSpeed: 300,
             collapsible: false,
             tabActiveClass: "clicked"
         });
-        /* remplace span to input */
-        $('#modsUser form .contentInfos > div').dblclick(function() {
-            var i      = 0;
-            var value  = $(this).data('value');
-            var title  = $(this).data('title');
-            var name   = $(this).data('name');
-
-            $('#modsUser form').find('input').each(function() {
-                i++;
-            });
-
-            // -> ajax
-            $.ajax({
-                type: 'POST',
-                data: {name:name},
-                url: getUrlSave,
-                // -> success
-                success:function(data) {
-                    // -> insert data
-                    $('#jqueryDataInput').html(data);
-                    // -> dialog ui
-                    $('#jqueryDataInput').dialog({
-                        title: title,
-                        modal: true,
-                        draggable: true,
-                        resizable: true,
-                        closeOnEscape: false,
-                    }); // -> end dialog ui
-                    $(".jQueryChosen").chosen();
-                }, // -> end success
-                complete:function() {
-                }
-            }); // -> end ajax
-        }); // -> end dblclick
-
-
+        // -> popup edit
+        editUsers();
         $('#modsUser').on('click', '.jqueryLinksSwtich', function(event) {
             event.preventDefault();
-            // -> Variables
+            // -> variables
             var value  = $(this).attr('href').replace('#','');
             var getUrl = 'index.php?file=User&nuked_nude=index&op=' + value;
             var title  = $(this).data('title');
@@ -232,6 +198,49 @@ $(document).ready(function(){
             $('#jqueryIcon').removeAttr('class').attr('class', icon);
         });
     }
+    function editUsers() {
+        // -> variables
+        var getUrlSave = 'index.php?file=User&nuked_nude=index&op=saveJquery';
+        // -> insert div#jqueryDataInput
+        var testIdDataInput = $("#testIdDataInput");
+        if (testIdDataInput.length) {
+            testIdDataInput.empty();
+        } else {
+            $('<div id="jqueryDataInput"></div>').prependTo('section#modsUser');
+        }
+        // -> double click
+        $('#modsUser form .contentInfos > div, .jqueryEdit').dblclick(function() {
+            // -> variables
+            var value  = $(this).data('value');
+            var title  = $(this).data('title');
+            var name   = $(this).data('name');
+            // -> ajax
+            $.ajax({
+                type: 'POST',
+                data: {name:name},
+                url: getUrlSave,
+                // -> success
+                success:function(data) {
+                    // -> insert data
+                    $('#jqueryDataInput').html(data);
+                    // -> dialog ui
+                    $('#jqueryDataInput').dialog({
+                        title: title,
+                        modal: true,
+                        draggable: true,
+                        resizable: true,
+                        closeOnEscape: false,
+                        minHeight: 165,
+                    }); // -> end dialog ui
+                    $(".jQueryChosen").chosen();
+                    datepicker();
+                }, // -> end success
+                complete:function() {
+                    form($('#formUsers'));
+                }
+            }); // -> end ajax
+        }); // -> end dblclick
+    }
     function form(form) {
         var formLogin = $('#' + $(form).attr('id'));
         var formId    = '#' + $(form).attr('id');
@@ -246,7 +255,6 @@ $(document).ready(function(){
                     var bgClass   = dataLogin.bgClass;
                     var uiButton  = $('.ui-button-blue');
                     var wUiButton = uiButton.width();
-
                     uiButton.animate(
                         {
                         width: "100%",
@@ -270,6 +278,38 @@ $(document).ready(function(){
                         setTimeout(function() {
                             $(formId + ' input').attr('disabled', false);
                         }, 3550);
+                    }
+                    else if (dataLogin.redirectLink == '#') {
+                        setTimeout(function() {
+                            uiButton
+                                .addClass('disabledSuccess')
+                                .val(dataLogin.redirectedName);
+                        }, 1000);
+                        setTimeout(function() {
+                            $('#jqueryDataInput').dialog("destroy");
+                            $('.ui-dialog').remove();
+                        }, 3000);
+                        setTimeout(function() {
+                            var getUrl = 'index.php?file=User&nuked_nude=index&op=home';
+                            var title  = 'Accueil';
+                            var icon   = 'icon-home';
+                            $('#jquerySections').fadeOut(450, function() {
+                                // -> ajax
+                                $.ajax({
+                                    type: 'GET',
+                                    url: getUrl,
+                                    // -> success
+                                    success:function(data) {
+                                        $('#jquerySections').empty().append(data).fadeIn(450);
+                                        modsUsers();
+                                        tooltips();
+                                        editUsers();
+                                    }, // -> end success
+                                }); // -> end ajax
+                            });
+                            $('#jqueryTitle').empty().append(title);
+                            $('#jqueryIcon').removeAttr('class').attr('class', icon);
+                        }, 3500);
                     }
                     else {
                         $(formId + ' input').attr('disabled', true);
@@ -307,6 +347,43 @@ $(document).ready(function(){
             });
         });
     }
+
+    // -> Initialize DatePicker
+    function datepicker() {
+        $( ".datepicker" ).datepicker({
+            defaultDate: +7,
+            showOtherMonths:true,
+            autoSize: true,
+            appendText: 'jours - mois - années',
+            dateFormat: 'dd-mm-yy',
+            changeMonth: true,
+            changeYear: true,
+            showAnim: 'slide',
+            maxDate: "-12Y",
+            minDate: "-60Y"
+        });
+
+        $.datepicker.regional['fr'] = {
+            closeText: 'Fermer',
+            prevText: '<Préc',
+            nextText: 'Suiv>',
+            currentText: 'Courant',
+            monthNames: ['Janvier','Février','Mars','Avril','Mai','Juin',
+            'Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
+            monthNamesShort: ['Jan','Fév','Mar','Avr','Mai','Jun',
+            'Jul','Aoû','Sep','Oct','Nov','Déc'],
+            dayNames: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
+            dayNamesShort: ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'],
+            dayNamesMin: ['Di','Lu','Ma','Me','Je','Ve','Sa'],
+            weekHeader: 'Sm',
+            firstDay: 1,
+            isRTL: false,
+            showMonthAfterYear: true,
+            yearSuffix: ''
+        };
+        $.datepicker.setDefaults($.datepicker.regional['fr']);
+    }
+
     // -> Initialize tooltips
     function tooltips() {
         $('.tipN').tipsy({gravity: 'n',fade: true, html:true});

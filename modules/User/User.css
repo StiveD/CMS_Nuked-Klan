@@ -898,11 +898,20 @@ cursor: pointer;
 #jqueryDataInput {
     display: none;
 }
+.inputSaveJquery {
+    text-align: center;
+}
 .inputSaveJquery input {
     width: -moz-calc(100% - 10px) !important;
     width: -webkit-calc(100% - 10px) !important;
     width: -o-calc(100% - 10px) !important;
     width: calc(100% - 10px) !important;
+}
+.inputSaveJquery img {
+    max-width: -moz-calc(100% - 10px) !important;
+    max-width: -webkit-calc(100% - 10px) !important;
+    max-width: -o-calc(100% - 10px) !important;
+    max-width: calc(100% - 10px) !important;
 }
 .ui-widget-overlay {
     background: rgba(0, 0, 0, .5);

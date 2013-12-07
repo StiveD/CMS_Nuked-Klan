@@ -20,8 +20,8 @@ nkTranslate('modules/User/lang/'.$GLOBALS['language'].'.lang.php');
                 <nav>
                     <ul>
                         <li class="pseudo">
-                            <img src="http://www.palacewar.eu/Stive/avatar_stive2.png" alt="Stive">
-                            <span>Stive</span>
+                            <img src="<?php echo $GLOBALS['user']['avatar']; ?>" alt="<?php echo $GLOBALS['user']['avatar']; ?>">
+                            <span><?php echo $GLOBALS['user']['nickName']; ?></span>
                         </li>
                         <li>
                             <a class="icon-home jqueryLinksSwtich" data-icon="icon-home" data-title="Accueil" href="#home">Accueil</a>
@@ -69,8 +69,10 @@ nkTranslate('modules/User/lang/'.$GLOBALS['language'].'.lang.php');
 
                 <header>
                     <h1>Compte</h1>
-                    <a class="tipE jqueryLinksSwtich" title="Option du compte" data-icon="icon-cog" href="#accountOption" title="Option du compte"><span class="icon-cog"></span></a>
-                    <a class="tipE" href="#" title="D&eacute;connexion" id="jqueryClose"><span class="icon-power-outline"></span></a>
+                    <a class="tipE jqueryLinksSwtich" title="<?php echo ACCOUNT_OPTION; ?>" data-icon="icon-cog" href="#accountOption" title="Option du compte">
+                        <span class="icon-cog"></span>
+                    </a>
+                    <a class="tipE" href="#" title="<?php echo LOGOUT; ?>" id="jqueryClose"><span class="icon-power-outline"></span></a>
                 </header>
                 <nav id="breadcrumb">
                     <ul>
@@ -210,7 +212,22 @@ nkTranslate('modules/User/lang/'.$GLOBALS['language'].'.lang.php');
             foreach ($arrayPref as $key) {
                 $arrayAllDataUser[$key] = (isset($arrayAllDataUser[$key])) ? $arrayAllDataUser[$key] : POA;
                 $arrayAllDataUser[$key] = (!empty($arrayAllDataUser[$key])) ? $arrayAllDataUser[$key] : POA;
-                $tmpDivPref .= ' <div><span>'.constant(strtoupper($key)).'</span><span>'.$arrayAllDataUser[$key].'</span></div> '."\n";
+                if ($key == 'country') {
+                    $arrayFlag = explode('.', $arrayAllDataUser[$key]);
+                    $tmpDivPref .= '    <div data-title="'.constant(strtoupper($key)).'" data-name="'.$key.'">
+                                            <span>'.constant(strtoupper($key)).'</span>
+                                            <span>
+                                                <img src="assets/images/flags/'.$arrayAllDataUser[$key].'" alt="'.$arrayFlag[0].'">
+                                                '.$arrayFlag[0].'
+                                            </span>
+                                        </div> '."\n";
+                }
+                else {
+                    $tmpDivPref .= '    <div data-title="'.constant(strtoupper($key)).'" data-name="'.$key.'">
+                                            <span>'.constant(strtoupper($key)).'</span>
+                                            <span>'.$arrayAllDataUser[$key].'</span>
+                                        </div> '."\n";
+                }
             }
             // ->   hardware config
             if ($arrayListLabel['HARDWARE_CONFIG'] == 'on') {
@@ -245,15 +262,19 @@ nkTranslate('modules/User/lang/'.$GLOBALS['language'].'.lang.php');
                                 FROM '.$GLOBALS['nuked']['prefix'].'_users_profils
                                 WHERE user_id = "'.$GLOBALS['user']['id'].'" ';
                 $dbeDataSN  =   mysql_query($dbsDataSN);
-                $dataSN = mysql_fetch_assoc($dbeDataSN);
+                $dataSN     = mysql_fetch_assoc($dbeDataSN);
                 unset($dbsDataSN);
                 $arrayAllDataUser = array_merge($arrayAllDataUser, $dataSN);
                 foreach ($tmpSelect as $key) {
                     $arrayAllDataUser[$key] = (isset($arrayAllDataUser[$key])) ? $arrayAllDataUser[$key] : POA;
                     $arrayAllDataUser[$key] = (!empty($arrayAllDataUser[$key])) ? $arrayAllDataUser[$key] : POA;
                     $name = (defined(strtoupper($key))) ? constant(strtoupper($key)) : $key;
-                    $tmpDivSocial .= '  <div><span>'.$name.'</span><span>'.$arrayAllDataUser[$key].'</span></div> '."\n";
+                    $tmpDivSocial .= '  <div data-title="'.constant(strtoupper($key)).'" data-name="'.$key.'">
+                                            <span>'.$name.'</span>
+                                            <span>'.$arrayAllDataUser[$key].'</span>
+                                        </div> '."\n";
                 }
+                unset($tmpSelect);
             }
             // ->   gaming / esport
             if ($arrayListLabel['GAMING'] == 'on') {
@@ -262,23 +283,27 @@ nkTranslate('modules/User/lang/'.$GLOBALS['language'].'.lang.php');
                                 WHERE status = "on" ';
                 $dbeGaming  =   mysql_query($dbsGaming);
                 unset($dbsGaming);
-                while ($data = mysql_fetch_assoc($dbeSocial)) {
+                while ($data = mysql_fetch_assoc($dbeGaming)) {
                     $tmpSelect[$data['name']] = $data['name'];
                 }
                 $tmpImplodeSelect  =   implode(', ', $tmpSelect);
-                $dbsDataSN  = ' SELECT '.$tmpImplodeSelect.'
+                $dbsDataGM  = ' SELECT '.$tmpImplodeSelect.'
                                 FROM '.$GLOBALS['nuked']['prefix'].'_users_profils
                                 WHERE user_id = "'.$GLOBALS['user']['id'].'" ';
-                $dbeDataSN  =   mysql_query($dbsDataSN);
-                $dataSN = mysql_fetch_assoc($dbeDataSN);
-                unset($dbsDataSN);
-                $arrayAllDataUser = array_merge($arrayAllDataUser, $dataSN);
+                $dbeDataGM  =   mysql_query($dbsDataGM);
+                $dataGM     = mysql_fetch_assoc($dbeDataGM);
+                unset($dbsDataGM);
+                $arrayAllDataUser = array_merge($arrayAllDataUser, $dataGM);
                 foreach ($tmpSelect as $key) {
                     $arrayAllDataUser[$key] = (isset($arrayAllDataUser[$key])) ? $arrayAllDataUser[$key] : POA;
                     $arrayAllDataUser[$key] = (!empty($arrayAllDataUser[$key])) ? $arrayAllDataUser[$key] : POA;
                     $name = (defined(strtoupper($key))) ? constant(strtoupper($key)) : $key;
-                    $tmpDivGaming .= '  <div><span>'.$name.'</span><span>'.$arrayAllDataUser[$key].'</span></div> '."\n";
+                    $tmpDivGaming .= '  <div data-title="'.constant(strtoupper($key)).'" data-name="'.$key.'">
+                                            <span>'.$name.'</span>
+                                            <span>'.$arrayAllDataUser[$key].'</span>
+                                        </div> '."\n";
                 }
+                unset($tmpSelect);
             }
             // ->   sql comment
             $dbsCommentLast     = ' SELECT im_id AS id, titre as title, module, date
@@ -354,21 +379,22 @@ nkTranslate('modules/User/lang/'.$GLOBALS['language'].'.lang.php');
                     $tmpStatsValue .= ' <span>'.$arrayAllDataUser[$key].'</span> '."\n";
                 }
             }
+            $arrayAllDataUser['avatar'] = (empty($arrayAllDataUser['avatar'])) ? 'assets/images/nkNoAvatar.png' : $arrayAllDataUser['avatar'];
 ?>
                     <div id="usersContent">
                         <?php subMenu(true, true); ?>
                         <div class="column">
                             <div>
                                 <form id="infosGen">
-                                    <h3>Informations générales</h3>
-                                    <div class="title">Administrateur</div>
-                                    <img src="http://www.palacewar.eu/Stive/avatar_stive2.png" alt="#">
+                                    <h3><?php echo INFOS_GEN; ?></h3>
+                                    <div data-title="Pseudo" data-name="pseudo" class="title jqueryEdit"><?php echo $arrayAllDataUser['pseudo']; ?></div>
+                                    <img class="jqueryEdit" data-title="avatar" data-name="avatar" src="<?php echo $arrayAllDataUser['avatar']; ?>" alt="<?php echo $arrayAllDataUser['pseudo']; ?>">
                                     <div class="contentInfos">
                                         <?php echo $tmpDivGen; ?>
                                     </div>
                                 </form>
                                 <form id="config">
-                                    <h3>Préférence</h3>
+                                    <h3><?php echo PREFS; ?></h3>
                                     <div class="contentInfos">
                                         <?php echo $tmpDivPref; ?>
                                     </div>
@@ -422,9 +448,9 @@ nkTranslate('modules/User/lang/'.$GLOBALS['language'].'.lang.php');
                     <aside>
                         <div id="tab-container" class="tab-container">
                             <ul>
-                                <li><a href="#Stats">Statistiques</a></li>
-                                <li><a href="#Msgs">Messages</a></li>
-                                <li><a href="#Comms">Commentaires</a></li>
+                                <li><a href="#Stats"><?php echo STATS_MODNAME; ?></a></li>
+                                <li><a href="#Msgs"><?php echo MESSAGES; ?></a></li>
+                                <li><a href="#Comms"><?php echo COMMENT_MODNAME; ?></a></li>
                             </ul>
                             <div id="Stats">
                                 <div class="name">
@@ -749,7 +775,8 @@ A REVOIR ! la function page et le reste !
     function saveJquery () {
         // variables
         $optTmp = '';
-        // liste les request autorisé
+        $inputHiddenName = '';
+        // -> list request authorized
         $arrayRequest = array('name');
         foreach ($arrayRequest as $key) {
             if (!array_key_exists($key, $_REQUEST)) {
@@ -758,7 +785,50 @@ A REVOIR ! la function page et le reste !
         }
         if (!nkHasVisitor()) { require_once'modules/User/array.php'; }
 
-        if (array_key_exists($_REQUEST['name'], $arrayListMaterial)) {
+        $arrayTmp        = null;
+        $dbsShowColumn   = ' SHOW COLUMNS FROM '.$GLOBALS['nuked']['prefix'].'_users_profils ';
+        $dbeShowColumn   =   mysql_query($dbsShowColumn);
+        // list of columns to not get
+        $arrayBase = array('id', 'user_id');
+        while($showColumn = mysql_fetch_assoc($dbeShowColumn)) {
+            if (!in_array($showColumn['Field'], $arrayBase, true)) {
+                $arrayAdditional[$showColumn['Field']] = '';
+            }
+        }
+        // -> list user infos
+        if (array_key_exists($_REQUEST['name'], $arrayListUsers)) {
+            $select = $arrayListUsers[$_REQUEST['name']];
+            // ->   sql select data $_REQUEST['name']
+            $dbsUser            = ' SELECT '.$select.'
+                                    FROM   '.USERS_TABLE.'
+                                    WHERE  id  = "'.$GLOBALS['user']['id'].'" ';
+            $dbeUser            =   mysql_query($dbsUser);
+            unset($dbsUser);
+            $value   =   mysql_fetch_assoc($dbeUser);
+            $placeholder = (defined(strtoupper($_REQUEST['name']))) ? constant(strtoupper($_REQUEST['name'])) : '' ;
+            if ($_REQUEST['name'] == 'avatar') {
+                $value[$select] = (empty($value[$select])) ? 'assets/images/nkNoAvatar.png' : $value[$select];
+                $input = '<img src="'.$value[$select].'" alt="'.$value[$select].'">';
+            }
+            else if ($_REQUEST['name'] == 'password') {
+                $input = '<input name="'.$_REQUEST['name'].'" placeholder="A remplir uniquement si vous désirer changer" type="password">';
+            }
+            else if ($_REQUEST['name'] == 'country') {
+                foreach ($arrayNameFlags as $key => $valueCountry) {
+                    $optTmp .= '<option value="'.$valueCountry.'">'.$key.'</option> '."\n";
+                }
+                $explode = explode ('.', $value[$select]);
+                $input = '  <select data-placeholder="Chosisez votre pays" class="jQueryChosen">
+                                <option value="'.$value[$select].'">'.$explode[0].'</option>
+                                '.$optTmp.'
+                            </select>';
+            }
+            else {
+                $input = '<input name="'.$_REQUEST['name'].'" placeholder="'.$placeholder.'" type="text" value="'.$value[$select].'">';
+            }
+        }
+        // -> list material
+        else if (array_key_exists($_REQUEST['name'], $arrayListMaterial)) {
             $select = $arrayListMaterial[$_REQUEST['name']];
             // ->   sql select data $_REQUEST['name']
             $dbsUser            = ' SELECT '.$select.'
@@ -772,21 +842,76 @@ A REVOIR ! la function page et le reste !
                 foreach ($arraySystemOs as $key) {
                     $optTmp .= '<option value="'.$key.'">'.$key.'</option> '."\n";
                 }
-                $input = '  <select data-placeholder="Chosisez votre OS" class="jQueryChosen">
+                $input = '  <select name="'.$_REQUEST['name'].'" data-placeholder="Chosisez votre OS" class="jQueryChosen">
                                 <option value="'.$value[$select].'">'.$value[$select].'</option>
                                 '.$optTmp.'
                             </select>';
+                $inputHiddenName = '<input name="jQuerySave" type="hidden" value="'.$_REQUEST['name'].'">';
+            }
+            else if ($_REQUEST['name'] == 'date_of_birth') {
+                $input = '<input name="'.$_REQUEST['name'].'" class="datepicker" placeholder="'.$placeholder.'" type="text" value="'.$value[$select].'">';
+                $inputHiddenName = '<input name="jQuerySave" type="hidden" value="'.$_REQUEST['name'].'">';
+            }
+            else if ($_REQUEST['name'] == 'resolution') {
+                foreach ($arrayListReso as $key) {
+                    $optTmp .= '<option value="'.$key.'">'.$key.'</option> '."\n";
+                }
+                $input = '  <select name="'.$_REQUEST['name'].'" data-placeholder="Chosisez votre résolion" class="jQueryChosen">
+                                <option value="'.$value[$select].'">'.$value[$select].'</option>
+                                '.$optTmp.'
+                            </select>';
+                $inputHiddenName = '<input name="jQuerySave" type="hidden" value="'.$_REQUEST['name'].'">';
+            }
+            else if ($_REQUEST['name'] == 'connection') {
+                foreach ($arrayConnection as $key) {
+                    $optTmp .= '<option name="'.$_REQUEST['name'].'" value="'.$key.'">'.$key.'</option> '."\n";
+                }
+                $input = '  <select name="'.$_REQUEST['name'].'" data-placeholder="Chosisez votre connexion" class="jQueryChosen">
+                                <option value="'.$value[$select].'">'.$value[$select].'</option>
+                                '.$optTmp.'
+                            </select>';
+                $inputHiddenName = '<input name="jQuerySave" type="hidden" value="'.$_REQUEST['name'].'">';
+            }
+            else if ($_REQUEST['name'] == 'ram') {
+                foreach ($arrayListRam as $key) {
+                    $optTmp .= '<option value="'.$key.'">'.$key.'</option> '."\n";
+                }
+                $input = '  <select name="'.$_REQUEST['name'].'" data-placeholder="Chosisez votre quantité de ram" class="jQueryChosen">
+                                <option value="'.$value[$select].'">'.$value[$select].'</option>
+                                '.$optTmp.'
+                            </select>';
+                $inputHiddenName = '<input name="jQuerySave" type="hidden" value="'.$_REQUEST['name'].'">';
             }
             else {
-                $input = '<input name="pseudo" placeholder="'.$placeholder.'" type="text" value="'.$value[$select].'">';
+                $input = '<input name="'.$_REQUEST['name'].'" placeholder="'.$placeholder.'" type="text" value="'.$value[$select].'">';
+                $inputHiddenName = '<input name="jQuerySave" type="hidden" value="'.$_REQUEST['name'].'">';
             }
+        }
+        else if (array_key_exists($_REQUEST['name'], $arrayAdditional)) {
+            // ->   sql select data $_REQUEST['name']
+            $dbsUser            = ' SELECT '.$_REQUEST['name'].'
+                                    FROM '.$GLOBALS['nuked']['prefix'].'_users_profils
+                                    WHERE  user_id  = "'.$GLOBALS['user']['id'].'" ';
+            $dbeUser            =   mysql_query($dbsUser);
+            unset($dbsUser);
+            $value   =   mysql_fetch_assoc($dbeUser);
+            $placeholder = (defined(strtoupper($_REQUEST['name']))) ? constant(strtoupper($_REQUEST['name'])) : '' ;
+
+            $input = '<input name="'.$_REQUEST['name'].'" placeholder="'.$placeholder.'" type="text" value="'.$value[$_REQUEST['name']].'">';
+            $inputHiddenName = '<input name="jQuerySave" type="hidden" value="'.$_REQUEST['name'].'">';
+        }
+        else {
+            echo '<div class="nkAlert"><strong>Ce champ ne peut être édité</strong></div>';
         }
 ?>
         <script src="assets/scripts/jquery.chosen.min.js"></script>
-        <form type="post" id="formUsers" action="index.php?file=User&amp;nuked_nude=index&amp;op=sendLogin">
+<?php
+        if (!empty($input)):
+?>
+        <form type="post" id="formUsers" action="index.php?file=User&amp;nuked_nude=index&amp;op=sendUsers">
             <fieldset>
                 <div class="inputSaveJquery">
-                    <?php echo $input; ?>
+                    <?php echo $input.$inputHiddenName; ?>
                 </div>
             </fieldset>
             <div>
@@ -794,6 +919,78 @@ A REVOIR ! la function page et le reste !
             </div>
         </form>
 <?php
+        endif;
+    }
+    function sendUsers () {
+        // -> list request authorized
+        $arrayRequest = array($_REQUEST['jQuerySave']);
+        foreach ($arrayRequest as $key) {
+            if (!array_key_exists($key, $_REQUEST)) {
+                $_REQUEST[$key] = '';
+            }
+        }
+        if (!nkHasVisitor()) { require_once'modules/User/array.php'; }
+        $arrayTmp        = null;
+        $dbsShowColumn   = ' SHOW COLUMNS FROM '.$GLOBALS['nuked']['prefix'].'_users_profils ';
+        $dbeShowColumn   =   mysql_query($dbsShowColumn);
+        // list of columns to not get
+        $arrayBase = array('id', 'user_id');
+        while($showColumn = mysql_fetch_assoc($dbeShowColumn)) {
+            if (!in_array($showColumn['Field'], $arrayBase, true)) {
+                $arrayAdditional[$showColumn['Field']] = '';
+            }
+        }
+        // -> list user infos
+        if (array_key_exists($_REQUEST['jQuerySave'], $arrayListUsers)) {
+            //$_REQUEST[$_REQUEST['jQuerySave']]
+        }
+        // -> list material
+        else if (array_key_exists($_REQUEST['jQuerySave'], $arrayListMaterial)) {
+            // ->   sql select data $_REQUEST['name']
+            $dbsUser            = ' SELECT count(user_id)
+                                    FROM   '.USERS_DETAIL_TABLE.'
+                                    WHERE  user_id  = "'.$GLOBALS['user']['id'].'" ';
+            $dbeUser            =   mysql_query($dbsUser);
+            $value              =   mysql_fetch_assoc($dbeUser);
+            if(empty($value)) {
+                $dbiUserDetail  = ' INSERT INTO '.USERS_DETAIL_TABLE.'  (
+                                                                            `user_id`, `'.$_REQUEST['jQuerySave'].'`)
+                                    VALUES                              (
+                                                                            "'.$GLOBALS['user']['id'].'", "'.$_REQUEST[$_REQUEST['jQuerySave']].'"
+                                                                        )';
+                $dbeUserDetail  =   mysql_query($dbiUserDetail);
+            }
+            else {
+                $dbuUser  = ' UPDATE '.USERS_DETAIL_TABLE.'
+                              SET '.$_REQUEST['jQuerySave'].' = "'.$_REQUEST[$_REQUEST['jQuerySave']].'"
+                              WHERE user_id = '.$GLOBALS['user']['id'].' ';
+                $dbeUser  =   mysql_query($dbuUser);
+            }
+            $data = array(
+               'errorMsg'       => nkUtf8Encode('Sauvegarde en cours...'),
+               'redirectLink'   => '#',
+               'redirectedName' => nkUtf8Encode('Sauvegarder avec succès'),
+            );
+
+
+/*
+Assemble INSERT + UPDATE Demande a Samoth !
+            $dbsUser            = ' INSERT INTO '.USERS_DETAIL_TABLE.' ('.$_REQUEST['jQuerySave'].')
+                                    VALUES "'.$_REQUEST[$_REQUEST['jQuerySave']].'"
+                                    ON DUPLICATE KEY UPDATE $_REQUEST['jQuerySave']  = "'.$GLOBALS['user']['id'].'" ';
+            $dbeUser            =   mysql_query($dbsUser);
+*/
+
+        }
+        // -> list additional column
+        else if (array_key_exists($_REQUEST['jQuerySave'], $arrayAdditional)) {
+            debug($_REQUEST[$_REQUEST['jQuerySave']]);
+        }
+        else {
+            'ERROR !!';
+        }
+        echo json_encode($data);
+
     }
     function formLogin () {
         if (nkHasVisitor()) {
@@ -829,7 +1026,7 @@ A REVOIR ! la function page et le reste !
     }
 
     function sendLogin () {
-        // Liste les request autorisé
+        // -> list request authorized
         $arrayRequest = array('pseudo', 'password', 'rememberMe', 'errorLogin', 'type', 'jQuery');
         foreach ($arrayRequest as $key) {
             if (!array_key_exists($key, $_REQUEST)) {
@@ -1078,7 +1275,7 @@ A REVOIR ! la function page et le reste !
     }
 
     function sendRegister() {
-        // Liste les request autorisé
+        // -> list request authorized
         $arrayRequest = array('pseudo', 'password', 'privateMail');
         foreach ($arrayRequest as $key) {
             if (!array_key_exists($key, $_REQUEST)) {
@@ -1358,7 +1555,7 @@ A REVOIR ! la function page et le reste !
     }
 
     function sendLostPassword () {
-        // Liste les request autorisé
+        // -> list request authorized
         $arrayRequest = array('mail');
         foreach ($arrayRequest as $key) {
             if (!array_key_exists($key, $_REQUEST)) {
@@ -1509,7 +1706,7 @@ A REVOIR ! la function page et le reste !
     }
 
     function sendPass () {
-        // Liste les request autorisé
+        // -> list request authorized
         $arrayRequest = array('mail', 'token');
         foreach ($arrayRequest as $key) {
             if (!array_key_exists($key, $_REQUEST)) {
@@ -1714,6 +1911,10 @@ A REVOIR ! la function page et le reste !
 
         case"saveJquery":
             saveJquery();
+            break;
+
+        case"sendUsers":
+            sendUsers();
             break;
 
         case"formLogin":

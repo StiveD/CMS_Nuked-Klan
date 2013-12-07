@@ -58,15 +58,19 @@ $arrayModLang = array(
     # USER - function Home H3
     #####################################
     'HISTORY_NICKNAME_USED'  => 'Historique pseudo(s) utilis&eacute;(s)',
+    'INFOS_GEN'              => 'Informations générales',
+    'PREFS'                  => 'Préférence',
     'NO_OLD_NICKNAME'        => 'Vous n&rsquo;avez utilis&eacute; aucun autre pseudo.',
     'NO_COMMENT_IN_DATABASE' => 'Aucun commentaire dans la base de donn&eacute;es',
     'NO_POST_IN_DATABASE'    => 'Aucun message dans la base de donn&eacute;es',
-    #####################################
-    # USER - function Home H3
-    #####################################
     'SOCIAL_NETWORKS'        => 'R&eacute;seaux Sociaux',
     'GAMING'                 => 'Gaming / Esport',
     'HARDWARE_CONFIG'        => 'Configuration Materiel',
+    #####################################
+    # USER - function Home title
+    #####################################
+    'LOGOUT'                 => 'D&eacute;connexion',
+    'ACCOUNT_OPTION'         => 'Option du compte',
     #####################################
     # USER - function Pref General
     #####################################

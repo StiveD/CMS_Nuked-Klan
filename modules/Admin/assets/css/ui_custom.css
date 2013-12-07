@@ -402,12 +402,12 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 
 /* ===== UI Datepicker ===== */
 
-.datepicker { width: 78px!important; }
+.datepicker { width: 78px!important; z-index: 3500001;}
 .datesRange li { float:left; }
 .datesRange li.separator { margin: 0 10px; color: #ddd; }
 .datesRange li input[type=text] { width: 78px!important; }
 .ui-datepicker-append { margin-left: 14px; font-size: 11px; line-height: 26px; }
-.ui-datepicker { width: 195px; /*padding: .2em .2em 0;*/ display: none; border: 1px solid #CDCDCD; }
+.ui-datepicker { width: 195px; /*padding: .2em .2em 0;*/ display: none; border: 1px solid #CDCDCD; z-index: 3500001 !important}
 .ui-datepicker-inline { width: 100%; box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; margin-top: 35px; }
 #sidebar .ui-datepicker-inline, .widget .ui-datepicker-inline { margin-top: 0; }
 .formRow .ui-datepicker-inline { width: 195px; }

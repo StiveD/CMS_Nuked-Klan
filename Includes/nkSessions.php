@@ -89,7 +89,7 @@ function secure(){
             }
 
             if (empty($dataUser['avatar'])) {
-                $dataUser['avatar'] = 'assets/images/noAvatar.png';
+                $dataUser['avatar'] = 'assets/images/nkNoAvatar.png';
             }
 
             if(!empty($dataUser['ids_group'])){
