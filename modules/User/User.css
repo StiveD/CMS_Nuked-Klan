@@ -44,6 +44,9 @@
 .icon-info:before {
     content: "\e607";
 }
+.icon-globe:before {
+    content: "\e60e";
+}
 .icon-chevron-right:before {
     content: "\e609";
 }
@@ -58,6 +61,10 @@
 }
 .icon-power-outline:before {
     content: "\e608";
+}
+.icon-group-outline:before {
+    content: "\e60f";
+    font-size: 18px;
 }
 .icon-arrow-right:before {
     content: "\e60d";

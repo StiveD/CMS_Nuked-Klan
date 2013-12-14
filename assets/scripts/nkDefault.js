@@ -159,17 +159,20 @@ $(document).ready(function(){
             return false;
         });
     }
-    // -> change page in jquery
+    // -> initialize mods users
     function modsUsers() {
+        // -> close modal user
         closeModalFull();
-        // -> tabs
-        $('#tab-container').easytabs({
-            animationSpeed: 300,
-            collapsible: false,
-            tabActiveClass: "clicked"
-        });
-        // -> popup edit
+        // -> initialize popup edit
         editUsers();
+        // -> initialize change page
+        switchPage();
+        // -> initialize easyTabs
+        easyTabs();
+        // -> initialize action double click for edit
+        dblclickEdit();
+    }
+    function switchPage() {
         $('#modsUser').on('click', '.jqueryLinksSwtich', function(event) {
             event.preventDefault();
             // -> variables
@@ -187,10 +190,10 @@ $(document).ready(function(){
                     // -> success
                     success:function(data) {
                         $('#jquerySections').empty().append(data).fadeIn(450);
-                        modsUsers();
-                        tooltips();
                     }, // -> end success
                     complete:function() {
+                        tooltips();
+                        easyTabs();
                     }
                 }); // -> end ajax
             });
@@ -198,19 +201,28 @@ $(document).ready(function(){
             $('#jqueryIcon').removeAttr('class').attr('class', icon);
         });
     }
+    function easyTabs() {
+        $('#tab-container').easytabs({
+            animationSpeed: 300,
+            collapsible: false,
+            tabActiveClass: "clicked"
+        });
+    }
     function editUsers() {
         // -> variables
-        var getUrlSave = 'index.php?file=User&nuked_nude=index&op=saveJquery';
-        // -> insert div#jqueryDataInput
         var testIdDataInput = $("#testIdDataInput");
+        // -> insert div#jqueryDataInput
         if (testIdDataInput.length) {
             testIdDataInput.empty();
         } else {
             $('<div id="jqueryDataInput"></div>').prependTo('section#modsUser');
         }
+    }
+    function dblclickEdit() {
         // -> double click
         $('#modsUser form .contentInfos > div, .jqueryEdit').dblclick(function() {
             // -> variables
+            var getUrlSave = 'index.php?file=User&nuked_nude=index&op=saveJquery';
             var value  = $(this).data('value');
             var title  = $(this).data('title');
             var name   = $(this).data('name');
@@ -286,8 +298,7 @@ $(document).ready(function(){
                                 .val(dataLogin.redirectedName);
                         }, 1000);
                         setTimeout(function() {
-                            $('#jqueryDataInput').dialog("destroy");
-                            $('.ui-dialog').remove();
+                            $(".ui-dialog-content").dialog("close");
                         }, 3000);
                         setTimeout(function() {
                             var getUrl = 'index.php?file=User&nuked_nude=index&op=home';
@@ -301,9 +312,9 @@ $(document).ready(function(){
                                     // -> success
                                     success:function(data) {
                                         $('#jquerySections').empty().append(data).fadeIn(450);
-                                        modsUsers();
                                         tooltips();
-                                        editUsers();
+                                        easyTabs();
+                                        dblclickEdit();
                                     }, // -> end success
                                 }); // -> end ajax
                             });

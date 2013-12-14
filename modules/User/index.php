@@ -358,7 +358,7 @@ nkTranslate('modules/User/lang/'.$GLOBALS['language'].'.lang.php');
                 $arrayAllDataUser[$key] = (isset($arrayAllDataUser[$key])) ? $arrayAllDataUser[$key] : UNKNOWN;
                 $tmpStatsName .= '  <span>'.$name.'</span> '."\n";
                 if ($key == 'ip') {
-                    $tmpStatsValue .= ' <a class="tipE" href="#" original-title="'.$arrayAllDataUser[$key].'"><span class="icon-cog"></span></a> '."\n";
+                    $tmpStatsValue .= ' <a class="tipE" href="#" original-title="'.$arrayAllDataUser[$key].'"><span class="icon-globe"></span></a> '."\n";
                 }
                 else if ($key == 'administrators') {
                     if (nkHasAdmin()) {
@@ -374,7 +374,7 @@ nkTranslate('modules/User/lang/'.$GLOBALS['language'].'.lang.php');
                     foreach ($tmpGroups as $key) {
                         $tmpTitleGroup .= $nameGroups[$key]['name'].'<br> '."\n";
                     }
-                    $tmpStatsValue .= ' <a class="tipE" href="#" original-title="'.$tmpTitleGroup.'"><span class="icon-cog"></span></a> '."\n";
+                    $tmpStatsValue .= ' <a class="tipE" href="#" original-title="'.$tmpTitleGroup.'"><span class="icon-group-outline"></span></a> '."\n";
                 } else {
                     $tmpStatsValue .= ' <span>'.$arrayAllDataUser[$key].'</span> '."\n";
                 }
@@ -809,22 +809,26 @@ A REVOIR ! la function page et le reste !
             if ($_REQUEST['name'] == 'avatar') {
                 $value[$select] = (empty($value[$select])) ? 'assets/images/nkNoAvatar.png' : $value[$select];
                 $input = '<img src="'.$value[$select].'" alt="'.$value[$select].'">';
+                $inputHiddenName = '<input name="jQuerySave" type="hidden" value="'.$_REQUEST['name'].'">';
             }
             else if ($_REQUEST['name'] == 'password') {
                 $input = '<input name="'.$_REQUEST['name'].'" placeholder="A remplir uniquement si vous désirer changer" type="password">';
+                $inputHiddenName = '<input name="jQuerySave" type="hidden" value="'.$_REQUEST['name'].'">';
             }
             else if ($_REQUEST['name'] == 'country') {
                 foreach ($arrayNameFlags as $key => $valueCountry) {
                     $optTmp .= '<option value="'.$valueCountry.'">'.$key.'</option> '."\n";
                 }
                 $explode = explode ('.', $value[$select]);
-                $input = '  <select data-placeholder="Chosisez votre pays" class="jQueryChosen">
+                $input = '  <select name="'.$_REQUEST['name'].'" data-placeholder="Chosisez votre pays" class="jQueryChosen">
                                 <option value="'.$value[$select].'">'.$explode[0].'</option>
                                 '.$optTmp.'
                             </select>';
+                $inputHiddenName = '<input name="jQuerySave" type="hidden" value="'.$_REQUEST['name'].'">';
             }
             else {
                 $input = '<input name="'.$_REQUEST['name'].'" placeholder="'.$placeholder.'" type="text" value="'.$value[$select].'">';
+                $inputHiddenName = '<input name="jQuerySave" type="hidden" value="'.$_REQUEST['name'].'">';
             }
         }
         // -> list material
@@ -942,30 +946,51 @@ A REVOIR ! la function page et le reste !
         }
         // -> list user infos
         if (array_key_exists($_REQUEST['jQuerySave'], $arrayListUsers)) {
-            //$_REQUEST[$_REQUEST['jQuerySave']]
+            $tmpSet = '';
+            if ($_REQUEST['jQuerySave'] == 'pseudo') {
+                // ->   sql select last pseudo
+                $dbsUser          = ' SELECT pseudo, last_pseudo
+                                      FROM   '.USERS_TABLE.'
+                                      WHERE  id  = "'.$GLOBALS['user']['id'].'" ';
+                $dbeUser          =   mysql_query($dbsUser);
+                $value            =   mysql_fetch_assoc($dbeUser);
+                $arrayLastPseudo = (empty($value['last_pseudo'])) ? array() : explode(",", $value['last_pseudo']);
+                array_push($arrayLastPseudo, $value['pseudo']);
+                $arrayLastPseudo = array_unique($arrayLastPseudo);
+                $arrayLastPseudo = implode(",", $arrayLastPseudo);
+                $tmpSet = ',last_pseudo = "'.$arrayLastPseudo.'" ';
+            }
+            $dbuUser  = ' UPDATE '.USERS_TABLE.'
+                          SET '.$_REQUEST['jQuerySave'].' = "'.$_REQUEST[$_REQUEST['jQuerySave']].'" '.$tmpSet.'
+                          WHERE id = "'.$GLOBALS['user']['id'].'" ';
+            $dbeUser  =   mysql_query($dbuUser);
+
+            $data = array(
+               'errorMsg'       => nkUtf8Encode('Sauvegarde en cours...'),
+               'redirectLink'   => '#',
+               'redirectedName' => nkUtf8Encode('Sauvegarder avec succès'),
+            );
         }
         // -> list material
         else if (array_key_exists($_REQUEST['jQuerySave'], $arrayListMaterial)) {
             // ->   sql select data $_REQUEST['name']
-            $dbsUser            = ' SELECT count(user_id)
+            $dbcUserId          = ' SELECT count(user_id) AS count
                                     FROM   '.USERS_DETAIL_TABLE.'
                                     WHERE  user_id  = "'.$GLOBALS['user']['id'].'" ';
-            $dbeUser            =   mysql_query($dbsUser);
-            $value              =   mysql_fetch_assoc($dbeUser);
-            if(empty($value)) {
-                $dbiUserDetail  = ' INSERT INTO '.USERS_DETAIL_TABLE.'  (
-                                                                            `user_id`, `'.$_REQUEST['jQuerySave'].'`)
-                                    VALUES                              (
-                                                                            "'.$GLOBALS['user']['id'].'", "'.$_REQUEST[$_REQUEST['jQuerySave']].'"
-                                                                        )';
+            $dbeUserId          =   mysql_query($dbcUserId);
+            $value              =   mysql_fetch_assoc($dbeUserId);
+            if(empty($value['count'])) {
+                $dbiUserDetail  = ' INSERT INTO '.USERS_DETAIL_TABLE.'  ( `user_id` , `'.$_REQUEST['jQuerySave'].'` )
+                                    VALUES ( "'.$GLOBALS['user']['id'].'" , "'.$_REQUEST[$_REQUEST['jQuerySave']].'" )';
                 $dbeUserDetail  =   mysql_query($dbiUserDetail);
             }
             else {
                 $dbuUser  = ' UPDATE '.USERS_DETAIL_TABLE.'
                               SET '.$_REQUEST['jQuerySave'].' = "'.$_REQUEST[$_REQUEST['jQuerySave']].'"
-                              WHERE user_id = '.$GLOBALS['user']['id'].' ';
+                              WHERE user_id = "'.$GLOBALS['user']['id'].'" ';
                 $dbeUser  =   mysql_query($dbuUser);
             }
+
             $data = array(
                'errorMsg'       => nkUtf8Encode('Sauvegarde en cours...'),
                'redirectLink'   => '#',
