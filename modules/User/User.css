@@ -489,6 +489,7 @@
                         }
                             section#modsUser > article section > #usersContent > .column > div form#infosGen {
                                 display: block;
+                                position: relative;
                             }
                                 section#modsUser > article section > #usersContent > .column > div form h3 {
                                     color: rgba(99, 99, 99, 1);
@@ -503,6 +504,7 @@
                                     font-size: 18px;
                                     width: 100%;
                                     margin: 10px auto;
+                                    text-transform: capitalize;
                                 }
                                 section#modsUser > article section > #usersContent > .column > div form#infosGen img  {
                                     display: inline-block;
@@ -522,6 +524,36 @@
                                     background: linear-gradient(to bottom, rgba(252,252,252,1) 0%,rgba(221,221,221,1) 100%);
                                     padding: 1px;
                                     margin-left: 15px;
+                                }
+                                #avatarFile {
+                                    height: 105px;
+                                    margin-left: -110px;
+                                    margin-top: 1px;
+                                    opacity: 0;
+                                    position: absolute;
+                                    width: 106px;
+                                    z-index: 4000;
+                                    cursor: pointer;
+                                }
+                                #msgavatarFile {
+                                    opacity: 0;
+                                    background: rgba(0, 0, 0, .3);
+                                    margin-left: -110px;
+                                    margin-top: 86px;
+                                    position: absolute;
+                                    width: 106px;
+                                    z-index: 5000;
+                                    line-height:  20px;
+                                    font-size: 11px;
+                                    text-align: center;
+                                }
+                                #avatarFile:hover + #msgavatarFile {
+                                    opacity: 1;
+                                    -webkit-transition: all .5s ease-in-out;
+                                       -moz-transition: all .5s ease-in-out;
+                                        -ms-transition: all .5s ease-in-out;
+                                         -o-transition: all .5s ease-in-out;
+                                            transition: all .5s ease-in-out;
                                 }
                                 section#modsUser > article section > #usersContent > .column > div form > .contentInfos,
                                 section#modsUser > article section > #usersContent > .column > div form > .contentInfosSubpage {
@@ -778,31 +810,93 @@
                         vertical-align: top;
                         width: 50%;
                     }
-                        aside.userbox div:first-child {
-                            text-align: right;
-                            padding-right: 5px;
+                        aside.userbox .full {
+                            display: block;
+                            width: 100%;
                         }
-                            article.userbox > section > aside div:first-child p {
+                        /* -> Progress Bar */
+                        #progressBar {
+                            text-align: right;
+                        }
+                            #progressBar p {
                                 display: inline-block;
                             }
-                            #progressBar {
+                            .progressBar {
                                 display: inline-block;
                                 width: 200px;
-                                height: 8px;
+                                background: none repeat scroll 0 0 #E6E6E6;
+                                border: 1px solid #CCCCCC;
+                                box-shadow: 0 1px 0 #FFFFFF, 0 1px 0 #DDDDDD inset;
+                                border-radius: 6px;
+                                height: 4px;
                             }
-                            #progressBar span {
+                            .progressBar span {
                                 display: block;
-                                height: 8px;
-                                background: rgb(208,241,102);
-                                width: attr(data-pourcent);
-                                background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2QwZjE2NiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNhYmNiMmEiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
-                                background: -moz-linear-gradient(top, rgba(208,241,102,1) 0%, rgba(171,203,42,1) 100%);
-                                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(208,241,102,1)), color-stop(100%,rgba(171,203,42,1)));
-                                background: -webkit-linear-gradient(top, rgba(208,241,102,1) 0%,rgba(171,203,42,1) 100%);
-                                background: -o-linear-gradient(top, rgba(208,241,102,1) 0%,rgba(171,203,42,1) 100%);
-                                background: -ms-linear-gradient(top, rgba(208,241,102,1) 0%,rgba(171,203,42,1) 100%);
-                                background: linear-gradient(to bottom, rgba(208,241,102,1) 0%,rgba(171,203,42,1) 100%);
+                                height: 3px;
+                                border-radius: 6px;
+                                height: 4px;
                             }
+                            .barG, .barB, .barO, .barBl, .barGr, .barR {
+                                background: url("../../assets/images/progress.png") repeat-x scroll 0 0 rgba(0, 0, 0, 0);
+                                border: 1px solid;
+                                margin: -1px 0 0 -1px;
+                                width: 0;
+                            }
+                            .barG {
+                                background-position: 0 0;
+                                border-color: #97AF32;
+                            }
+                            .barB {
+                                background-position: 0 -5px;
+                                border-color: #5F9FCE;
+                            }
+                            .barO {
+                                background-position: 0 -10px;
+                                border-color: #D28346;
+                            }
+                            .barBl {
+                                background-position: 0 -15px;
+                                border-color: #4C4C4C;
+                            }
+                            .barGr {
+                                background-position: 0 -20px;
+                                border-color: #7B7B7B;
+                            }
+                            .barR {
+                                background-position: 0 -25px;
+                                border-color: #C8514E;
+                            }
+
+                            ul#navUserbox {
+                                display: inline-block;
+                                margin: 10px 0;
+                                padding: 0;
+                                width: 50%;
+                                vertical-align: top;
+                            }
+                                ul#navUserbox li {
+                                    display: inline-block;
+                                    list-style: none;
+                                    background: rgb(234,234,237);
+                                    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2VhZWFlZCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNjZWNmZDIiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+                                    background: -moz-linear-gradient(top, rgba(234,234,237,1) 0%, rgba(206,207,210,1) 100%);
+                                    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(234,234,237,1)), color-stop(100%,rgba(206,207,210,1)));
+                                    background: -webkit-linear-gradient(top, rgba(234,234,237,1) 0%,rgba(206,207,210,1) 100%);
+                                    background: -o-linear-gradient(top, rgba(234,234,237,1) 0%,rgba(206,207,210,1) 100%);
+                                    background: -ms-linear-gradient(top, rgba(234,234,237,1) 0%,rgba(206,207,210,1) 100%);
+                                    background: linear-gradient(to bottom, rgba(234,234,237,1) 0%,rgba(206,207,210,1) 100%);
+                                    border: 1px solid rgba(140, 140, 140, 1);
+                                    border-radius: 4px 4px 4px 4px;
+                                    -moz-border-radius: 4px 4px 4px 4px;
+                                    -webkit-border-radius: 4px 4px 4px 4px;
+                                }
+                                    ul#navUserbox li a {
+                                        line-height: 22px;
+                                        display: block;
+                                        padding: 0 15px;
+                                        color: rgba(121, 121, 121, 1);
+                                        text-decoration: none;
+                                    }
 
                 section#modsUser > article section > article.userbox {
                     border-left: 1px inset rgba(0, 0, 0, 0.12);
@@ -810,7 +904,6 @@
                     height: 100%;
                     min-width: 50%;
                 }
-
 
 section#modsUser input[type="text"] {
 height: 17px;

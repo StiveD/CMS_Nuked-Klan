@@ -153,10 +153,11 @@ nkTranslate('modules/User/lang/'.$GLOBALS['language'].'.lang.php');
                                             signature,
                                             country,
                                             ids_group AS groups,
+                                            last_pseudo AS lastPseudo,
                                             ip,
                                             prenom AS first_name,
                                             age AS date_of_birth,
-                                            sexe AS sex,
+                                            sexe AS gender,
                                             ville AS city,
                                             photo,
                                             motherboard,
@@ -382,13 +383,15 @@ nkTranslate('modules/User/lang/'.$GLOBALS['language'].'.lang.php');
             $arrayAllDataUser['avatar'] = (empty($arrayAllDataUser['avatar'])) ? 'assets/images/nkNoAvatar.png' : $arrayAllDataUser['avatar'];
 ?>
                     <div id="usersContent">
-                        <?php subMenu(true, true); ?>
+                        <?php subMenu(true, true, $arrayAllDataUser['lastPseudo']); ?>
                         <div class="column">
                             <div>
                                 <form id="infosGen">
                                     <h3><?php echo INFOS_GEN; ?></h3>
                                     <div data-title="Pseudo" data-name="pseudo" class="title jqueryEdit"><?php echo $arrayAllDataUser['pseudo']; ?></div>
                                     <img class="jqueryEdit" data-title="avatar" data-name="avatar" src="<?php echo $arrayAllDataUser['avatar']; ?>" alt="<?php echo $arrayAllDataUser['pseudo']; ?>">
+                                    <input id="avatarFile" type="file" name="avatar">
+                                    <span id="msgavatarFile">Upload un avatar</span>
                                     <div class="contentInfos">
                                         <?php echo $tmpDivGen; ?>
                                     </div>
@@ -701,11 +704,36 @@ A REVOIR ! la function page et le reste !
     function privateMsg () {
 ?>
             <aside class="userbox">
-                <div>
-                    <p>Espace utilisé 12%</p>
-                    <div class="progressBar">
-                        <span data-pourcent="12"></span>
+                <div class="full">
+                    <div id="progressBar">
+                        <p>Espace utilisé 25%</p>
+                        <div class="progressBar">
+                            <span style="width:25%;" class="barB tipS" original-title="25%" data-pourcent="25"></span>
+                        </div>
                     </div>
+
+                    <ul id="navUserbox">
+                        <li>
+                            <a class="tipS jqueryLinksSwtich" data-icon="icon-home" href="#home" title="Accueil">
+                                <i class="icon-menu"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="tipS jqueryLinksSwtich" title="Effacer" href="#">
+                                <i class="icon-trash"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="tipS" href="#" title="Nouveau">
+                                <i class="icon-pen"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="tipS jqueryLinksSwtich" title="Option du compte" data-icon="icon-cog" data-title="Option du compte" href="#accountOption">
+                                <i class="icon-cog"></i>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </aside>
 
@@ -715,7 +743,7 @@ A REVOIR ! la function page et le reste !
 <?php
     }
 
-    function subMenu ($oldName, $ddclick) {
+    function subMenu ($oldName, $ddclick, $lastPseudo = null) {
 ?>
                         <div class="full">
                             <ul>
@@ -742,16 +770,17 @@ A REVOIR ! la function page et le reste !
                             </ul>
 <?php
                             if ($oldName === true):
+                                $lastPseudo = explode(',', $lastPseudo);
 ?>
                             <ul>
                                 <li><?php echo HISTORY_NICKNAME_USED; ?></li>
 <?php
-                                if (empty($GLOBALS['arrayUserInfos']['oldPseudo'])):
+                                if (empty($lastPseudo)):
 ?>
                                 <li><?php echo NO_OLD_NICKNAME; ?></li>
 <?php
                                 else:
-                                foreach ($GLOBALS['arrayUserInfos']['oldPseudo'] as $key):
+                                foreach ($lastPseudo as $key):
 ?>
                                     <li><?php echo $key; ?></li>
 <?php
@@ -784,6 +813,8 @@ A REVOIR ! la function page et le reste !
             }
         }
         if (!nkHasVisitor()) { require_once'modules/User/array.php'; }
+
+        debug($_FILES);
 
         $arrayTmp        = null;
         $dbsShowColumn   = ' SHOW COLUMNS FROM '.$GLOBALS['nuked']['prefix'].'_users_profils ';
@@ -946,6 +977,7 @@ A REVOIR ! la function page et le reste !
         }
         // -> list user infos
         if (array_key_exists($_REQUEST['jQuerySave'], $arrayListUsers)) {
+            $name = $arrayListUsers[$_REQUEST['jQuerySave']];
             $tmpSet = '';
             if ($_REQUEST['jQuerySave'] == 'pseudo') {
                 // ->   sql select last pseudo
@@ -961,7 +993,7 @@ A REVOIR ! la function page et le reste !
                 $tmpSet = ',last_pseudo = "'.$arrayLastPseudo.'" ';
             }
             $dbuUser  = ' UPDATE '.USERS_TABLE.'
-                          SET '.$_REQUEST['jQuerySave'].' = "'.$_REQUEST[$_REQUEST['jQuerySave']].'" '.$tmpSet.'
+                          SET '.$name.' = "'.$_REQUEST[$_REQUEST['jQuerySave']].'" '.$tmpSet.'
                           WHERE id = "'.$GLOBALS['user']['id'].'" ';
             $dbeUser  =   mysql_query($dbuUser);
 
@@ -973,30 +1005,29 @@ A REVOIR ! la function page et le reste !
         }
         // -> list material
         else if (array_key_exists($_REQUEST['jQuerySave'], $arrayListMaterial)) {
-            // ->   sql select data $_REQUEST['name']
+            $name = $arrayListMaterial[$_REQUEST['jQuerySave']];
+            // ->   sql select count
             $dbcUserId          = ' SELECT count(user_id) AS count
                                     FROM   '.USERS_DETAIL_TABLE.'
                                     WHERE  user_id  = "'.$GLOBALS['user']['id'].'" ';
             $dbeUserId          =   mysql_query($dbcUserId);
             $value              =   mysql_fetch_assoc($dbeUserId);
             if(empty($value['count'])) {
-                $dbiUserDetail  = ' INSERT INTO '.USERS_DETAIL_TABLE.'  ( `user_id` , `'.$_REQUEST['jQuerySave'].'` )
+                $dbiUserDetail  = ' INSERT INTO '.USERS_DETAIL_TABLE.'  ( `user_id` , `'.$name.'` )
                                     VALUES ( "'.$GLOBALS['user']['id'].'" , "'.$_REQUEST[$_REQUEST['jQuerySave']].'" )';
                 $dbeUserDetail  =   mysql_query($dbiUserDetail);
             }
             else {
                 $dbuUser  = ' UPDATE '.USERS_DETAIL_TABLE.'
-                              SET '.$_REQUEST['jQuerySave'].' = "'.$_REQUEST[$_REQUEST['jQuerySave']].'"
+                              SET '.$name.' = "'.$_REQUEST[$_REQUEST['jQuerySave']].'"
                               WHERE user_id = "'.$GLOBALS['user']['id'].'" ';
                 $dbeUser  =   mysql_query($dbuUser);
             }
-
             $data = array(
                'errorMsg'       => nkUtf8Encode('Sauvegarde en cours...'),
                'redirectLink'   => '#',
                'redirectedName' => nkUtf8Encode('Sauvegarder avec succès'),
             );
-
 
 /*
 Assemble INSERT + UPDATE Demande a Samoth !
@@ -1009,13 +1040,37 @@ Assemble INSERT + UPDATE Demande a Samoth !
         }
         // -> list additional column
         else if (array_key_exists($_REQUEST['jQuerySave'], $arrayAdditional)) {
-            debug($_REQUEST[$_REQUEST['jQuerySave']]);
+            // ->   sql select count
+            $dbcUserId          = ' SELECT count(user_id) AS count
+                                    FROM '.$GLOBALS['nuked']['prefix'].'_users_profils
+                                    WHERE  user_id  = "'.$GLOBALS['user']['id'].'" ';
+            $dbeUserId          =   mysql_query($dbcUserId);
+            $value              =   mysql_fetch_assoc($dbeUserId);
+            if(empty($value['count'])) {
+                $dbiUserDetail  = ' INSERT INTO '.$GLOBALS['nuked']['prefix'].'_users_profils ( `user_id` , `'.$name.'` )
+                                    VALUES ( "'.$GLOBALS['user']['id'].'" , "'.$_REQUEST[$_REQUEST['jQuerySave']].'" )';
+                $dbeUserDetail  =   mysql_query($dbiUserDetail);
+            }
+            else {
+                $dbuUser  = ' UPDATE '.$GLOBALS['nuked']['prefix'].'_users_profils
+                              SET '.$_REQUEST['jQuerySave'].' = "'.$_REQUEST[$_REQUEST['jQuerySave']].'"
+                              WHERE user_id = "'.$GLOBALS['user']['id'].'" ';
+                $dbeUser  =   mysql_query($dbuUser);
+            }
+            $data = array(
+               'errorMsg'       => nkUtf8Encode('Sauvegarde en cours...'),
+               'redirectLink'   => '#',
+               'redirectedName' => nkUtf8Encode('Sauvegarder avec succès'),
+            );
         }
         else {
-            'ERROR !!';
+            $data = array(
+               'errorMsg'       => nkUtf8Encode('Sauvegarde en cours...'),
+               'redirectLink'   => '#',
+               'redirectedName' => nkUtf8Encode('Une erreur est survenue'),
+            );
         }
         echo json_encode($data);
-
     }
     function formLogin () {
         if (nkHasVisitor()) {
