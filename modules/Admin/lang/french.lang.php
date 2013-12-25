@@ -16,35 +16,35 @@ $arrayAdminLang = array(
     #####################################
     # Admin - Panel
     #####################################
-    'ADMIN_PANEL_TITLE'    => 'Panel d\'administration',
-    'PANEL'                => 'Panneau',
-    'MANAGEMENTS'          => 'Gestions',
-    'GENERAL_SETTINGS'     => 'Pr&eacute;f&eacute;rences g&eacute;n&eacute;rales',
-    'MYSQL'                => 'MySql',
-    'PHPINFO'              => 'PHP Info',
-    'ACTIONS'              => 'Actions',
-    'SQL_ERRORS'           => 'Erreurs SQL',
-    'OFFICIAL_FORUM'       => 'Forum officiel Nuked-KLan',
-    'ABOUT'                => 'A propos',
-    'LICENSE'              => 'Licence',
-    'VISITS'               => 'Visites',
-    'PAGES_VIEWS'          => 'Pages vues',
-    'STATS'                => 'Statistiques',
-    'CLOSE'                => 'Fermer',
+    'ADMIN_PANEL_TITLE'         => 'Panel d\'administration',
+    'PANEL'                     => 'Panneau',
+    'MANAGEMENTS'               => 'Gestions',
+    'GENERAL_SETTINGS'          => 'Pr&eacute;f&eacute;rences g&eacute;n&eacute;rales',
+    'MYSQL'                     => 'MySql',
+    'PHPINFO'                   => 'PHP Info',
+    'ACTIONS'                   => 'Actions',
+    'SQL_ERRORS'                => 'Erreurs SQL',
+    'OFFICIAL_FORUM'            => 'Forum officiel Nuked-KLan',
+    'ABOUT'                     => 'A propos',
+    'LICENSE'                   => 'Licence',
+    'VISITS'                    => 'Visites',
+    'PAGES_VIEWS'               => 'Pages vues',
+    'STATS'                     => 'Statistiques',
+    'CLOSE'                     => 'Fermer',
     #####################################
     # Admin - Login page
     #####################################
-    'CHECK_IN_PROGRESS'    => 'V&eacute;rification en cours...',
-    'EMPTY_FIELDS'         => 'Vous devez remplir tous les champs !',
-    'BAD_MAIL'             => 'L\'adresse e-mail ne correspond pas !',
-    'BAD_PASSWORD'         => 'Le mot de passe ne correspond pas !',
-    'LOGIN_SUCCESS'        => 'Connexion r&eacute;ussie, vous allez &ecirc;tre redirig&eacute; !',
+    'CHECK_IN_PROGRESS'         => 'V&eacute;rification en cours...',
+    'EMPTY_FIELDS'              => 'Vous devez remplir tous les champs !',
+    'BAD_MAIL'                  => 'L\'adresse e-mail ne correspond pas !',
+    'BAD_PASSWORD'              => 'Le mot de passe ne correspond pas !',
+    'LOGIN_SUCCESS'             => 'Connexion r&eacute;ussie, vous allez &ecirc;tre redirig&eacute; !',
     #####################################
     # Admin - Home page
     #####################################
-    'NEWS_NKORG'           => 'Actualit&eacute;s de Nuked-Klan.org',
-    'NK_UPDATE'            => 'Mis &agrave; jour du CMS',
-    'VERSION_UP_TO_DATE'   => 'Votre version de Nuked-Klan est &agrave; jour !',
+    'NEWS_NKORG'                => 'Actualit&eacute;s de Nuked-Klan.org',
+    'NK_UPDATE'                 => 'Mis &agrave; jour du CMS',
+    'VERSION_UP_TO_DATE'        => 'Votre version de Nuked-Klan est &agrave; jour !',
     #####################################
     # Admin - General Settings
     #####################################
@@ -126,18 +126,121 @@ $arrayAdminLang = array(
     #####################################
     # Admin - Smilies Management
     #####################################
-    'SMILIES_MANAGEMENT'   => 'Gestion des &eacute;moticones',
-    'SMILEY'               => 'Emoticone',
-    'CODE'                 => 'Code',
-    'SMILEY_ADD'           => 'Ajouter un &eacute;moticone',
-    'UPLOAD_SMILEY'        => 'Envoyer un &eacute;moticone',
-    'SMILEY_DELETED'       => 'Smiley supprim&eacute; avec succ&egrave;s',
-    'SMILEY_UPLOAD_FAILED' => 'Une erreur est survenue lors de l\'upload du smiley',
-    'DELETE_SMILEY'        => 'Supprimer le smiley ',
-    'SMILEY_ADDED'         => 'Smiley ajout&eacute; avec succ&egrave;s',
-    'SMILEY_EDITED'        => 'Smiley modifi&eacute; avec succ&egrave;s',
-    'SMILEY_BAD_CODE'      => 'Le code de l\'&eacute;moticone ne peut contenir de quotes (\' ou ") et ne peut &ecirc;tre &eacute;gale au nom',
-    'BAD_IMAGE_FILE'       => 'L\'image que vous avez envoyé n\'est pas valide, seules les extensions JPG, PNG et GIF sont autorisées',
+    'SMILIES_MANAGEMENT'        => 'Gestion des &eacute;moticones',
+    'SMILEY'                    => 'Emoticone',
+    'CODE'                      => 'Code',
+    'SMILEY_ADD'                => 'Ajouter un &eacute;moticone',
+    'UPLOAD_SMILEY'             => 'Envoyer un &eacute;moticone',
+    'SMILEY_DELETED'            => 'Smiley supprim&eacute; avec succ&egrave;s',
+    'SMILEY_UPLOAD_FAILED'      => 'Une erreur est survenue lors de l\'upload du smiley',
+    'DELETE_SMILEY'             => 'Supprimer le smiley ',
+    'SMILEY_ADDED'              => 'Smiley ajout&eacute; avec succ&egrave;s',
+    'SMILEY_EDITED'             => 'Smiley modifi&eacute; avec succ&egrave;s',
+    'SMILEY_BAD_CODE'           => 'Le code de l\'&eacute;moticone ne peut contenir de quotes (\' ou ") et ne peut &ecirc;tre &eacute;gale au nom',
+    'BAD_IMAGE_FILE'            => 'L\'image que vous avez envoyé n\'est pas valide, seules les extensions JPG, PNG et GIF sont autorisées',
+    #####################################
+    # Admin - Smilies Management
+    #####################################
+    'SMILIES_MANAGEMENT'        => 'Gestion des &eacute;moticones',
+    'SMILEY'                    => 'Emoticone',
+    'CODE'                      => 'Code',
+    'SMILEY_ADD'                => 'Ajouter un &eacute;moticone',
+    'UPLOAD_SMILEY'             => 'Envoyer un &eacute;moticone',
+    'SMILEY_DELETED'            => 'Smiley supprim&eacute; avec succ&egrave;s',
+    'SMILEY_UPLOAD_FAILED'      => 'Une erreur est survenue lors de l\'upload du smiley',
+    'DELETE_SMILEY'             => 'Supprimer le smiley ',
+    'SMILEY_ADDED'              => 'Smiley ajout&eacute; avec succ&egrave;s',
+    'SMILEY_EDITED'             => 'Smiley modifi&eacute; avec succ&egrave;s',
+    'SMILEY_BAD_CODE'           => 'Le code de l\'&eacute;moticone ne peut contenir de quotes (\' ou ") et ne peut &ecirc;tre &eacute;gale au nom',
+    'BAD_IMAGE_FILE'            => 'L\'image que vous avez envoyé n\'est pas valide, seules les extensions JPG, PNG et GIF sont autorisées',
+    #####################################
+    # Admin - Users Management - Main
+    #####################################
+    'USERS_MANAGEMENT'          => 'Gestion des utilisateurs',
+    'USER_ADD'                  => 'Ajouter un utilisateur',
+    'NICK_USER'                 => 'Pseudo',
+    'GROUPS_MAIN'               => 'Groupe principal',
+    'DATE_USER'                 => 'Date d\'arriv&eacute;e',
+    'LAST_USER'                 => 'Derni&egrave;re visite',
+    #####################################
+    # Admin - Users Management - formUser
+    #####################################
+    'SUBMIT_USER_ADD'           => '',
+    'USERS_EDITED'              => '',
+    'TEAM'                      => 'Team',
+    'PASSWORD'                  => 'Mot de passe',
+    'CONFIRM_PASS'              => 'Confirmer votre mot de passe',
+    'MAIL_PRIVATE'              => 'Courriel Privé',
+    'MAIL_PUBLIC'               => 'Courriel Public',
+    'WEBSITE'                   => 'Site web',
+    'COUNTRY'                   => 'Pays',
+    'AVATAR'                    => 'Avatar',
+
+    'FIRSTNAME'                 => 'Prénom',
+    'BIRTHDAY'                  => 'Âge',
+    'SEX'                       => 'Sexe',
+    'CITY'                      => 'Ville',
+    'SHOT'                      => 'Photo',
+    'SIGNING'                   => 'Signature',
+
+    'MOTHERBOARD'               => 'Carte mère',
+    'CPU'                       => 'Processeur',
+    'RAM'                       => 'Mémoire',
+    'GPU'                       => 'Carte Vidéo',
+    'RESOLUTION'                => 'Résolution',
+    'SOUNDCARD'                 => 'Carte son',
+    'SCREEN'                    => 'Ecran',
+    'MOUSE'                     => 'Souris',
+    'KEYBOARD'                  => 'Clavier',
+    'CONNECTION'                => 'Connexion',
+    'OS'                        => 'Systeme OS',
+    #####################################
+    # Admin - Users Management - MainValidatedUser
+    #####################################
+    'TIME_REMNANT'              => 'Temps restant',
+    'NO_USER_VALID'             => 'Aucun utilisateur',
+    #####################################
+    # Admin - Users Management - formPref
+    #####################################
+    'DELETE_THEMSELVES'         => 'Autoriser les membres &agrave; supprimer leur compte',
+    'ALLOW_AVATAR_UPLOAD'       => 'Autoriser l\'upload d\'avatars',
+    'ALLOW_EXTERNAL_AVATAR'     => 'Autoriser les avatars externes (liens)',
+    'REGISTRATION_MAIL'         => 'Etre averti par email des nouvelles inscriptions',
+    'REGISTRATION_DISCLAIMER'   => 'Charte - r&egrave;glement de l\'inscription',
+    'REGISTRATION_MAIL_CONTENT' => 'Contenu de l\'email d\'inscription',
+    'ADMINISTRATOR'             => 'Administrateur',
+    'REGISTRATION_TEXT_MAIL'    => 'Texte de l\'email d\'inscription',
+    'INFOS_GEN'                 => 'Infos Générales',
+    'CONFIG_MATERIEL'           => 'Config matérielle',
+    'INFOS_EXTRA'               => 'Infos supplémentaire',
+    #####################################
+    # Admin - Users Management - mainProfil
+    #####################################
+    'ACTIVATE'                  => 'Activer',
+    'DELETE_COLUMN'             => 'Supprimer les infos ',
+    #####################################
+    # Admin - Users Management - formProfil
+    #####################################
+    'OPTION_ADD'                => 'Ajouter une info de profil',
+    #####################################
+    # Admin - Users Management - sendProfil
+    #####################################
+    'COLUMN_ADDED'              => 'Colonne ajout&eacute; avec succ&egrave;s',
+    'COLUMN_EDITED'             => 'Colonne modifi&eacute; avec succ&egrave;s',
+    'ACTION_EDIT_COLUMN'        => 'a modifi&eacute; la colonne',
+    'ACTION_ADD_COLUMN'         => 'a ajout&eacute; la colonne',
+    'BAD_NAME'                  => 'Le nom ne peut être double',
+    #####################################
+    # Admin - Users Management - sendUser
+    #####################################
+    'ERROR_PSEUDO_BANNED'       => 'Utilisateurs est banni',
+    'ERROR_REG_LOGIN'           => 'Utilisateurs existe déjà',
+    'ERROR_MAIL_BANNED'         => 'Ce courriel est banni',
+    'ERROR_EMPTY_FIELD'         => 'Un champ obligatoire est vide',
+    'NICK_TO_LONG'              => 'Votre pseudo est trop long',
+    'ERROR_TWO_PASS_FAIL'       => 'Les deux mots de passe saisis ne sont pas identiques',
+    'ERROR_MAIL_USE'            => 'Ce courriel est déjà utilisé',
+    'REG_PROGRESS'              => 'Enregistrement en cours...',
 );
 
 ?>

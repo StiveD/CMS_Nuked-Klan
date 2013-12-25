@@ -3,6 +3,21 @@ $(document).ready(function(){
     initDivSystem();
     tooltips();
     datepicker();
+    //===== Dynamic table toolbars =====//
+
+    $('#dyn .tOptions').click(function () {
+        $('#dyn .tablePars').slideToggle(200);
+    });
+
+    $('#dyn2 .tOptions').click(function () {
+        $('#dyn2 .tablePars').slideToggle(200);
+    });
+
+
+    $('.tOptions').click(function () {
+        $(this).toggleClass("act");
+    });
+
     $(".lightbox").fancybox({ 'padding': 2 });
     // -> close popup private message
     $('#nkNewPrivateMsgClose').click(function(){
@@ -200,6 +215,12 @@ $(document).ready(function(){
                         easyTabs();
                         // -> initialize action double click for edit
                         dblclickEdit();
+                        if(value == 'privateMsg') {
+                            checkedUserbox(); // initialize checkbox userbox
+                            deleteMsgUserbox(); // initialize button delete msg userbox
+                            resizeImg(); // initialize max size screen
+                            slideContentMsg(); // initialize slide content msg
+                        }
                     }
                 }); // -> end ajax
             });
@@ -387,6 +408,62 @@ $(document).ready(function(){
             return false;
         });
     }
+    // ### USERBOX ### //
+    function checkedUserbox() {
+        $('#nkTableUserbox > tbody > tr').click(function(event) {
+            event.preventDefault(); // Pas nécessaire normalement
+            var id    = $(this).data('id');
+            var forId = $('#for_id_' + id);
+            if(forId.is(':checked')) {
+                $(forId).attr('checked', false);
+            }
+            else {
+                $(forId).attr('checked', true);
+            }
+            var numberCheckboxChecked = $('#nkTableUserbox input[type="checkbox"]:checked').length;
+            if(numberCheckboxChecked == 0) {
+                $('#jqueryDelMsg').removeClass('activeJqueryDelMsg');
+            } else {
+                $('#jqueryDelMsg').addClass('activeJqueryDelMsg');
+            }
+        });
+    }
+    function deleteMsgUserbox() {
+        $('#jqueryDelMsg').click(function(event) {
+            event.preventDefault();
+            var dataId = [];
+            $('#nkTableUserbox input[type="checkbox"]:checked').each(function() {
+                dataId.push($(this).attr('id'));
+            });
+        });
+    }
+    // -> resize image + add function fancybox all img
+    function resizeImg() {
+        var imgResize  = $('.msgUserbox .contentMsg img').css({display: "none"});
+        var maxWidth   = $('article.userbox > header').width();
+        imgResize.each(function(e){
+            $(e).css({display: "none"});
+            var e = document.createElement('a');
+            $(e).attr('href',$(this).attr('src')).addClass('lightbox').append('<img class="imgResize" src="'+$(this).attr('src')+'" alt="">');
+            $(this).replaceWith(e);
+            $(e).css({display: "inline", maxWidth: maxWidth});
+        });
+        $('.imgResize').css({display: "inline", maxWidth: maxWidth});
+        $('.lightbox').fancybox({ 'padding': 2 });
+    }
+    // -> slide content messages
+    function slideContentMsg() {
+        $('.msgUserbox > header').click(function() {
+            if($(this).hasClass('icon-fastup')) {
+                $(this).removeClass('icon-fastup').addClass('icon-fastdown');
+                $(this).next('.contentMsg').slideUp(500);
+            }
+            else {
+                $(this).removeClass('icon-fastdown').addClass('icon-fastup');
+                $(this).next('.contentMsg').slideDown(500);
+            }
+        });
+    }
     // -> form lost password
     function lostPassword() {
         $('#passLost').click(function() {
@@ -451,7 +528,6 @@ $(document).ready(function(){
         $('.tipW').tipsy({gravity: 'w',fade: true, html:true});
         $('.tipE').tipsy({gravity: 'e',fade: true, html:true});
     }
-
 
 // variables
 /*

@@ -703,6 +703,57 @@ A REVOIR ! la function page et le reste !
     }
     function privateMsg () {
 ?>
+                        <script src="assets/ckeditor/ckeditor.js"></script>
+                        <script>
+                            //<![CDATA[
+                            CKEDITOR.basePath = '/assets/ckeditor/';
+                            CKEDITOR.config.contentsCss = '/assets/ckeditor/contents.css';
+                            CKEDITOR.config.scayt_sLang = "<?php echo (($GLOBALS['language'] == 'french') ? 'fr_FR' : 'en_US'); ?>";
+                            CKEDITOR.replaceAll(function(textarea,config){
+                                if (textarea.className!='editor') return false;
+                                CKEDITOR.config.toolbar = 'Basic';
+                                CKEDITOR.configlanguage = "<?php echo substr($GLOBALS['language'], 0,2) ?>";
+                                CKEDITOR.config.uiColor = '#ffffff';
+                            });
+                            <?php echo ConfigSmileyCkeditor(); ?>
+                            //]]>
+                        </script>
+            <script src="assets/scripts/jquery.dataTables.js"></script>
+            <script>
+                oTable = $('#nkTableUserbox').dataTable({
+                    "bPaginate": true,
+                    "bLengthChange": true,
+                    "bFilter": true,
+                    "bSort": true,
+                    "bInfo": true,
+                    "bAutoWidth": false,
+                    "sPaginationType": "full_numbers",
+                    "sDom": '<"H"fl>t<"F"ip>',
+                    //"aoColumnDefs": [{bSortable: false,aTargets: [ 0 ]}]
+                    "oLanguage": {
+                        "sProcessing":     "Traitement en cours...",
+                        "sSearch":         "Rechercher&nbsp;:",
+                        "sLengthMenu":     "Afficher _MENU_ &eacute;l&eacute;ments",
+                        "sInfo":           "Affichage de l'&eacute;lement _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+                        "sInfoEmpty":      "Affichage de l'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
+                        "sInfoFiltered":   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+                        "sInfoPostFix":    "",
+                        "sLoadingRecords": "Chargement en cours...",
+                        "sZeroRecords":    "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                        "sEmptyTable":     "Aucune donnée disponible dans le tableau",
+                        "oPaginate": {
+                            "sFirst":      "Premier",
+                            "sPrevious":   "Pr&eacute;c&eacute;dent",
+                            "sNext":       "Suivant",
+                            "sLast":       "Dernier"
+                        },
+                        "oAria": {
+                            "sSortAscending":  ": activer pour trier la colonne par ordre croissant",
+                            "sSortDescending": ": activer pour trier la colonne par ordre décroissant"
+                        },
+                    },
+                });
+            </script>
             <aside class="userbox">
                 <div class="full">
                     <div id="progressBar">
@@ -719,26 +770,186 @@ A REVOIR ! la function page et le reste !
                             </a>
                         </li>
                         <li>
-                            <a class="tipS jqueryLinksSwtich" title="Effacer" href="#">
-                                <i class="icon-trash"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="tipS" href="#" title="Nouveau">
-                                <i class="icon-pen"></i>
-                            </a>
-                        </li>
-                        <li>
                             <a class="tipS jqueryLinksSwtich" title="Option du compte" data-icon="icon-cog" data-title="Option du compte" href="#accountOption">
                                 <i class="icon-cog"></i>
                             </a>
                         </li>
+                        <li>
+                            <a class="tipS" title="Effacer" href="#" id="jqueryDelMsg">
+                                <i class="icon-trash"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="tipS" href="#" title="Nouveau" id="jqueryNewMsg">
+                                <i class="icon-pen"></i>
+                            </a>
+                        </li>
                     </ul>
+                </div>
+
+                <div class="full nkTableUserbox">
+                    <table cellpadding="0" cellspacing="0" id="nkTableUserbox" class="nkTableUserbox">
+                        <thead>
+                            <tr>
+                                <th colspan="2">Expediteur</th>
+                                <th>Titre du message</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr data-id="1">
+                                <td>
+                                    <input type="checkbox" id="for_id_1" name="rememberMe" value="true" />
+                                    <label data-value="&#8730;" for="for_id_1"></label>
+                                </td>
+                                <td>
+                                    <img class="tipE" original-title="Stive" src="http://www.palacewar.eu/Stive/avatar_stive2.png" alt="Stive" />
+                                    <span>Stive</span>
+                                </td>
+                                <td>Test titre</td>
+                                <td>16/12/2013</td>
+                            </tr>
+
+                            <tr data-id="2">
+                                <td>
+                                    <input type="checkbox" id="for_id_2" name="rememberMe" value="true" />
+                                    <label data-value="&#8730;" for="for_id_2"></label>
+                                </td>
+                                <td>
+                                    <img class="tipE" original-title="Samoth" src="http://www.nuked-klan.org/upload/User/avatar_samoth.png" alt="Samoth" />
+                                    <span>Samoth</span>
+                                </td>
+                                <td>Test titre Samoth</td>
+                                <td>01/06/2011</td>
+                            </tr>
+
+                            <tr data-id="3">
+                                <td>
+                                    <input type="checkbox" id="for_id_3" name="rememberMe" value="true" />
+                                    <label data-value="&#8730;" for="for_id_3"></label>
+                                </td>
+                                <td>
+                                    <img class="tipE" original-title="Homax" src="http://www.nuked-klan.org/upload/User/avatar_homax.png" alt="Homax" />
+                                    <span>Homax</span>
+                                </td>
+                                <td>Test titre Homax</td>
+                                <td>vendredi, 15 novembre, 2013 - 21:52:00</td>
+                            </tr>
+
+                            <tr data-id="4">
+                                <td>
+                                    <input type="checkbox" id="for_id_4" name="rememberMe" value="true" />
+                                    <label data-value="&#8730;" for="for_id_4"></label>
+                                </td>
+                                <td>
+                                    <img class="tipE" original-title="Nk PoMME" src="http://www.nuked-klan.org/upload/User/avatar_snk.png" alt="Nk PoMME" />
+                                    <span>Nk PoMME</span>
+                                </td>
+                                <td>Test titre Nk PoMME D'amour</td>
+                                <td>24/06/2012</td>
+                            </tr>
+
+                            <tr data-id="5">
+                                <td>
+                                    <input type="checkbox" id="for_id_5" name="rememberMe" value="true" />
+                                    <label data-value="&#8730;" for="for_id_5"></label>
+                                </td>
+                                <td>
+                                    <img class="tipE" original-title="Zdav" src="http://www.nuked-klan.org/upload/User/avatar_zdav.png" alt="Zdav" />
+                                    <span>Zdav</span>
+                                </td>
+                                <td>Test titre Zdav</td>
+                                <td>11/12/2013 - 20:55:25</td>
+                            </tr>
+
+                            <tr data-id="6">
+                                <td>
+                                    <input type="checkbox" id="for_id_6" name="rememberMe" value="true" />
+                                    <label data-value="&#8730;" for="for_id_6"></label>
+                                </td>
+                                <td>
+                                    <img class="tipE" original-title="Guigz" src="http://www.nuked-klan.org/upload/User/avatar_guigz.png" alt="Guigz" />
+                                    <span>Guigz</span>
+                                </td>
+                                <td>Test titre Guigzou</td>
+                                <td>06/12/2013 - 16:00:01</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
                 </div>
             </aside>
 
             <article class="userbox">
-                test
+                <header>
+                    <span>Titre</span>
+                    <div>
+                        <span>Répondre</span>
+                    </div>
+                    <a href="#" class="tipE" original-title="Stive<br>Samoth<br>Homax<br>Nk PoMME<br>Guigz<br>Zdav">Voir 5 autres destinataires</a>
+                </header>
+
+                <div class="msgUserbox">
+                    <header class="icon-fastup">
+                        <img src="http://www.nuked-klan.org/upload/User/avatar_homax.png" alt="homax">
+                        <span>Homax</span>
+                        <span>Aujourd'hui à 23h48</span>
+                    </header>
+                    <div class="contentMsg">
+                        <p>Test 1er image</p>
+                        <p>Sed fringilla eros purus, id tempor ante consectetur eu.</p>
+                        <p>Ut magna nisl, fermentum eu erat et, fringilla ullamcorper diam. Maecenas porttitor, nisl tempus rutrum eleifend, arcu neque aliquet nunc,</p>
+                        <p>vel pulvinar urna urna nec dolor. Aenean ac metus nisi. Vestibulum quis nibh hendrerit, semper felis non, rutrum enim. Sed tempus, libero sit amet tincidunt tincidunt, elit eros pharetra augue, eget eleifend ligula urna vel massa. In quis auctor nunc. Nunc enim nibh, laoreet ac sollicitudin nec, varius nec nunc.</p>
+                        <img src="http://www.coloriagesdecoupages.com/wallpaper/noel/coloriage-fond-ecran-noel-21.jpg" alt="#">
+                    </div>
+                </div>
+
+                <div class="msgUserbox">
+                    <header class="icon-fastup">
+                        <img src="http://www.nuked-klan.org/upload/User/avatar_homax.png" alt="homax">
+                        <span>Homax</span>
+                        <span>Aujourd'hui à 23h48</span>
+                    </header>
+                    <div class="contentMsg">
+                        <p>Test la 2eme images</p>
+                        <p>vel pulvinar urna urna nec dolor. Aenean ac metus nisi. Vestibulum quis nibh hendrerit, semper felis non, rutrum enim. Sed tempus, libero sit amet tincidunt tincidunt, elit eros pharetra augue, eget eleifend ligula urna vel massa. In quis auctor nunc. Nunc enim nibh, laoreet ac sollicitudin nec, varius nec nunc.</p>
+                        <p>
+                            <img src="upload/Gallery/wallpaper_Windows.jpg" alt="#">
+                        </p>
+                    </div>
+                </div>
+
+                <div class="msgUserbox">
+                    <header class="icon-fastup">
+                        <img src="http://www.nuked-klan.org/upload/User/avatar_homax.png" alt="homax">
+                        <span>Homax</span>
+                        <span>Aujourd'hui à 23h48</span>
+                    </header>
+                    <div class="contentMsg">
+                        <p>Test code php</p>
+                        <pre class="brush:php;">
+function random($car) {
+    $string = &quot;&quot;;
+    $chaine = &quot;abcdefghijklmnpqrstuvwxy&quot;;
+    srand((double)microtime()*1000000);
+    for($i=0; $i&lt;$car; $i++) {
+        $string .= $chaine[rand()%strlen($chaine)];
+    }
+    return $string;
+}
+// APPEL
+// G&eacute;n&egrave;re une chaine de longueur 20
+$chaine = random(20);</pre>
+                    </div>
+                </div>
+
+                <footer>
+                    <form id="userboxSendReply" action="">
+                        <textarea class="editor" name="texte" cols="70" rows="15"></textarea>
+                        <input type="submit" value="Envoyer">
+                    </form>
+                </footer>
             </article>
 <?php
     }
