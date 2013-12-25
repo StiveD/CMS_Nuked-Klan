@@ -72,6 +72,7 @@ $arrayConstants =   array(
     'USERBOX_TABLE'        => '_userbox',
     'USERS_TABLE'          => '_users',
     'USERS_DETAIL_TABLE'   => '_users_detail',
+    'USERS_PROFILS'        => '_users_profils',
     'VOTE_TABLE'           => '_vote',
     'WARS_TABLE'           => '_match',
     'WARS_FILES_TABLE'     => '_match_files'
