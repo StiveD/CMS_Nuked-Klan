@@ -321,12 +321,12 @@ else if ( ( $_REQUEST['file'] != 'Admin' AND $_REQUEST['page'] != 'admin' )
         require_once 'modules/404/index.php';
     }
 
-    if ($_REQUEST['file'] != 'Admin' && $_REQUEST['page'] != 'admin' && defined('EDITOR_CHECK')) {
+    if ($_REQUEST['file'] != 'Admin' && $_REQUEST['page'] != 'admin' && !isset($_REQUEST['nuked_nude'])) { // Function a faire
 
         ?>
             <script type="text/javascript" src="assets/ckeditor/ckeditor.js"></script>
             <script type="text/javascript" src="assets/ckeditor/config.js"></script>
-            <script type="text/javascript">
+            <script>
                 //<![CDATA[
                 if(document.getElementById('e_basic')){
                     CKEDITOR.config.scayt_sLang = "<?php echo (($language == 'french') ? 'fr_FR' : 'en_US'); ?>";

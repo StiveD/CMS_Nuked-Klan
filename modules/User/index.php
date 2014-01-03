@@ -28,10 +28,10 @@ nkTranslate('modules/User/lang/'.$GLOBALS['language'].'.lang.php');
                         </li>
                         <li>
                             <a class="icon-envelope jqueryLinksSwtich" data-icon="icon-envelope" data-title="Messagerie Priv&eacute;" href="#privateMsg">Messagerie Priv&eacute;
-                                <span>14</span>
+                                <span>0</span>
                             </a>
                             <ul id="userbox">
-                                <li><a class="icon-arrow-right" href="#">Boîte de r&eacute;ception</a></li>
+                                <li><a class="icon-arrow-right jqueryLinksSwtich" href="#privateMsg">Boîte de r&eacute;ception</a></li>
                                 <li><a class="icon-arrow-right" href="#">Envoy&eacute;(s)</a></li>
                                 <li><a class="icon-arrow-right" href="#">Corbeille</a></li>
                             </ul>
@@ -702,22 +702,45 @@ A REVOIR ! la function page et le reste !
 <?php
     }
     function privateMsg () {
+        // declaration(s) Variable(s)
+        $tmpTrInbox        = '';
+        $arrayTableTdTtile = '';
+        $tmpTableTitle     = '';
+        $i                 = null;
+        // list title table
+        $arrayTableTdTtile = array('Auteur', 'Sujet', 'Date');
+        foreach ($arrayTableTdTtile as $title) {
+            $i++;
+            $colspan = ($i == 1) ? 'colspan="2"' : '';
+            $tmpTableTitle .= '<th '.$colspan.'><stong>'.$title.'</strong></th>';
+        }
+        // sql select
+        // Status 0 = Message recus non lu | Status 1 = Message recus Lu | Status 2 = Message Envoyé
+        $dbsTheads      = ' SELECT UTT.thread_id, UTT.title, UTT.user_id, UTT.status, UTM.date, UT.pseudo, UT.avatar
+                            FROM '.USERBOX_THREADS_TABLE.' AS UTT
+                            LEFT OUTER JOIN '.USERBOX_THREADS_MSG.' AS UTM ON UTT.thread_id = UTM.thread_id
+                            LEFT OUTER JOIN '.USERS_TABLE.' AS UT ON UTM.user_from = UT.id
+                            WHERE UTT.user_id = "'.$GLOBALS['user']['id'].'"
+                            ORDER BY UTT.id DESC';
+        $dbeTheads      =   mysql_query($dbsTheads) or die(mysql_error()); unset($dbsTheads);
+        while ($data    =  mysql_fetch_assoc($dbeTheads)):
+            $data['avatar'] = (empty($data['avatar'])) ? 'assets/images/nkNoAvatar.png' : $data['avatar'];
+            if ($data['status'] == 0):
+                $tmpTrInbox .= '    <tr data-id="'.$data['thread_id'].'">
+                                        <td>
+                                            <input type="checkbox" id="for_id_'.$data['thread_id'].'">
+                                            <label data-value="&#8730;" for="for_id_'.$data['thread_id'].'"></label>
+                                        </td>
+                                        <td>
+                                            <img class="tipE" original-title="'.$data['pseudo'].'" src="'.$data['avatar'].'" alt="'.$data['pseudo'].'" />
+                                            <span>'.$data['pseudo'].'</span>
+                                        </td>
+                                        <td>'.$data['title'].'</td>
+                                        <td>'.nkDate($data['date']).'</td>
+                                    </tr>'."\n";
+            endif;
+        endwhile;
 ?>
-                        <script src="assets/ckeditor/ckeditor.js"></script>
-                        <script>
-                            //<![CDATA[
-                            CKEDITOR.basePath = '/assets/ckeditor/';
-                            CKEDITOR.config.contentsCss = '/assets/ckeditor/contents.css';
-                            CKEDITOR.config.scayt_sLang = "<?php echo (($GLOBALS['language'] == 'french') ? 'fr_FR' : 'en_US'); ?>";
-                            CKEDITOR.replaceAll(function(textarea,config){
-                                if (textarea.className!='editor') return false;
-                                CKEDITOR.config.toolbar = 'Basic';
-                                CKEDITOR.configlanguage = "<?php echo substr($GLOBALS['language'], 0,2) ?>";
-                                CKEDITOR.config.uiColor = '#ffffff';
-                            });
-                            <?php echo ConfigSmileyCkeditor(); ?>
-                            //]]>
-                        </script>
             <script src="assets/scripts/jquery.dataTables.js"></script>
             <script>
                 oTable = $('#nkTableUserbox').dataTable({
@@ -763,14 +786,14 @@ A REVOIR ! la function page et le reste !
                         </div>
                     </div>
 
-                    <ul id="navUserbox">
+                    <ul class="navUserbox">
                         <li>
-                            <a class="tipS jqueryLinksSwtich" data-icon="icon-home" href="#home" title="Accueil">
+                            <a class="tipS jqueryLinksSwtich" data-icon="icon-home" href="#privateMsg" title="Accueil">
                                 <i class="icon-menu"></i>
                             </a>
                         </li>
                         <li>
-                            <a class="tipS jqueryLinksSwtich" title="Option du compte" data-icon="icon-cog" data-title="Option du compte" href="#accountOption">
+                            <a class="tipS jqueryLinksSwtich" title="Option du compte" data-icon="icon-cog" data-title="Option du compte" href="#privateMsgConfig">
                                 <i class="icon-cog"></i>
                             </a>
                         </li>
@@ -791,169 +814,303 @@ A REVOIR ! la function page et le reste !
                     <table cellpadding="0" cellspacing="0" id="nkTableUserbox" class="nkTableUserbox">
                         <thead>
                             <tr>
-                                <th colspan="2">Expediteur</th>
-                                <th>Titre du message</th>
-                                <th>Date</th>
+                                <?php echo $tmpTableTitle; ?>
                             </tr>
                         </thead>
                         <tbody>
-
-                            <tr data-id="1">
-                                <td>
-                                    <input type="checkbox" id="for_id_1" name="rememberMe" value="true" />
-                                    <label data-value="&#8730;" for="for_id_1"></label>
-                                </td>
-                                <td>
-                                    <img class="tipE" original-title="Stive" src="http://www.palacewar.eu/Stive/avatar_stive2.png" alt="Stive" />
-                                    <span>Stive</span>
-                                </td>
-                                <td>Test titre</td>
-                                <td>16/12/2013</td>
-                            </tr>
-
-                            <tr data-id="2">
-                                <td>
-                                    <input type="checkbox" id="for_id_2" name="rememberMe" value="true" />
-                                    <label data-value="&#8730;" for="for_id_2"></label>
-                                </td>
-                                <td>
-                                    <img class="tipE" original-title="Samoth" src="http://www.nuked-klan.org/upload/User/avatar_samoth.png" alt="Samoth" />
-                                    <span>Samoth</span>
-                                </td>
-                                <td>Test titre Samoth</td>
-                                <td>01/06/2011</td>
-                            </tr>
-
-                            <tr data-id="3">
-                                <td>
-                                    <input type="checkbox" id="for_id_3" name="rememberMe" value="true" />
-                                    <label data-value="&#8730;" for="for_id_3"></label>
-                                </td>
-                                <td>
-                                    <img class="tipE" original-title="Homax" src="http://www.nuked-klan.org/upload/User/avatar_homax.png" alt="Homax" />
-                                    <span>Homax</span>
-                                </td>
-                                <td>Test titre Homax</td>
-                                <td>vendredi, 15 novembre, 2013 - 21:52:00</td>
-                            </tr>
-
-                            <tr data-id="4">
-                                <td>
-                                    <input type="checkbox" id="for_id_4" name="rememberMe" value="true" />
-                                    <label data-value="&#8730;" for="for_id_4"></label>
-                                </td>
-                                <td>
-                                    <img class="tipE" original-title="Nk PoMME" src="http://www.nuked-klan.org/upload/User/avatar_snk.png" alt="Nk PoMME" />
-                                    <span>Nk PoMME</span>
-                                </td>
-                                <td>Test titre Nk PoMME D'amour</td>
-                                <td>24/06/2012</td>
-                            </tr>
-
-                            <tr data-id="5">
-                                <td>
-                                    <input type="checkbox" id="for_id_5" name="rememberMe" value="true" />
-                                    <label data-value="&#8730;" for="for_id_5"></label>
-                                </td>
-                                <td>
-                                    <img class="tipE" original-title="Zdav" src="http://www.nuked-klan.org/upload/User/avatar_zdav.png" alt="Zdav" />
-                                    <span>Zdav</span>
-                                </td>
-                                <td>Test titre Zdav</td>
-                                <td>11/12/2013 - 20:55:25</td>
-                            </tr>
-
-                            <tr data-id="6">
-                                <td>
-                                    <input type="checkbox" id="for_id_6" name="rememberMe" value="true" />
-                                    <label data-value="&#8730;" for="for_id_6"></label>
-                                </td>
-                                <td>
-                                    <img class="tipE" original-title="Guigz" src="http://www.nuked-klan.org/upload/User/avatar_guigz.png" alt="Guigz" />
-                                    <span>Guigz</span>
-                                </td>
-                                <td>Test titre Guigzou</td>
-                                <td>06/12/2013 - 16:00:01</td>
-                            </tr>
-
+                            <?php echo $tmpTrInbox; ?>
                         </tbody>
                     </table>
                 </div>
             </aside>
 
             <article class="userbox">
-                <header>
-                    <span>Titre</span>
-                    <div>
-                        <span>Répondre</span>
-                    </div>
-                    <a href="#" class="tipE" original-title="Stive<br>Samoth<br>Homax<br>Nk PoMME<br>Guigz<br>Zdav">Voir 5 autres destinataires</a>
-                </header>
-
-                <div class="msgUserbox">
-                    <header class="icon-fastup">
-                        <img src="http://www.nuked-klan.org/upload/User/avatar_homax.png" alt="homax">
-                        <span>Homax</span>
-                        <span>Aujourd'hui à 23h48</span>
-                    </header>
-                    <div class="contentMsg">
-                        <p>Test 1er image</p>
-                        <p>Sed fringilla eros purus, id tempor ante consectetur eu.</p>
-                        <p>Ut magna nisl, fermentum eu erat et, fringilla ullamcorper diam. Maecenas porttitor, nisl tempus rutrum eleifend, arcu neque aliquet nunc,</p>
-                        <p>vel pulvinar urna urna nec dolor. Aenean ac metus nisi. Vestibulum quis nibh hendrerit, semper felis non, rutrum enim. Sed tempus, libero sit amet tincidunt tincidunt, elit eros pharetra augue, eget eleifend ligula urna vel massa. In quis auctor nunc. Nunc enim nibh, laoreet ac sollicitudin nec, varius nec nunc.</p>
-                        <img src="http://www.coloriagesdecoupages.com/wallpaper/noel/coloriage-fond-ecran-noel-21.jpg" alt="#">
-                    </div>
-                </div>
-
-                <div class="msgUserbox">
-                    <header class="icon-fastup">
-                        <img src="http://www.nuked-klan.org/upload/User/avatar_homax.png" alt="homax">
-                        <span>Homax</span>
-                        <span>Aujourd'hui à 23h48</span>
-                    </header>
-                    <div class="contentMsg">
-                        <p>Test la 2eme images</p>
-                        <p>vel pulvinar urna urna nec dolor. Aenean ac metus nisi. Vestibulum quis nibh hendrerit, semper felis non, rutrum enim. Sed tempus, libero sit amet tincidunt tincidunt, elit eros pharetra augue, eget eleifend ligula urna vel massa. In quis auctor nunc. Nunc enim nibh, laoreet ac sollicitudin nec, varius nec nunc.</p>
-                        <p>
-                            <img src="upload/Gallery/wallpaper_Windows.jpg" alt="#">
-                        </p>
-                    </div>
-                </div>
-
-                <div class="msgUserbox">
-                    <header class="icon-fastup">
-                        <img src="http://www.nuked-klan.org/upload/User/avatar_homax.png" alt="homax">
-                        <span>Homax</span>
-                        <span>Aujourd'hui à 23h48</span>
-                    </header>
-                    <div class="contentMsg">
-                        <p>Test code php</p>
-                        <pre class="brush:php;">
-function random($car) {
-    $string = &quot;&quot;;
-    $chaine = &quot;abcdefghijklmnpqrstuvwxy&quot;;
-    srand((double)microtime()*1000000);
-    for($i=0; $i&lt;$car; $i++) {
-        $string .= $chaine[rand()%strlen($chaine)];
-    }
-    return $string;
-}
-// APPEL
-// G&eacute;n&egrave;re une chaine de longueur 20
-$chaine = random(20);</pre>
-                    </div>
-                </div>
-
-                <footer>
-                    <form id="userboxSendReply" action="">
-                        <textarea class="editor" name="texte" cols="70" rows="15"></textarea>
-                        <input type="submit" value="Envoyer">
-                    </form>
-                </footer>
             </article>
 <?php
     }
+    function newMsgUserbox () {
+        // declaration(s) Variable(s)
+        $tmpOptGroup = null;
+        $tmpOption   = null;
+        $arrayUsers  = array();
+        // SQL
+        $dbsUser         = '    SELECT UT.id AS idUser, UT.pseudo, GR.nameGroup
+                                FROM '.USERS_TABLE.' AS UT
+                                LEFT OUTER JOIN '.GROUPS_TABLE.' AS GR ON GR.id = UT.main_group
+                                WHERE UT.main_group != 3 AND UT.main_group != ""
+                                ORDER BY GR.nameGroup';
+        $dbeUser         =      mysql_query($dbsUser) or die(mysql_error());
 
+        while ($data     =  mysql_fetch_assoc($dbeUser)) {
+            if (defined($data['nameGroup'])) {
+                    $data['nameGroup'] = constant($data['nameGroup']);
+            }
+            $arrayUsers[]   = $data;
+            $arrayGroup[]   = $data['nameGroup'];
+        }
+
+        foreach (array_unique($arrayGroup) as $keyOptGroup) {
+            $tmpOptGroup .= '   <optgroup label="'.$keyOptGroup.'"> '."\n";
+            foreach ($arrayUsers as $key => $value) {
+                $tmpOptGroup .= in_array($keyOptGroup, $value) ? '<option value="'.$value['idUser'].'">'.$value['pseudo'].'</option>' : null;
+            }
+            $tmpOptGroup .= '   </optgroup> '."\n";
+        }
+?>
+        <script>
+            //<![CDATA[
+            CKEDITOR.replaceAll(function(textarea,config){
+                if (textarea.className!='editor') return false;
+                CKEDITOR.config.toolbar = 'Basic';
+                CKEDITOR.configlanguage = "<?php echo substr($GLOBALS['language'], 0,2) ?>";
+                CKEDITOR.config.uiColor = '#ffffff';
+            });
+            <?php echo ConfigSmileyCkeditor(); ?>
+            //]]>
+        </script>
+    <form id="newMsgUserbox" action="index.php?file=User&amp;nuked_nude=index&amp;op=formSendNewMsg">
+        <header>
+            <div id="msgAlertSend" class="warning"></div>
+            <div>
+                <span>Poster un message</span>
+            </div>
+        </header>
+        <div class="msgUserbox">
+            <select name="userId[]" data-placeholder="Choisissez le(s) pseudo(s)" class="nkMultiSelect" tabindex="1" multiple="multiple">
+                <option value=""></option>
+                <?php echo $tmpOptGroup; ?>
+            </select>
+            <span><input type="text" name="objet" placeholder="Entrer l'objet de votre message"></span>
+        </div>
+        <footer>
+            <textarea class="editor" name="text" cols="70" rows="15"></textarea>
+            <input class="nkSubmit" type="submit" value="Envoyer">
+        </footer>
+    </form>
+<?php
+    }
+    function formSendNewMsg () {
+        // list the authorized request
+        $arrayRequest = array('userId', 'objet', 'text');
+        foreach ($arrayRequest as $key) {
+            if (!array_key_exists($key, $_REQUEST)) {
+                $_REQUEST[$key] = '';
+            }
+        }
+        // declaration(s) Variable(s)
+        $errors = null;
+        // security
+        $arraySecurity = array(
+                        'userId' => '',
+                        'objet'  => $_REQUEST['objet'],
+                        'text'   => $_REQUEST['text']
+                        );
+        foreach ($arraySecurity as $key => $value) {
+            $value        = mysql_real_escape_string(stripslashes($value));
+            $_CLEAN[$key] = nkHtmlEntities($value);
+        }
+        // check $_REQUEST['userId'] not empty
+        if (!empty($_REQUEST['userId'])) {
+            // for each userID it checks if it is a string
+            foreach ($_REQUEST['userId'] as $key) {
+                if (!is_string($key)) {
+                    $errors++;
+                    $data = array(
+                       'msg'            => nkUtf8Encode('Pseudo Invalide...'),
+                       'redirect'       => false,
+                       'redirectedName' => REDIRECTED
+                    );
+                }
+                else {
+                    $_CLEAN['userId'][$key] = '';
+                }
+            }
+        }
+        // check userId not empty
+        if (empty($_CLEAN['userId']) OR empty($_REQUEST['userId'])) {
+            $errors++;
+            $data = array(
+               'msg'            => nkUtf8Encode('Pseudo Vide...'),
+               'redirect'       => false,
+               'redirectedName' => REDIRECTED
+            );
+        }
+        // check objet not empty
+        else if (empty($_CLEAN['objet'])) {
+            $errors++;
+            $data = array(
+               'msg'            => nkUtf8Encode('Objet Vide...'),
+               'redirect'       => false,
+               'redirectedName' => REDIRECTED
+            );
+        }
+        // check text not empty
+        else if (empty($_CLEAN['text'])) {
+            $errors++;
+            $data = array(
+               'msg'            => nkUtf8Encode('Message Vide...'),
+               'redirect'       => false,
+               'redirectedName' => REDIRECTED
+            );
+        }
+        // Verifie qu'il a aucune erreur !
+        else if ($errors == 0) {
+            // generates a unique ID of "23
+            $threadId = uniqid(time(),false);
+            // insert message
+            $dbiMsg = ' INSERT INTO '.USERBOX_THREADS_MSG.'  (
+                                                                `id` , `text` , `user_from` , `thread_id` , `date`
+                                                            )
+                        VALUES                              (
+                                                                "" , "'.$_CLEAN['text'].'" , "'.$GLOBALS['user']['id'].'" , "'.$threadId.'" , "'.time().'"
+                                                            )';
+            $dbeMsg =   mysql_query($dbiMsg);
+            // insert for each selected user
+            foreach ($_CLEAN['userId'] as $key => $value) {
+                // le Status 0 pour non lu & 1 pour lu ( uniquement celui qui envoie a 2)
+                // Status 0 = Message recus non lu | Status 1 = Message recus Lu | Status 2 = Message Envoyé
+                $status = ($key == $GLOBALS['user']['id']) ? 2 : 0;
+
+                $dbiThreads = ' INSERT INTO '.USERBOX_THREADS_TABLE.'    (
+                                                                            `id` , `thread_id` , `title` , `user_id` , `status`
+                                                                        )
+                                VALUES                                  (
+                                                                            "" , "'.$threadId.'" , "'.$_CLEAN['objet'].'" , "'.$key.'" , "'.$status.'"
+                                                                        )';
+                $dbeThreads =   mysql_query($dbiThreads);
+            }
+            $data = array(
+               'msg'            => nkUtf8Encode('Message envoyé avec succès'),
+               'redirect'       => true,
+               'redirectedName' => REDIRECTED
+            );
+
+        }
+        echo json_encode($data);
+    }
+    function loadMsgUserbox () {
+        // declaration(s) Variable(s)
+        $listPseudo  = array();
+        $contributor = '';
+        $tmpDivMsg   = '';
+        $i           = null;
+        // list the authorized request
+        $arrayRequest = array('id');
+        foreach ($arrayRequest as $key) {
+            if (!array_key_exists($key, $_REQUEST)) {
+                $_REQUEST[$key] = '';
+            }
+        }
+        // sql select
+        $dbsTheadsCheck = ' SELECT title, user_id, pseudo
+                            FROM '.USERBOX_THREADS_TABLE.' AS UTT
+                            LEFT OUTER JOIN '.USERS_TABLE.' AS UT ON UT.id = UTT.user_id
+                            WHERE thread_id = "'.$_REQUEST['id'].'" ';
+        $dbeTheadsCheck =   mysql_query($dbsTheadsCheck) or die(mysql_error()); unset($dbsTheadsCheck);
+        while ($dataCheck = mysql_fetch_assoc($dbeTheadsCheck)) {
+            $listPseudo[$dataCheck['user_id']] = $dataCheck['pseudo'];
+            $title = $dataCheck['title'];
+        }
+        if (in_array($GLOBALS['user']['id'], $listPseudo)) {
+?>
+            <header>
+                <div>
+                    <span>Vous n'appartenez pas à ce fil de discussion</span>
+                </div>
+            </header>
+<?php
+        die();
+        }
+        else {
+            foreach ($listPseudo as $key => $value) {
+                $i++;
+                $contributor .=  $value.'<br>';
+            }
+            $dbsThreads     = ' SELECT UTM.text, UTM.date, UT.pseudo, UT.avatar
+                                FROM '.USERBOX_THREADS_MSG.' AS UTM
+                                LEFT OUTER JOIN '.USERS_TABLE.' AS UT ON UT.id = UTM.user_from
+                                WHERE thread_id  = "'.$_REQUEST['id'].'"
+                                ORDER BY UTM.date DESC';
+            $dbeThreads     =   mysql_query($dbsThreads) or die(mysql_error()); unset($dbsThreads);
+            while ($data    =   mysql_fetch_assoc($dbeThreads)):
+                $data['avatar'] = (empty($data['avatar'])) ? 'assets/images/nkNoAvatar.png' : $data['avatar'];
+                $data['text'] = nkHtmlEntityDecode(nkHtmlEntityDecode($data['text'])); // A corriger ... voir Insert en BDD
+                $tmpDivMsg .= ' <div class="msgUserbox">
+                                    <header class="icon-fastup">
+                                        <img src="'.$data['avatar'].'" alt="'.$data['pseudo'].'">
+                                        <span>'.$data['pseudo'].'</span>
+                                        <span>'.nkDate($data['date']).'</span>
+                                    </header>
+                                    <div class="contentMsg">
+                                        '.$data['text'].'
+                                    </div>
+                                </div> '."\n";
+            endwhile;
+            // UPdate status
+            //$sql = mysql_query("UPDATE " . USERBOX_TABLE . " SET status = 1 WHERE mid = '$mid' AND user_for = '{$GLOBALS['user']['id']}'");
+?>
+            <script type="text/javascript" src="/assets/scripts/syntaxhighlighter.autoloader.js"></script>
+            <script>
+                //<![CDATA[
+                CKEDITOR.replaceAll(function(textarea,config){
+                    if (textarea.className!='editor') return false;
+                    CKEDITOR.config.toolbar = 'Basic';
+                    CKEDITOR.configlanguage = "<?php echo substr($GLOBALS['language'], 0,2) ?>";
+                    CKEDITOR.config.uiColor = '#ffffff';
+                });
+                <?php echo ConfigSmileyCkeditor(); ?>
+                //]]>
+            </script>
+            <header>
+                <div>
+                    <span><?php echo $title; ?></span>
+                    <a href="#" class="tipE" original-title="<?php echo $contributor; ?>">Voir les <?php echo $i; ?> participants</a>
+                </div>
+                <ul class="navUserbox">
+                    <li>
+                        <a class="tipN" href="#" title="Répondre a Auteur">
+                            <i class="icon-comment"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="tipN" href="#" title="R&eacute;pondre &agrave; tous">
+                            <i class="icon-chat"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a id="fullContentMsg" class="tipN fullContentMsg" href="#" title="Agrandir">
+                            <i class="icon-uniF4C4"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a id="hideAllMsg" class="tipN" href="#" title="Cacher tous">
+                            <span class="rotate90Left">
+                                <i class="icon-uniF4C4"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a id="showAllMsg" class="tipN" href="#" title="Montrer tous">
+                            <span class="rotate90Right">
+                                <i class="icon-uniF4C4"></i>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </header>
+
+            <?php echo $tmpDivMsg; ?>
+
+            <footer>
+                <form id="userboxSendReply" action="#">
+                    <textarea class="editor" name="text" cols="70" rows="15"></textarea>
+                    <input type="hidden" name="user" value="">
+                    <input type="submit" value="Envoyer">
+                </form>
+            </footer>
+<?php
+        }
+    }
     function subMenu ($oldName, $ddclick, $lastPseudo = null) {
 ?>
                         <div class="full">
@@ -1024,8 +1181,6 @@ $chaine = random(20);</pre>
             }
         }
         if (!nkHasVisitor()) { require_once'modules/User/array.php'; }
-
-        debug($_FILES);
 
         $arrayTmp        = null;
         $dbsShowColumn   = ' SHOW COLUMNS FROM '.$GLOBALS['nuked']['prefix'].'_users_profils ';
@@ -2198,6 +2353,18 @@ Assemble INSERT + UPDATE Demande a Samoth !
 
         case"privateMsg":
             privateMsg();
+            break;
+
+        case"newMsgUserbox":
+            newMsgUserbox();
+            break;
+
+        case"formSendNewMsg":
+            formSendNewMsg();
+            break;
+
+        case"loadMsgUserbox":
+            loadMsgUserbox();
             break;
 
         case"saveJquery":

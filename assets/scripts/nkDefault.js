@@ -218,8 +218,8 @@ $(document).ready(function(){
                         if(value == 'privateMsg') {
                             checkedUserbox(); // initialize checkbox userbox
                             deleteMsgUserbox(); // initialize button delete msg userbox
-                            resizeImg(); // initialize max size screen
-                            slideContentMsg(); // initialize slide content msg
+                            loadMsg(); // initialize load first msg
+                            newMsgUserbox(); // initialize new msg
                         }
                     }
                 }); // -> end ajax
@@ -413,6 +413,7 @@ $(document).ready(function(){
         $('#nkTableUserbox > tbody > tr').click(function(event) {
             event.preventDefault(); // Pas nécessaire normalement
             var id    = $(this).data('id');
+            loadMsg(id);
             var forId = $('#for_id_' + id);
             if(forId.is(':checked')) {
                 $(forId).attr('checked', false);
@@ -428,6 +429,71 @@ $(document).ready(function(){
             }
         });
     }
+    function newMsgUserbox() {
+        $('#jqueryNewMsg').click(function(event){
+            event.preventDefault();
+            var getUrl   = 'index.php?file=User&nuked_nude=index&op=newMsgUserbox';
+            var userboxContent = $('article.userbox');
+            $.ajax({
+                type: 'GET',
+                url: getUrl,
+                beforeSend:function() {
+                    userboxContent.append('<div id="bgOverlayUserbox"></div>');
+                },
+                success: function(data) {
+                    $('#bgOverlayUserbox').remove();
+                    userboxContent.html(data);
+                },
+                complete: function(data) {
+                    // initialize multi select
+                    $(".nkMultiSelect").chosen({
+                        no_results_text: "Aucun utilisateurs",
+                        width: "100%",
+                        allow_single_deselect:true,
+                        disable_search_threshold:10
+                    });
+                    sendNewMsgUserbox(); // initialize send msg
+                }
+            });
+        })
+    }
+    function sendNewMsgUserbox() {
+        var form = $('#newMsgUserbox');
+        var userboxContent = $('article.userbox');
+        var divAlert = $('#msgAlertSend');
+        form.submit(function(event) {
+            event.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: form.attr('action'),
+                dataType: "json",
+                data: form.serialize(),
+                beforeSend:function() {
+                    userboxContent.append('<div id="bgOverlayUserbox"></div>');
+                },
+                success: function(data) {
+                    $('#bgOverlayUserbox').remove();
+                    divAlert.fadeIn(300).append(data.msg);
+                    setTimeout(function() {
+                        if (data.redirect === false) {
+                            var errorClass = 'error';
+                        } else if (data.redirect === true) {
+                            var errorClass = 'success';
+                        }
+                        divAlert.removeClass('warning').addClass(errorClass).empty().append(data.redirectedName);
+                    }, 1500);
+                    setTimeout(function() {
+                        if (data.redirect === false) {
+                            divAlert.fadeOut(300).removeAttr('class').attr('class', 'warning').empty();
+                        } else if (data.redirect === true) {
+                            loadMsg();
+                        }
+                    }, 3500);
+                },
+            });
+        });
+    }
+
     function deleteMsgUserbox() {
         $('#jqueryDelMsg').click(function(event) {
             event.preventDefault();
@@ -440,7 +506,7 @@ $(document).ready(function(){
     // -> resize image + add function fancybox all img
     function resizeImg() {
         var imgResize  = $('.msgUserbox .contentMsg img').css({display: "none"});
-        var maxWidth   = $('article.userbox > header').width();
+        var maxWidth   = $('article.userbox > header').width() - 1;
         imgResize.each(function(e){
             $(e).css({display: "none"});
             var e = document.createElement('a');
@@ -462,6 +528,74 @@ $(document).ready(function(){
                 $(this).removeClass('icon-fastdown').addClass('icon-fastup');
                 $(this).next('.contentMsg').slideDown(500);
             }
+        });
+    }
+    function slideAllMsg() {
+        // hide all messages
+        $('#hideAllMsg').click(function() {
+            $('.msgUserbox .contentMsg').slideUp(500);
+            $('.msgUserbox > header').removeAttr('class').attr('class', 'icon-fastdown');
+        });
+        // show all messages
+        $('#showAllMsg').click(function() {
+            $('.msgUserbox .contentMsg').slideDown(500);
+            $('.msgUserbox > header').removeAttr('class').attr('class', 'icon-fastup');
+        });
+    }
+    // -> full message page
+    function fullContentMsg() {
+        $('#fullContentMsg').click(function() {
+            if($(this).hasClass('fullContentMsg')) {
+                $(this).children('.icon-uniF4C4').removeClass('icon-uniF4C4').addClass('icon-uniF4C5')
+                $(this).removeClass('fullContentMsg');
+                $('section#jquerySections').css({ display:'block' });
+                $('aside.userbox').css({ 'display':'none' });
+                $('article.userbox').css({ display:'block', float:'right' });
+                setTimeout(function() {
+                    $('article.userbox').css({ width: '100%' });
+                }, 100);
+            } else {
+                $(this).children('.icon-uniF4C5').removeClass('icon-uniF4C5').addClass('icon-uniF4C4')
+                $(this).addClass('fullContentMsg');
+                $('section#jquerySections').removeAttr('style');
+                $('aside.userbox').removeAttr('style');
+                $('article.userbox').removeAttr('style');
+            }
+
+        });
+    }
+    function loadMsg(loadId = 0) {
+        var idOneMsg = $('#nkTableUserbox tbody tr:eq(0)').data('id');
+        var getUrl   = 'index.php?file=User&nuked_nude=index&op=loadMsgUserbox';
+        var userboxContent = $('article.userbox');
+        if (loadId == 0) {
+            var id = idOneMsg;
+        } else {
+            var id = loadId;
+        }
+        $.ajax({
+            type: 'GET',
+            url: getUrl,
+            data: 'id='+ id,
+            beforeSend:function() {
+                userboxContent.append('<div id="bgOverlayUserbox"></div>');
+            },
+            success: function(data) {
+                $('#bgOverlayUserbox').remove();
+                userboxContent.html(data);
+            },
+            complete: function(data) {
+                tooltips() // -> initialize tooltips
+                resizeImg(); // initialize max size screen
+                slideContentMsg(); // initialize slide content msg
+                slideAllMsg(); // initialize slide all msg
+                fullContentMsg(); // initialize slide full content
+            }
+        });
+    }
+    function sendMsg() {
+        $('#userboxSendReply').submit(function(event) {
+            event.preventDefault();
         });
     }
     // -> form lost password

@@ -1518,7 +1518,28 @@ function colorGroup($userMainGroup) {
         return $data['color'];
     }
 }
+/**
+ * send mail
+ * @return boolean
+ */
+function nkMail ($fromName, $fromMail, $sendMail, $subject, $msg) {
+    if (empty($fromName)) {
+        $fromName  = $GLOBALS['nuked']['name'];
+    }
+    if (empty($frommMail)) {
+        $fromMail = $GLOBALS['nuked']['mail'];
+    }
 
+    $headers   = array();
+    $headers[] = "MIME-Version: 1.0";
+    $headers[] = "Content-type: text/html; charset=iso-8859-1";
+    $headers[] = "From: {$fromName} <{$fromMail}>";
+    $headers[] = "Reply-To: No Reply <{$fromMail}>";
+    $headers[] = "Subject: {$fromName}";
+    $headers[] = "X-Mailer: PHP/".phpversion();
+
+    return @mail($sendMail, nkUtf8Encode($subject), $msg, implode("\r\n", $headers));
+}
 /**
  * This function format var dump display
  * @param  string $content param to var dump
